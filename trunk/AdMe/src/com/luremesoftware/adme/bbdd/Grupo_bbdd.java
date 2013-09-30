@@ -2,7 +2,7 @@ package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
 
-import com.luremesoftware.adme.constantes.MetadatosGrupo;
+import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.ListaGrupo;
@@ -37,13 +37,13 @@ public class Grupo_bbdd {
 		Entity entUsuarioGrupo = new Entity(NombreTabla.USUARIOGRUPO.toString());
 
 		entUsuarioGrupo.setProperty(NombreTabla.USUARIO.toString(), usuario.getId());
-		entUsuarioGrupo.setProperty(MetadatosGrupo.NOMBRE.toString(), grupo.getNombre());
+		entUsuarioGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 			
 		if(!grupo.existebbdd()){//Si el grupo no exsite en bbdd se guarda
 		    //TODO Ir incluyendo propiedades del grupo
 			Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
 			
-			entGrupo.setProperty(MetadatosGrupo.NOMBRE.toString(), grupo.getNombre());
+			entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 			
 			datastore.put(entGrupo);
 		}	
@@ -70,9 +70,9 @@ public class Grupo_bbdd {
 
 		for (Entity result_ug : pq_ug.asIterable()) {
 			listaFiltros.add(
-					new FilterPredicate(MetadatosGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(MetadatosGrupo.NOMBRE.toString())));
+					new FilterPredicate(ConstanteGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(ConstanteGrupo.NOMBRE.toString())));
 			listaFiltros.add(
-					new FilterPredicate(MetadatosGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(MetadatosGrupo.NOMBRE.toString())));
+					new FilterPredicate(ConstanteGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(ConstanteGrupo.NOMBRE.toString())));
 		}
 		
 		if(!listaFiltros.isEmpty()){
@@ -86,7 +86,7 @@ public class Grupo_bbdd {
 		PreparedQuery pq = datastore.prepare(query);
 		for (Entity result : pq.asIterable()) {
 			   Grupo grupo = new Grupo(usuario,
-			   (String) result.getProperty(MetadatosGrupo.NOMBRE.toString()));
+			   (String) result.getProperty(ConstanteGrupo.NOMBRE.toString()));
 			   listaGrupo.add(grupo);
 			}
 		}

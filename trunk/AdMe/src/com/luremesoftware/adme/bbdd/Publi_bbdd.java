@@ -12,8 +12,8 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.luremesoftware.adme.constantes.MetadatosPubli;
-import com.luremesoftware.adme.constantes.MetadatosUsuario;
+import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
+import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.ListaMensaje;
 import com.luremesoftware.adme.modelo.ListaMetadato;
@@ -37,10 +37,10 @@ public class Publi_bbdd {
 		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entPublicacion = new Entity(NombreTabla.PUBLICACION.toString());
 
-		entPublicacion.setProperty(MetadatosPubli.PROPIETARIO.toString(), publi.getPropietarioId());
-		entPublicacion.setProperty(MetadatosPubli.TITULO.toString(), publi.getTitulo());
-		entPublicacion.setProperty(MetadatosPubli.CIUDAD.toString(), publi.getCiudad());
-		entPublicacion.setProperty(MetadatosPubli.DESCRIPCION.toString(), publi.getDescripcion());
+		entPublicacion.setProperty(ConstantePubli.PROPIETARIO.toString(), publi.getPropietarioId());
+		entPublicacion.setProperty(ConstantePubli.TITULO.toString(), publi.getTitulo());
+		entPublicacion.setProperty(ConstantePubli.CIUDAD.toString(), publi.getCiudad());
+		entPublicacion.setProperty(ConstantePubli.DESCRIPCION.toString(), publi.getDescripcion());
 			
 		Key key = datastore.put(entPublicacion);
 		
@@ -56,7 +56,7 @@ public class Publi_bbdd {
 	public ListaPubli getListaPubli(Propietario propietario){
 		ListaPubli listaPubli = new ListaPubli();
 		
-		query.setFilter(new FilterPredicate(MetadatosPubli.PROPIETARIO.toString(),FilterOperator.EQUAL,propietario.getId()));
+		query.setFilter(new FilterPredicate(ConstantePubli.PROPIETARIO.toString(),FilterOperator.EQUAL,propietario.getId()));
 		
 		// PreparedQuery contains the methods for fetching query results
 		// from the datastore
@@ -72,7 +72,7 @@ public class Publi_bbdd {
 		ListaPubli listaPubli = new ListaPubli();
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
 
-		if(listaPubli.size() == 1){
+		if(listaMetadato.size() == 1){
 			query.setFilter(listaMetadato.get(0).getlikeFilterPredicate());
 		}
 		else{
@@ -88,7 +88,7 @@ public class Publi_bbdd {
 		Usuario_bbdd usuario_bbdd = new Usuario_bbdd();
 
 		for (Entity result : pq.asIterable()) {	
-			Propietario propietario = usuario_bbdd.getUsuario((String) result.getProperty(MetadatosUsuario.CORREO.toString()));
+			Propietario propietario = usuario_bbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
 			
 			if(propietario!=null){
 				listaPubli.add(rellenaPubli(result, propietario));
@@ -101,8 +101,8 @@ public class Publi_bbdd {
 	private Publi rellenaPubli(Entity result, Propietario propietario){
 
 		    return new Publi(propietario,
-				   			(String) result.getProperty(MetadatosPubli.TITULO.toString()),
-				   			(String) result.getProperty(MetadatosPubli.CIUDAD.toString()),
-				   			(String) result.getProperty(MetadatosPubli.DESCRIPCION.toString()));
+				   			(String) result.getProperty(ConstantePubli.TITULO.toString()),
+				   			(String) result.getProperty(ConstantePubli.CIUDAD.toString()),
+				   			(String) result.getProperty(ConstantePubli.DESCRIPCION.toString()));
 	}
 }

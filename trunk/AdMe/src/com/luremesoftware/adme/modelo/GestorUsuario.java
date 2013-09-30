@@ -1,6 +1,9 @@
 package com.luremesoftware.adme.modelo;
 
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.Usuario_bbdd;
+import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
+import com.luremesoftware.adme.constantes.NombreTabla;
 
 public class GestorUsuario {
 	private Usuario_bbdd usuario_bbdd = null;
@@ -39,12 +42,16 @@ public class GestorUsuario {
 	
 	public ListaUsuario getListaUsuario(Usuario usuario){
 		
-		String correo = usuario.getCorreo();//.toLowerCase();
-		String nombre = usuario.getNombre();//.toLowerCase();
-		String apellido1 = usuario.getApellido1();//.toLowerCase();
-		String apellido2 = usuario.getApellido2();//.toLowerCase();
+		ListaMetadato listaMetadato = new ListaMetadato();
+
+		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, usuario.getCorreo());
 		
-		return this.usuario_bbdd.getListaUsuario(correo, nombre, apellido1, apellido2);
+		return this.usuario_bbdd.getListaUsuario(listaMetadato);
+	}
+	
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
+		
+		return this.usuario_bbdd.getListaUsuario(listaMetadato);
 	}
 
 	public ListaGrupo getListaGrupo(Usuario usuario){
