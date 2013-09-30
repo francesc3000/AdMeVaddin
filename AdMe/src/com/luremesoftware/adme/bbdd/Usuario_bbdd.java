@@ -2,11 +2,13 @@ package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
 
-import com.luremesoftware.adme.constantes.MetadatosUsuario;
+import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.ListaMensaje;
+import com.luremesoftware.adme.modelo.ListaMetadato;
 import com.luremesoftware.adme.modelo.ListaUsuario;
 import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -34,11 +36,11 @@ public class Usuario_bbdd {
 		Entity entUsuario = new Entity(NombreTabla.USUARIO.toString(), usuario.getCorreo());
 		
 
-		entUsuario.setProperty(MetadatosUsuario.CORREO.toString(), usuario.getCorreo());
-		entUsuario.setProperty(MetadatosUsuario.CONTRASENA.toString(), usuario.getContrasena());
-		entUsuario.setProperty(MetadatosUsuario.NOMBRE.toString(), usuario.getNombre());
-		entUsuario.setProperty(MetadatosUsuario.APELLIDO1.toString(), usuario.getApellido1());
-		entUsuario.setProperty(MetadatosUsuario.APELLIDO2.toString(), usuario.getApellido2());
+		entUsuario.setProperty(ConstanteUsuario.CORREO.toString(), usuario.getCorreo());
+		entUsuario.setProperty(ConstanteUsuario.CONTRASENA.toString(), usuario.getContrasena());
+		entUsuario.setProperty(ConstanteUsuario.NOMBRE.toString(), usuario.getNombre());
+		entUsuario.setProperty(ConstanteUsuario.APELLIDO1.toString(), usuario.getApellido1());
+		entUsuario.setProperty(ConstanteUsuario.APELLIDO2.toString(), usuario.getApellido2());
 		
 		Key key = datastore.put(entUsuario);
 		if(key==null){
@@ -55,7 +57,7 @@ public class Usuario_bbdd {
 	public Usuario getUsuario(String f_correo)
 	{
 		Usuario usuario = null;
-		query.setFilter(new FilterPredicate(MetadatosUsuario.CORREO.toString(),FilterOperator.EQUAL,f_correo));
+		query.setFilter(new FilterPredicate(ConstanteUsuario.CORREO.toString(),FilterOperator.EQUAL,f_correo));
 		
 		// PreparedQuery contains the methods for fetching query results
 		// from the datastore
@@ -63,26 +65,31 @@ public class Usuario_bbdd {
 
 		for (Entity result : pq.asIterable()) {
 		   usuario = new Usuario(
-		   (String) result.getProperty(MetadatosUsuario.CORREO.toString()),
+		   (String) result.getProperty(ConstanteUsuario.CORREO.toString()),
 		   //usuario.setContrasena((String) result.getProperty(Contrasena));
 		   " ",
-		   (String) result.getProperty(MetadatosUsuario.NOMBRE.toString()),
-		   (String) result.getProperty(MetadatosUsuario.APELLIDO1.toString()),
-		   (String) result.getProperty(MetadatosUsuario.APELLIDO2.toString()));
+		   (String) result.getProperty(ConstanteUsuario.NOMBRE.toString()),
+		   (String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()),
+		   (String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
 		}
 		
 		return usuario;
 	}
 
-	public ListaUsuario getListaUsuario(String f_correo, String f_nombre, String f_apellido1, String f_apellido2){
-		//TODO Integrar Clase ListaMetadato
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		ListaUsuario listaUsuario = new ListaUsuario();
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
-
-		buildFiltro(MetadatosUsuario.CORREO.toString(), FilterOperator.EQUAL, f_correo, listaFiltros);
-		buildFiltro(MetadatosUsuario.NOMBRE.toString(), FilterOperator.EQUAL, f_nombre, listaFiltros);
-		buildFiltro(MetadatosUsuario.APELLIDO1.toString(), FilterOperator.EQUAL, f_apellido1, listaFiltros);
-		buildFiltro(MetadatosUsuario.APELLIDO2.toString(), FilterOperator.EQUAL, f_apellido2, listaFiltros);
+		
+		if(listaMetadato.size() == 1){
+			query.setFilter(listaMetadato.get(0).getlikeFilterPredicate());
+		}
+		else{
+			for(Metadato metadato:listaMetadato){
+				listaFiltros.add(metadato.getlikeFilterPredicate());
+			}
+			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
+			query.setFilter(filtroCompuesto);
+		}
 
 		//Use CompositeFilter to combine multiple filters
 		if(listaFiltros.size() == 1){
@@ -98,24 +105,16 @@ public class Usuario_bbdd {
 
 		for (Entity result : pq.asIterable()) {			
 		  Usuario usuario = new Usuario(
-		  (String) result.getProperty(MetadatosUsuario.CORREO.toString()),
-		  (String) result.getProperty(MetadatosUsuario.CONTRASENA.toString()),
-		  (String) result.getProperty(MetadatosUsuario.NOMBRE.toString()),
-		  (String) result.getProperty(MetadatosUsuario.APELLIDO1.toString()),
-		  (String) result.getProperty(MetadatosUsuario.APELLIDO2.toString()));
+		  (String) result.getProperty(ConstanteUsuario.CORREO.toString()),
+		  (String) result.getProperty(ConstanteUsuario.CONTRASENA.toString()),
+		  (String) result.getProperty(ConstanteUsuario.NOMBRE.toString()),
+		  (String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()),
+		  (String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
 		  
 		  listaUsuario.add(usuario);
 		}
 		
 		return listaUsuario;
 		
-	}
-	
-	private boolean buildFiltro(String nombrePropiedad, FilterOperator operador, Object valor, ArrayList<Filter> listaFiltros){
-		
-		if(valor!=null){
-			return listaFiltros.add(new FilterPredicate(nombrePropiedad,operador,valor));
-		}else{return false;}
-	
 	}
 }

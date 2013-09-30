@@ -55,20 +55,22 @@ public class ControladorWeb {
 		return gestorPubli.crearPubli(publi);
 	}
 
-	public Usuario getUsuario(Usuario usuario){
-		return gestorUsuario.getUsuario(usuario);
-	}
-
 	/**
 	 * Se realiza una consulta de Usuarios en base de datos
 	 * 
-	 * @param usuario Clase tipo usuario
+	 * @param listaMetadato Clase tipo usuario
 	 * @return Se retorna un listado de Usuarios
 	 */
-	public ListaUsuario getListaUsuario(Usuario usuario){
-		return gestorUsuario.getListaUsuario(usuario);
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
+		return gestorUsuario.getListaUsuario(listaMetadato);
 	}
 	
+	/**
+	 * Se realiza una consulta de Publicaciones en base de datos
+	 * 
+	 * @param listaMetadato 
+	 * @return
+	 */
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
