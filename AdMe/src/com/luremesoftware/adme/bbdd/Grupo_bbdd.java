@@ -20,7 +20,7 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
-public class Grupo_bbdd {
+public class Grupo_bbdd extends Bbdd{
 
 	private DatastoreService datastore = null;
 	private Query query_ug = null;

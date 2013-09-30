@@ -1,15 +1,11 @@
 package com.luremesoftware.adme.bbdd;
 
-import java.util.ArrayList;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
-import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
@@ -19,11 +15,10 @@ import com.luremesoftware.adme.modelo.ListaMensaje;
 import com.luremesoftware.adme.modelo.ListaMetadato;
 import com.luremesoftware.adme.modelo.ListaPubli;
 import com.luremesoftware.adme.modelo.Mensaje;
-import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 
-public class Publi_bbdd {
+public class Publi_bbdd extends Bbdd{
 
 	private DatastoreService datastore = null;
 	private Query query = null;
@@ -70,18 +65,8 @@ public class Publi_bbdd {
 	
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		ListaPubli listaPubli = new ListaPubli();
-		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
-
-		if(listaMetadato.size() == 1){
-			query.setFilter(listaMetadato.get(0).getlikeFilterPredicate());
-		}
-		else{
-			for(Metadato metadato:listaMetadato){
-				listaFiltros.add(metadato.getlikeFilterPredicate());
-			}
-			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
-			query.setFilter(filtroCompuesto);
-		}
+		
+		this.buildQuery(this.query, listaMetadato);
 		
 		PreparedQuery pq = datastore.prepare(query);
 		

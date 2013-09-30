@@ -1,27 +1,22 @@
 package com.luremesoftware.adme.bbdd;
 
-import java.util.ArrayList;
-
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.ListaMensaje;
 import com.luremesoftware.adme.modelo.ListaMetadato;
 import com.luremesoftware.adme.modelo.ListaUsuario;
 import com.luremesoftware.adme.modelo.Mensaje;
-import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 
-public class Usuario_bbdd {
+public class Usuario_bbdd extends Bbdd{
 	
 	private DatastoreService datastore = null;
 	private Query query = null;
@@ -78,26 +73,8 @@ public class Usuario_bbdd {
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		ListaUsuario listaUsuario = new ListaUsuario();
-		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
 		
-		if(listaMetadato.size() == 1){
-			query.setFilter(listaMetadato.get(0).getlikeFilterPredicate());
-		}
-		else{
-			for(Metadato metadato:listaMetadato){
-				listaFiltros.add(metadato.getlikeFilterPredicate());
-			}
-			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
-			query.setFilter(filtroCompuesto);
-		}
-
-		//Use CompositeFilter to combine multiple filters
-		if(listaFiltros.size() == 1){
-			query.setFilter(listaFiltros.get(0));
-		}else{
-			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
-			query.setFilter(filtroCompuesto);
-		}
+		this.buildQuery(this.query, listaMetadato);
 		
 		// PreparedQuery contains the methods for fetching query results
 		// from the datastore

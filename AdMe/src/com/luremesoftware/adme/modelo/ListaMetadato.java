@@ -19,7 +19,13 @@ public class ListaMetadato extends ArrayList<Metadato>{
 	}
 	
 
-
+	public boolean add(Metadato metadato){
+		if(metadato != null){
+			return this.add(metadato);
+		}else{
+			return true;
+		}
+	}
 	
 
 	
