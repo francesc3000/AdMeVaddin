@@ -2,6 +2,7 @@ package com.luremesoftware.adme.controlador;
 
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
@@ -28,19 +29,25 @@ public class ControladorWeb {
 	 * Se crea un usuario en base de datos
 	 * 
 	 * @param usuario Clase tipo usuario
-	 * @return Si todo va bien se retorna true
+	 * @return Se retorna un listado de mensajes del sistema
 	 */
 	public ListaMensaje crearUsuario(Usuario usuario){
 		
 		ListaUsuario listaUsuario = gestorUsuario.getListaUsuario(usuario);
 		if(listaUsuario.isEmpty()==false){
 			ListaMensaje listaMensaje = new ListaMensaje();
-			listaMensaje.add(new Mensaje(Mensaje.ERROR,"El Usuario ya existe!"));
+			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe!"));
 			return listaMensaje;
 			}
 		else{return gestorUsuario.crearUsuario(usuario);}
 	}
 	
+	/**
+	 * Crea un nuevo grupo
+	 * @param usuario
+	 * @param grupo
+	 * @return Se retorna un listado de mensajes del sistema
+	 */
 	public ListaMensaje crearGrupo(Usuario usuario, Grupo grupo){
 		return gestorGrupo.crearGrupo(usuario, grupo);
 	}
@@ -49,7 +56,7 @@ public class ControladorWeb {
 	 * Se crea una Publicación
 	 * 
 	 * @param publi Clase Publicación
-	 * @return Retorna true si la inserción ha sido satisfactoria
+	 * @return Se retorna un listado de mensajes del sistema
 	 */
 	public ListaMensaje crearPubli(Publi publi){
 		return gestorPubli.crearPubli(publi);
@@ -69,9 +76,18 @@ public class ControladorWeb {
 	 * Se realiza una consulta de Publicaciones en base de datos
 	 * 
 	 * @param listaMetadato 
-	 * @return
+	 * @return Se retorna un listado de Publicaciones
 	 */
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
+	}
+	
+	/**
+	 * Se modifica un Usuario ya existente en base de datos
+	 * @param usuario
+	 * @return Se retorna un listado de mensajes del sistema
+	 */
+	public ListaMensaje modUsuario(Usuario usuario){
+		return this.gestorUsuario.modUsuario(usuario);
 	}
 }

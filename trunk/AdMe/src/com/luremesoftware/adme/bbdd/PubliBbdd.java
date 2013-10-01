@@ -1,9 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -11,7 +8,6 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
-import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -20,11 +16,10 @@ import com.luremesoftware.adme.modelo.lista.ListaPubli;
 
 public class PubliBbdd extends Bbdd{
 
-	private DatastoreService datastore = null;
 	private Query query = null;
 	
 	public PubliBbdd(){
-		datastore = DatastoreServiceFactory.getDatastoreService();
+		super();
 		query = new Query(NombreTabla.PUBLICACION.toString());
 	}
 	
@@ -36,14 +31,8 @@ public class PubliBbdd extends Bbdd{
 		entPublicacion.setProperty(ConstantePubli.TITULO.toString(), publi.getTitulo());
 		entPublicacion.setProperty(ConstantePubli.CIUDAD.toString(), publi.getCiudad());
 		entPublicacion.setProperty(ConstantePubli.DESCRIPCION.toString(), publi.getDescripcion());
-			
-		Key key = datastore.put(entPublicacion);
 		
-		if(key == null){
-			listaMensaje.add(new Mensaje(Mensaje.ERROR,"No se pudo crer la Publicación!"));
-		}else{
-			listaMensaje.add(new Mensaje(Mensaje.OK,"Publicación creada!"));
-		}
+		listaMensaje.addAll(this.putDatastore(entPublicacion));
 		
 		return listaMensaje;
 	}
@@ -53,9 +42,7 @@ public class PubliBbdd extends Bbdd{
 		
 		query.setFilter(new FilterPredicate(ConstantePubli.PROPIETARIO.toString(),FilterOperator.EQUAL,propietario.getId()));
 		
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		PreparedQuery pq = datastore.prepare(query);
+		PreparedQuery pq = this.prepareDatastore(query);
 		
 		for (Entity result : pq.asIterable()) {
 		    listaPubli.add(rellenaPubli(result, propietario));
@@ -68,7 +55,7 @@ public class PubliBbdd extends Bbdd{
 		
 		this.buildQuery(this.query, listaMetadato);
 		
-		PreparedQuery pq = datastore.prepare(query);
+		PreparedQuery pq = this.prepareDatastore(query);
 		
 		UsuarioBbdd usuarioBbdd = new UsuarioBbdd();
 

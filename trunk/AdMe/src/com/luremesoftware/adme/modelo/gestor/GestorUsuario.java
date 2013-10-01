@@ -5,6 +5,7 @@ import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -24,17 +25,21 @@ public class GestorUsuario {
 	/**
 	 * Regista un usuario en el sistema
 	 * 
-	 * @return Si el registo es satisfactorio se retona OK
+	 * @return Se retorna un listado de mensajes del sistema
 	 */	
 	public ListaMensaje crearUsuario(Usuario usuario){
 		
 	  if(checkparamObl(usuario)){
-	    return this.usuarioBbdd.crearUsuario(usuario);
+	    return this.usuarioBbdd.putUsuario(usuario);
 	  }else{
 		  ListaMensaje listaMensaje = new ListaMensaje();
-		  listaMensaje.add(new Mensaje(Mensaje.ERROR, "Complete todos los campos obligatorios"));
+		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 		  return listaMensaje;
 	  }
+	}
+	
+	public ListaMensaje modUsuario(Usuario usuario){
+		return this.usuarioBbdd.putUsuario(usuario);
 	}
 	
 	public Usuario getUsuario(Usuario usuario){

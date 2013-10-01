@@ -1,11 +1,14 @@
 package com.luremesoftware.adme.modelo;
 
+import com.google.appengine.api.images.Image;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaPuntuacion;
 
 public class Propietario {
 	private String id;
+	private String video;
+	private Image avatar;
 	private ListaPubli listaPubli = null;
 	private ListaPuntuacion listaPuntuacion;
 			
@@ -36,7 +39,6 @@ public class Propietario {
 	}
 	
 	public boolean setId(String id){
-		//TODO TRANSFORMAR STRING TO LONG
 		this.id = id;
 		return true;
 	}

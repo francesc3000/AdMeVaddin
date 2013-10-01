@@ -2,19 +2,31 @@ package com.luremesoftware.adme.modelo;
 
 public class Mensaje {
 	
-	public static String OK			= "S";
-	public static String WARNING 	= "W";
-	public static String ERROR		= "E";
+	public enum TipoError {
+		OK("S"),
+		WARNING("W"),
+		ERROR("E");
+		
+		private final String tipoError;
+		
+		private TipoError(String tipoError){
+			this.tipoError = tipoError;
+		}
+		
+		public String toString(){
+			return this.tipoError;
+		}
+	}
 
-	private String tipo;
+	private TipoError tipo;
 	private String msg;
 
-	public Mensaje(String tipo, String msg){
+	public Mensaje(TipoError tipo, String msg){
 		this.tipo = tipo;
 		this.msg = msg;
 	}
 	
-	public String getTipo(){
+	public TipoError getTipo(){
 		return this.tipo;
 	}
 	

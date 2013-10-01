@@ -1,6 +1,5 @@
 package com.luremesoftware.adme.modelo;
 
-import com.google.appengine.api.images.Image;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 
@@ -16,8 +15,6 @@ public class Usuario extends Propietario{
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
-	private String video;
-	private Image avatar;
 	
 	
 	private ListaGrupo listaGrupo = null;
