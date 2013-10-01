@@ -11,6 +11,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
@@ -54,13 +55,22 @@ public class Bbdd {
 			//nothing to do
 		}
 		else if(listaMetadato.size() == 1){
-			query.setFilter(listaMetadato.get(0).getlikeFilterPredicate());
+			FilterPredicate filterPredicate = listaMetadato.get(0).getlikeFilterPredicate();
+			if(filterPredicate!=null){
+				query.setFilter(filterPredicate);
+			}
 		}
 		else{
 			for(Metadato metadato:listaMetadato){
-				listaFiltros.add(metadato.getlikeFilterPredicate());
+				FilterPredicate filterPredicate = metadato.getlikeFilterPredicate();
+				if(filterPredicate!=null){
+					listaFiltros.add(filterPredicate);
+				}
 			}
-			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
+			Filter filtroCompuesto = null;
+			if(!listaFiltros.isEmpty()){
+				CompositeFilterOperator.and(listaFiltros);
+			}
 			query.setFilter(filtroCompuesto);
 		}
 		

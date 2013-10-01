@@ -113,7 +113,7 @@
      
                  
                     ControladorWeb cw = new ControladorWeb();
-                    cw.crearUsuario(usu);
+                    cw.putUsuario(usu);
                  
    
                     String name = request.getParameter( "txtNombre" );

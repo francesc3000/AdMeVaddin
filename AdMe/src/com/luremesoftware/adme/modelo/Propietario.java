@@ -11,6 +11,8 @@ public class Propietario {
 	private Image avatar;
 	private ListaPubli listaPubli = null;
 	private ListaPuntuacion listaPuntuacion;
+	
+	public Propietario(){}
 			
 	public Propietario(String id){
 		this.setId(id);
