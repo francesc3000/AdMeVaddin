@@ -1,6 +1,8 @@
 package com.luremesoftware.adme.modelo;
 
 import com.google.appengine.api.images.Image;
+import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 
 /**
  * Clase Usuario

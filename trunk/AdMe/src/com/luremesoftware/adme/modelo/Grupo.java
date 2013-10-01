@@ -1,5 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
+
 public class Grupo extends Propietario{
 
 	private String nombre = null;

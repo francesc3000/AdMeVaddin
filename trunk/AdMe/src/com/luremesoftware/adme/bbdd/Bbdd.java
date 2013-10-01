@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
-import com.luremesoftware.adme.modelo.ListaMetadato;
 import com.luremesoftware.adme.modelo.Metadato;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
 public class Bbdd {
 	public boolean buildQuery(Query query, ListaMetadato listaMetadato){
