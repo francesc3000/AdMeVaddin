@@ -1,16 +1,16 @@
 package com.luremesoftware.adme.modelo;
 
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.luremesoftware.adme.bbdd.Usuario_bbdd;
+import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 
 public class GestorUsuario {
-	private Usuario_bbdd usuario_bbdd = null;
+	private UsuarioBbdd usuarioBbdd = null;
 	private GestorPubli gestorPubli = null;
 	
 	public GestorUsuario(){
-		this.usuario_bbdd = new Usuario_bbdd();
+		this.usuarioBbdd = new UsuarioBbdd();
 		this.gestorPubli = new GestorPubli();
 	}
 	
@@ -22,7 +22,7 @@ public class GestorUsuario {
 	public ListaMensaje crearUsuario(Usuario usuario){
 		
 	  if(checkparamObl(usuario)){
-	    return this.usuario_bbdd.crearUsuario(usuario);
+	    return this.usuarioBbdd.crearUsuario(usuario);
 	  }else{
 		  ListaMensaje listaMensaje = new ListaMensaje();
 		  listaMensaje.add(new Mensaje(Mensaje.ERROR, "Complete todos los campos obligatorios"));
@@ -37,7 +37,7 @@ public class GestorUsuario {
 		//String apellido1 = usuario.getApellido1();//.toLowerCase();
 		//String apellido2 = usuario.getApellido2();//.toLowerCase();
 		
-		return this.usuario_bbdd.getUsuario(correo);
+		return this.usuarioBbdd.getUsuario(correo);
 	}
 	
 	public ListaUsuario getListaUsuario(Usuario usuario){
@@ -46,12 +46,12 @@ public class GestorUsuario {
 
 		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, usuario.getCorreo());
 		
-		return this.usuario_bbdd.getListaUsuario(listaMetadato);
+		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}
 	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		
-		return this.usuario_bbdd.getListaUsuario(listaMetadato);
+		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}
 
 	public ListaGrupo getListaGrupo(Usuario usuario){

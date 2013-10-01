@@ -16,12 +16,12 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 
-public class Usuario_bbdd extends Bbdd{
+public class UsuarioBbdd extends Bbdd{
 	
 	private DatastoreService datastore = null;
 	private Query query = null;
 	
-	public Usuario_bbdd(){
+	public UsuarioBbdd(){
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		query = new Query(NombreTabla.USUARIO.toString());
 	}

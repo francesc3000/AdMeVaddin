@@ -20,13 +20,13 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 
-public class Grupo_bbdd extends Bbdd{
+public class GrupoBbdd extends Bbdd{
 
 	private DatastoreService datastore = null;
 	private Query query_ug = null;
 	private Query query = null;
 	
-	public Grupo_bbdd(){
+	public GrupoBbdd(){
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		query_ug = new Query(NombreTabla.USUARIOGRUPO.toString());
 		query = new Query(NombreTabla.GRUPO.toString());
