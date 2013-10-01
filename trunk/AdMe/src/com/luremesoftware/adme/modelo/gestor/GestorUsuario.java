@@ -6,7 +6,9 @@ import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
+import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -21,56 +23,50 @@ public class GestorUsuario {
 		this.gestorPubli = new GestorPubli();
 	}
 	
+	public boolean existeUsuario(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		//TODO Meter en MemCache
+		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
+		
+		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
+		
+		if(listaUsuario.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	/**
 	 * Regista un usuario en el sistema
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
 	public ListaMensaje putUsuario(Usuario usuario){
-		Usuario Usuario = this.getUsuario(usuario);
-		if(Usuario!=null){
-			ListaMensaje listaMensaje = new ListaMensaje();
-			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe!"));
-			return listaMensaje;
-			}
-		else{
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		if(!this.existeUsuario(usuario.getCorreo()))
+		{
 			 if(checkparamObl(usuario)){
-			   return this.usuarioBbdd.putUsuario(usuario);
+			   listaMensaje = this.usuarioBbdd.putUsuario(usuario);
 			 }else{
-				 ListaMensaje listaMensaje = new ListaMensaje();
 				 listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
-				 return listaMensaje;
 			 }
 		}
+		
+		return listaMensaje;
 	}
 	
-	public Usuario getUsuario(String correo){
+	public Usuario getUsuario(String correo) throws MultipleUsuario{
 		ListaMetadato listaMetadato = new ListaMetadato();
 		Usuario ret_usuario = null;
 		
-		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo);
+		listaMetadato.add( new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
 		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
 		
 		if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
-			//TODO Crear log
-		}else{
-			ret_usuario = listaUsuario.get(0);
-		}
-		
-		return ret_usuario;
-	}
-	
-	public Usuario getUsuario(Usuario usuario){
-		
-		ListaMetadato listaMetadato = new ListaMetadato();
-		Usuario ret_usuario = null;
-		
-		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, usuario.getCorreo());
-		
-		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
-		
-		if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
-			//TODO Crear log
+			throw new MultipleUsuario("Usuario duplicado en base de datos");
 		}else{
 			ret_usuario = listaUsuario.get(0);
 		}

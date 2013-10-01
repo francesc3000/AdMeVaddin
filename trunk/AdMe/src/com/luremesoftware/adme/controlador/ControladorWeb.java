@@ -23,6 +23,10 @@ public class ControladorWeb {
 		this.gestorPubli = new GestorPubli();
 	}
 	
+	public boolean existeUsuario(String correo){
+		return gestorUsuario.existeUsuario(correo);
+	}
+	
 	/**
 	 * Se crea o modifica un usuario en base de datos
 	 * 

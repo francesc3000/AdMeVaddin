@@ -11,6 +11,7 @@ import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
@@ -60,6 +61,7 @@ public class PubliBbdd extends Bbdd{
 		PreparedQuery pq = this.prepareDatastore(query);
 
 		for (Entity result : pq.asIterable()) {
+			//TODO Diferenciar Usuario de Grupo
 			/*String class_string = (String) result.getProperty(ConstantePropietario.CLASS.toString());
 			switch(class_string){
 			case "Usuario":
@@ -72,7 +74,13 @@ public class PubliBbdd extends Bbdd{
 					break;
 			}*/
 			
-			Propietario propietario = new GestorUsuario().getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+			Propietario propietario = null;
+			GestorUsuario gestorUsuario = new GestorUsuario();
+			try{
+				propietario = gestorUsuario.getUsuario((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
+			}catch(MultipleUsuario mu){
+				//Nothing to do
+			}
 			
 			
 			if(propietario!=null){

@@ -48,7 +48,7 @@
                 	
                     ControladorWeb cw = new ControladorWeb();
                          	         
-                    cw.crearPubli(publi);
+                    cw.putPubli(publi);
 
                 }
             }
@@ -86,6 +86,7 @@
 		<textarea name="mensaje" cols="40" rows="15">
 
   </textarea>
+  	<input type="submit" value="Enviar"> 
 	</form>
 
 	<%

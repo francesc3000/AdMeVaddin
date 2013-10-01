@@ -9,8 +9,8 @@
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb"%>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 <%@ page import="com.luremesoftware.adme.modelo.Publi"%>
-<%@ page import="com.luremesoftware.adme.modelo.ListaMetadato"%>
-<%@ page import="com.luremesoftware.adme.modelo.ListaPubli"%>
+<%@ page import="com.luremesoftware.adme.modelo.lista.ListaMetadato"%>
+<%@ page import="com.luremesoftware.adme.modelo.lista.ListaPubli"%>
 
 
 <!DOCTYPE html>

@@ -14,19 +14,21 @@ public class ListaMetadato extends ArrayList<Metadato>{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public boolean setMetadato(NombreTabla tabla, Constante nombreMetadato, FilterOperator operador, Object valor)
+	/*public boolean setMetadato(NombreTabla tabla, Constante nombreMetadato, FilterOperator operador, Object valor)
 	{
 		return this.add(new Metadato(tabla, nombreMetadato, operador, valor));
-	}
+	}*/
 	
 
-	public boolean add(Metadato metadato){
+	/*public boolean add(Metadato metadato){
 		if(metadato != null){
-			return this.add(metadato);
+			ensureCapacityInternal(size + 1);  // Increments modCount!!
+	        elementData[size++] = e;
+	        return true;
 		}else{
 			return true;
 		}
-	}
+	}*/
 	
 
 	

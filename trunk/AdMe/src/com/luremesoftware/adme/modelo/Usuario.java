@@ -36,15 +36,12 @@ public class Usuario extends Propietario{
     * @param apellido2 Segundo apellido del usuario
 	*/	
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		super(correo);
+		this.setId(correo);
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
-		
-		//Se buscan los grupo en los que está incluido
-		this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 	}
 
 	public String getCorreo(){
