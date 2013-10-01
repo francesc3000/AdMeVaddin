@@ -2,32 +2,27 @@ package com.luremesoftware.adme.bbdd;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
-import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 
 public class UsuarioBbdd extends Bbdd{
-	
-	private DatastoreService datastore = null;
+
 	private Query query = null;
 	
 	public UsuarioBbdd(){
-		datastore = DatastoreServiceFactory.getDatastoreService();
+		super();
 		query = new Query(NombreTabla.USUARIO.toString());
 	}
 	
-	public ListaMensaje crearUsuario(Usuario usuario){
-		ListaMensaje listaMensaje = new ListaMensaje();		
+	public ListaMensaje putUsuario(Usuario usuario){
+		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entUsuario = new Entity(NombreTabla.USUARIO.toString(), usuario.getCorreo());
 		
 
@@ -37,14 +32,7 @@ public class UsuarioBbdd extends Bbdd{
 		entUsuario.setProperty(ConstanteUsuario.APELLIDO1.toString(), usuario.getApellido1());
 		entUsuario.setProperty(ConstanteUsuario.APELLIDO2.toString(), usuario.getApellido2());
 		
-		Key key = datastore.put(entUsuario);
-		if(key==null){
-			//TODO Si falla la creación introducir en LOG
-			listaMensaje.add(new Mensaje(Mensaje.ERROR,"No ha sido posible crear el Usuario"));
-		}else{
-			listaMensaje.add(new Mensaje(Mensaje.OK,"Usuario Creado"));
-		}
-		
+		listaMensaje.addAll(this.putDatastore(entUsuario));
 		
 		return listaMensaje;
 	}
@@ -54,9 +42,7 @@ public class UsuarioBbdd extends Bbdd{
 		Usuario usuario = null;
 		query.setFilter(new FilterPredicate(ConstanteUsuario.CORREO.toString(),FilterOperator.EQUAL,f_correo));
 		
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		PreparedQuery pq = datastore.prepare(query);
+		PreparedQuery pq = this.prepareDatastore(query);
 
 		for (Entity result : pq.asIterable()) {
 		   usuario = new Usuario(
@@ -76,9 +62,7 @@ public class UsuarioBbdd extends Bbdd{
 		
 		this.buildQuery(this.query, listaMetadato);
 		
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		PreparedQuery pq = datastore.prepare(query);
+		PreparedQuery pq = this.prepareDatastore(query);
 
 		for (Entity result : pq.asIterable()) {			
 		  Usuario usuario = new Usuario(

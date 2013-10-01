@@ -5,14 +5,10 @@ import java.util.ArrayList;
 import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Grupo;
-import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
@@ -22,12 +18,11 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 
 public class GrupoBbdd extends Bbdd{
 
-	private DatastoreService datastore = null;
 	private Query query_ug = null;
 	private Query query = null;
 	
 	public GrupoBbdd(){
-		datastore = DatastoreServiceFactory.getDatastoreService();
+		super();
 		query_ug = new Query(NombreTabla.USUARIOGRUPO.toString());
 		query = new Query(NombreTabla.GRUPO.toString());
 	}
@@ -38,22 +33,17 @@ public class GrupoBbdd extends Bbdd{
 
 		entUsuarioGrupo.setProperty(NombreTabla.USUARIO.toString(), usuario.getId());
 		entUsuarioGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
-			
+		
+		//TODO Ejecutar en transacción o mirar de insertar como ancestros
 		if(!grupo.existebbdd()){//Si el grupo no exsite en bbdd se guarda
 		    //TODO Ir incluyendo propiedades del grupo
 			Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
 			
 			entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 			
-			datastore.put(entGrupo);
-		}	
-		Key key = datastore.put(entUsuarioGrupo);
-		
-		if(key == null){
-			listaMensaje.add(new Mensaje(Mensaje.ERROR,"No se pudo crear el grupo"));
-		}else{
-			listaMensaje.add(new Mensaje(Mensaje.OK,"Grupo creado"));
+			listaMensaje.addAll(this.putDatastore(entGrupo));
 		}
+		listaMensaje.addAll(this.putDatastore(entUsuarioGrupo));
 		
 		return listaMensaje;
 	}
@@ -64,9 +54,7 @@ public class GrupoBbdd extends Bbdd{
 		
 		query_ug.setFilter(new FilterPredicate(NombreTabla.USUARIO.toString(),FilterOperator.EQUAL,usuario.getId()));
 		
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		PreparedQuery pq_ug = datastore.prepare(query_ug);
+		PreparedQuery pq_ug = this.prepareDatastore(query_ug);
 
 		for (Entity result_ug : pq_ug.asIterable()) {
 			listaFiltros.add(
@@ -76,15 +64,11 @@ public class GrupoBbdd extends Bbdd{
 		}
 		
 		if(!listaFiltros.isEmpty()){
-		//try{
-		Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
-		//}catch{};
-		query.setFilter(filtroCompuesto);
-		
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		PreparedQuery pq = datastore.prepare(query);
-		for (Entity result : pq.asIterable()) {
+			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
+			query.setFilter(filtroCompuesto);
+			
+			PreparedQuery pq = this.prepareDatastore(query);
+			for (Entity result : pq.asIterable()) {
 			   Grupo grupo = new Grupo(usuario,
 			   (String) result.getProperty(ConstanteGrupo.NOMBRE.toString()));
 			   listaGrupo.add(grupo);
