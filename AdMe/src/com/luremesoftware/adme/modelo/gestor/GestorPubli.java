@@ -24,8 +24,8 @@ public class GestorPubli {
 	 * 
 	 * @return Retorna el identificador de la publicación
 	 */
-	public ListaMensaje crearPubli(Publi publi){
-		return publiBbdd.crearPublicacion(publi);
+	public ListaMensaje putPubli(Publi publi){
+		return publiBbdd.putPublicacion(publi);
 	}
 	
 	/**

@@ -27,7 +27,7 @@ public class GrupoBbdd extends Bbdd{
 		query = new Query(NombreTabla.GRUPO.toString());
 	}
 	
-	public ListaMensaje crearGrupo(Usuario usuario, Grupo grupo){
+	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entUsuarioGrupo = new Entity(NombreTabla.USUARIOGRUPO.toString());
 

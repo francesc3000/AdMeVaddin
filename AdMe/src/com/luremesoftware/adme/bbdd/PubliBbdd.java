@@ -5,11 +5,13 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.luremesoftware.adme.constantes.Constante.ConstantePropietario;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -23,7 +25,7 @@ public class PubliBbdd extends Bbdd{
 		query = new Query(NombreTabla.PUBLICACION.toString());
 	}
 	
-	public ListaMensaje crearPublicacion(Publi publi){
+	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entPublicacion = new Entity(NombreTabla.PUBLICACION.toString());
 
@@ -56,11 +58,22 @@ public class PubliBbdd extends Bbdd{
 		this.buildQuery(this.query, listaMetadato);
 		
 		PreparedQuery pq = this.prepareDatastore(query);
-		
-		UsuarioBbdd usuarioBbdd = new UsuarioBbdd();
 
-		for (Entity result : pq.asIterable()) {	
-			Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+		for (Entity result : pq.asIterable()) {
+			/*String class_string = (String) result.getProperty(ConstantePropietario.CLASS.toString());
+			switch(class_string){
+			case "Usuario":
+				Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+				break;
+			case "Grupo":
+				break;
+				default:
+					Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+					break;
+			}*/
+			
+			Propietario propietario = new GestorUsuario().getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+			
 			
 			if(propietario!=null){
 				listaPubli.add(rellenaPubli(result, propietario));

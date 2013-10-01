@@ -15,8 +15,8 @@ public class GestorGrupo {
 		this.grupoBbdd = new GrupoBbdd();
 	}
 	
-	public ListaMensaje crearGrupo(Usuario usuario, Grupo grupo){
-		return this.grupoBbdd.crearGrupo(usuario, grupo);
+	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
+		return this.grupoBbdd.putGrupo(usuario, grupo);
 	}
 
 	public ListaGrupo getListaGrupo(Usuario usuario){
