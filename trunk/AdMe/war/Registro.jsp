@@ -111,19 +111,15 @@
                     
                     Usuario usu = new Usuario(email,pass,nom,apellido1,apellido2);
      
-                    //usu.inserta();
+                 
                     ControladorWeb cw = new ControladorWeb();
-                    /*if(cw.crearUsuario(usu)){
-                    out.print("Usuario registrado con exito");
+                    cw.crearUsuario(usu);
+                 
    
                     String name = request.getParameter( "txtNombre" );
                     session.setAttribute( "user", nom );
                     response.sendRedirect("Perfil.jsp");
-                    }
-                    else{
-                    	
-                    	 out.print("Usuario NO registrado");
-                    }*/
+                  
 
                 }
 
