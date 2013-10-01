@@ -2,11 +2,11 @@ package com.luremesoftware.adme.bbdd;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
-import com.luremesoftware.adme.modelo.ListaMensaje;
-import com.luremesoftware.adme.modelo.ListaMetadato;
-import com.luremesoftware.adme.modelo.ListaUsuario;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.lista.ListaMensaje;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;

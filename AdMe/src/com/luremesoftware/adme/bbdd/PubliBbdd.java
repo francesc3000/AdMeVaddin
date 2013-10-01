@@ -11,12 +11,12 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
-import com.luremesoftware.adme.modelo.ListaMensaje;
-import com.luremesoftware.adme.modelo.ListaMetadato;
-import com.luremesoftware.adme.modelo.ListaPubli;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.lista.ListaMensaje;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaPubli;
 
 public class PubliBbdd extends Bbdd{
 

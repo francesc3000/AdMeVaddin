@@ -1,6 +1,8 @@
-package com.luremesoftware.adme.modelo;
+package com.luremesoftware.adme.modelo.lista;
 
 import java.util.ArrayList;
+
+import com.luremesoftware.adme.modelo.Publi;
 
 public class ListaPubli extends ArrayList<Publi>{
 

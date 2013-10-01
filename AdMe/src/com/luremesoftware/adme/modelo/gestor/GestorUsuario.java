@@ -1,9 +1,16 @@
-package com.luremesoftware.adme.modelo;
+package com.luremesoftware.adme.modelo.gestor;
 
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.lista.ListaGrupo;
+import com.luremesoftware.adme.modelo.lista.ListaMensaje;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaPubli;
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 public class GestorUsuario {
 	private UsuarioBbdd usuarioBbdd = null;

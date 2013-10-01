@@ -1,6 +1,15 @@
-package com.luremesoftware.adme.modelo;
+package com.luremesoftware.adme.modelo.gestor;
 
 import com.luremesoftware.adme.bbdd.PubliBbdd;
+import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
+import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.lista.ListaGrupo;
+import com.luremesoftware.adme.modelo.lista.ListaMensaje;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaPubli;
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 public class GestorPubli {
 	
