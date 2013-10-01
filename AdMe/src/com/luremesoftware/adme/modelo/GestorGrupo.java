@@ -1,21 +1,21 @@
 package com.luremesoftware.adme.modelo;
 
-import com.luremesoftware.adme.bbdd.Grupo_bbdd;
+import com.luremesoftware.adme.bbdd.GrupoBbdd;
 
 public class GestorGrupo {
 
-	private Grupo_bbdd grupo_bbdd = null;
+	private GrupoBbdd grupoBbdd = null;
 	
 	public GestorGrupo(){
-		this.grupo_bbdd = new Grupo_bbdd();
+		this.grupoBbdd = new GrupoBbdd();
 	}
 	
 	public ListaMensaje crearGrupo(Usuario usuario, Grupo grupo){
-		return this.grupo_bbdd.crearGrupo(usuario, grupo);
+		return this.grupoBbdd.crearGrupo(usuario, grupo);
 	}
 
 	public ListaGrupo getListaGrupo(Usuario usuario){
-		return this.grupo_bbdd.getListaGrupo(usuario);
+		return this.grupoBbdd.getListaGrupo(usuario);
 	}
 
 	public ListaPubli getListaPubli(Grupo grupo){

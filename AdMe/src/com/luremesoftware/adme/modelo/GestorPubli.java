@@ -1,13 +1,13 @@
 package com.luremesoftware.adme.modelo;
 
-import com.luremesoftware.adme.bbdd.Publi_bbdd;
+import com.luremesoftware.adme.bbdd.PubliBbdd;
 
 public class GestorPubli {
 	
-	private Publi_bbdd publi_bbdd = null;
+	private PubliBbdd publiBbdd = null;
 	
 	public GestorPubli(){
-		this.publi_bbdd = new Publi_bbdd();
+		this.publiBbdd = new PubliBbdd();
 	}
 	
 	/**
@@ -16,7 +16,7 @@ public class GestorPubli {
 	 * @return Retorna el identificador de la publicación
 	 */
 	public ListaMensaje crearPubli(Publi publi){
-		return publi_bbdd.crearPublicacion(publi);
+		return publiBbdd.crearPublicacion(publi);
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class GestorPubli {
 	 * @return Listado de Publicaciones
 	 */
 	public ListaPubli getListaPubli(Propietario propietario){
-		return publi_bbdd.getListaPubli(propietario);
+		return publiBbdd.getListaPubli(propietario);
 	}
 	
 	/**
@@ -58,6 +58,6 @@ public class GestorPubli {
 	
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		
-		return this.publi_bbdd.getListaPubli(listaMetadato);
+		return this.publiBbdd.getListaPubli(listaMetadato);
 	}
 }

@@ -18,12 +18,12 @@ import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 
-public class Publi_bbdd extends Bbdd{
+public class PubliBbdd extends Bbdd{
 
 	private DatastoreService datastore = null;
 	private Query query = null;
 	
-	public Publi_bbdd(){
+	public PubliBbdd(){
 		datastore = DatastoreServiceFactory.getDatastoreService();
 		query = new Query(NombreTabla.PUBLICACION.toString());
 	}
@@ -70,10 +70,10 @@ public class Publi_bbdd extends Bbdd{
 		
 		PreparedQuery pq = datastore.prepare(query);
 		
-		Usuario_bbdd usuario_bbdd = new Usuario_bbdd();
+		UsuarioBbdd usuarioBbdd = new UsuarioBbdd();
 
 		for (Entity result : pq.asIterable()) {	
-			Propietario propietario = usuario_bbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+			Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
 			
 			if(propietario!=null){
 				listaPubli.add(rellenaPubli(result, propietario));
