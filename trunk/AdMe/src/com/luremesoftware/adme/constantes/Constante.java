@@ -11,6 +11,26 @@ package com.luremesoftware.adme.constantes;
 public interface Constante {
 	/**
 	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
+	 * la clase Propietario
+	 */
+	public enum ConstantePropietario implements Constante{
+		CLASS("Class"),
+		USUARIO("Usuario"),
+		GRUPO("Grupo");
+		
+		private final String constante;
+		
+		private ConstantePropietario(String constante){
+			this.constante = constante;
+		}
+		
+		public String toString(){
+			return this.constante;
+		}
+	}
+	
+	/**
+	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
 	 * la clase Usuario
 	 */
 	public enum ConstanteUsuario implements Constante{

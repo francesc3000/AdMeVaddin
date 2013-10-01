@@ -7,8 +7,6 @@ import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 
@@ -35,26 +33,6 @@ public class UsuarioBbdd extends Bbdd{
 		listaMensaje.addAll(this.putDatastore(entUsuario));
 		
 		return listaMensaje;
-	}
-	
-	public Usuario getUsuario(String f_correo)
-	{
-		Usuario usuario = null;
-		query.setFilter(new FilterPredicate(ConstanteUsuario.CORREO.toString(),FilterOperator.EQUAL,f_correo));
-		
-		PreparedQuery pq = this.prepareDatastore(query);
-
-		for (Entity result : pq.asIterable()) {
-		   usuario = new Usuario(
-		   (String) result.getProperty(ConstanteUsuario.CORREO.toString()),
-		   //usuario.setContrasena((String) result.getProperty(Contrasena));
-		   " ",
-		   (String) result.getProperty(ConstanteUsuario.NOMBRE.toString()),
-		   (String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()),
-		   (String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
-		}
-		
-		return usuario;
 	}
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){

@@ -7,7 +7,6 @@ import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -27,38 +26,56 @@ public class GestorUsuario {
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
-	public ListaMensaje crearUsuario(Usuario usuario){
-		
-	  if(checkparamObl(usuario)){
-	    return this.usuarioBbdd.putUsuario(usuario);
-	  }else{
-		  ListaMensaje listaMensaje = new ListaMensaje();
-		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
-		  return listaMensaje;
-	  }
+	public ListaMensaje putUsuario(Usuario usuario){
+		Usuario Usuario = this.getUsuario(usuario);
+		if(Usuario!=null){
+			ListaMensaje listaMensaje = new ListaMensaje();
+			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe!"));
+			return listaMensaje;
+			}
+		else{
+			 if(checkparamObl(usuario)){
+			   return this.usuarioBbdd.putUsuario(usuario);
+			 }else{
+				 ListaMensaje listaMensaje = new ListaMensaje();
+				 listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
+				 return listaMensaje;
+			 }
+		}
 	}
 	
-	public ListaMensaje modUsuario(Usuario usuario){
-		return this.usuarioBbdd.putUsuario(usuario);
+	public Usuario getUsuario(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		Usuario ret_usuario = null;
+		
+		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo);
+		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
+		
+		if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
+			//TODO Crear log
+		}else{
+			ret_usuario = listaUsuario.get(0);
+		}
+		
+		return ret_usuario;
 	}
 	
 	public Usuario getUsuario(Usuario usuario){
 		
-		String correo = usuario.getCorreo();//.toLowerCase();
-		//String nombre = usuario.getNombre();//.toLowerCase();
-		//String apellido1 = usuario.getApellido1();//.toLowerCase();
-		//String apellido2 = usuario.getApellido2();//.toLowerCase();
-		
-		return this.usuarioBbdd.getUsuario(correo);
-	}
-	
-	public ListaUsuario getListaUsuario(Usuario usuario){
-		
 		ListaMetadato listaMetadato = new ListaMetadato();
-
+		Usuario ret_usuario = null;
+		
 		listaMetadato.setMetadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, usuario.getCorreo());
 		
-		return this.usuarioBbdd.getListaUsuario(listaMetadato);
+		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
+		
+		if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
+			//TODO Crear log
+		}else{
+			ret_usuario = listaUsuario.get(0);
+		}
+		
+		return ret_usuario;
 	}
 	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
@@ -66,19 +83,15 @@ public class GestorUsuario {
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}
 
-	public ListaGrupo getListaGrupo(Usuario usuario){
-		return usuario.getListaGrupo();
-	}
-
 	public ListaPubli getListaPubli(Usuario usuario){
-
+	
 	    if(usuario.getId() == null && checkparamObl(usuario)){
 		  usuario.setListaPubli(gestorPubli.getListaPubli(usuario));
 		}
-
+	
 		return usuario.getListaPubli();
 	}
-	
+
 	public ListaPubli getListaPubli(ListaUsuario listaUsuario){
 		
 		ListaPubli listaPubli = new ListaPubli();
