@@ -23,8 +23,8 @@ public class ControladorWeb {
 		this.gestorPubli = new GestorPubli();
 	}
 	
-	public boolean existeUsuario(String correo){
-		return gestorUsuario.existeUsuario(correo);
+	public Usuario acceder(String correo){
+		return gestorUsuario.acceder(correo);
 	}
 	
 	/**
