@@ -23,19 +23,13 @@ public class GestorUsuario {
 		this.gestorPubli = new GestorPubli();
 	}
 	
-	public boolean existeUsuario(String correo){
-		ListaMetadato listaMetadato = new ListaMetadato();
-		
-		//TODO Meter en MemCache
-		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
-		
-		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
-		
-		if(listaUsuario.isEmpty()){
-			return false;
-		}else{
-			return true;
+	public Usuario acceder(String correo){
+		Usuario usuario = null;
+		if(!this.existeUsuario(correo)){
+			usuario = new Usuario(correo);
 		}
+		
+		return usuario;
 	}
 	
 	/**
@@ -109,5 +103,20 @@ public class GestorUsuario {
 		}
 		
 		return result;
+	}
+	
+	private boolean existeUsuario(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		//TODO Meter en MemCache
+		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
+		
+		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
+		
+		if(listaUsuario.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }
