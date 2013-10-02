@@ -43,7 +43,8 @@
                 if (ok == 1) {
                    
                 Usuario usu = new Usuario(usuario);	
-                    
+                
+   
 				Publi publi = new Publi(usu,titulo,ciudad,mensaje);
                 	
                     ControladorWeb cw = new ControladorWeb();
@@ -90,7 +91,7 @@
 	</form>
 
 	<%
-		out.print(usuario);
+		//out.print(usuario);
 	%>
 
 
