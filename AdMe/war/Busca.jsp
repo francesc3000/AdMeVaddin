@@ -67,35 +67,30 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 
 
 	<%
- 
-           ListaPubli a = new ListaPubli();
-           int ok = 1;
-           if (!(request.getParameter("env") == null)) {
+		ListaPubli a = new ListaPubli();
+		int ok = 1;
+		if (!(request.getParameter("env") == null)) {
 
-           	
-           	ListaMetadato listaMetadato = new ListaMetadato();
-          
-           	
-           ControladorWeb cw = new ControladorWeb();
-           
-        	a = cw.getListaPubli(listaMetadato);
-          
-        	  Iterator<Publi> itr = a.iterator();
-        	 
-        	  
-        	  while(itr.hasNext()){
-        		  
-        		  
-        		 Publi p=itr.next();
-        		 
-        		 String d= p.getDescripcion();
-        		 
-        		  out.print(p+"\n");
-        	  }
-        	 
-           
-           }
-       %>
+			ListaMetadato listaMetadato = new ListaMetadato();
+
+			ControladorWeb cw = new ControladorWeb();
+
+			a = cw.getListaPubli(listaMetadato);
+
+			Iterator<Publi> itr = a.iterator();
+
+			out.print("1");
+			while (itr.hasNext()) {
+
+				Publi p = itr.next();
+
+				String d = p.getDescripcion();
+
+				out.println(d);
+				out.print("2");
+			}
+		}
+	%>
 
 
 
@@ -106,8 +101,8 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 		<h4>Busca:</h4>
 		<input type="text" name="txtNom"
 			value="<%if (!(request.getParameter("env") == null)) {
-                    out.print(request.getParameter("txtNom"));
-                }%>">
+				out.print(request.getParameter("txtNom"));
+			}%>">
 
 		<br> <select name="ciudad">
 			<option value="Barcelona">Barcelona
@@ -131,21 +126,7 @@ input:hover,textarea:hover,input:focus,textarea:focus {
 
 
 	<br>
-	<br>
 
-	<table border="2" WIDTH="80%">
-		<tr>
-
-			<td>HOLA</td>
-
-			<td>HOLA</td>
-
-			<td>HOLA</td>
-
-		</tr>
-
-
-	</table>
 
 </body>
 </html>
