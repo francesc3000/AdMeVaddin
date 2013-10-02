@@ -25,7 +25,13 @@ public class GestorPubli {
 	 * @return Retorna el identificador de la publicación
 	 */
 	public ListaMensaje putPubli(Publi publi){
-		return publiBbdd.putPublicacion(publi);
+		GestorUsuario gestorUsuario = new GestorUsuario();
+		ListaMensaje listaMensaje = null;
+		listaMensaje = gestorUsuario.existeUsuario(publi.getPropietarioId());
+		if(!listaMensaje.contieneErrores()){
+			listaMensaje = publiBbdd.putPublicacion(publi);
+		}
+		return listaMensaje;
 	}
 	
 	/**
