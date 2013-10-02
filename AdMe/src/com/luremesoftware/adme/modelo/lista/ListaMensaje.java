@@ -12,7 +12,11 @@ public class ListaMensaje extends ArrayList<Mensaje> {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public boolean existeError(){
+	/**
+	 * Busca en la lista si existen algun mensaje de error
+	 * @return
+	 */
+	public boolean contieneErrores(){
 		for(Mensaje mensaje: this){
 			if(mensaje.getTipo()==TipoError.ERROR){
 				return true;

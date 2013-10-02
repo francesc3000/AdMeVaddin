@@ -25,7 +25,10 @@ public class GestorUsuario {
 	
 	public Usuario acceder(String correo){
 		Usuario usuario = null;
-		if(!this.existeUsuario(correo)){
+		ListaMensaje listaMensaje = null;
+		
+		listaMensaje = this.existeUsuario(correo);
+		if(!listaMensaje.contieneErrores()){
 			usuario = new Usuario(correo);
 		}
 		
@@ -40,7 +43,9 @@ public class GestorUsuario {
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
-		if(!this.existeUsuario(usuario.getCorreo()))
+		listaMensaje = this.existeUsuario(usuario.getCorreo());
+		
+		if(!listaMensaje.contieneErrores())
 		{
 			 if(checkparamObl(usuario)){
 			   listaMensaje = this.usuarioBbdd.putUsuario(usuario);
@@ -105,18 +110,19 @@ public class GestorUsuario {
 		return result;
 	}
 	
-	private boolean existeUsuario(String correo){
+	public ListaMensaje existeUsuario(String correo){
 		ListaMetadato listaMetadato = new ListaMetadato();
+		ListaMensaje listaMensaje = new ListaMensaje();
 		
 		//TODO Meter en MemCache
 		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
 		
 		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
 		
-		if(listaUsuario.isEmpty()){
-			return false;
-		}else{
-			return true;
+		if(!listaUsuario.isEmpty()){
+			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe"));
 		}
+		
+		return listaMensaje;
 	}
 }
