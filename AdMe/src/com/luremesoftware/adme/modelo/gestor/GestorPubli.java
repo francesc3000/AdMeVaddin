@@ -26,10 +26,10 @@ public class GestorPubli {
 	 */
 	public ListaMensaje putPubli(Publi publi){
 		GestorUsuario gestorUsuario = new GestorUsuario();
-		ListaMensaje listaMensaje = null;
-		listaMensaje = gestorUsuario.existeUsuario(publi.getPropietarioId());
+		ListaMensaje listaMensaje = new ListaMensaje();
+		listaMensaje.addAll(gestorUsuario.existeUsuario(publi.getPropietarioId()));
 		if(!listaMensaje.contieneErrores()){
-			listaMensaje = publiBbdd.putPublicacion(publi);
+			listaMensaje.addAll(publiBbdd.putPublicacion(publi));
 		}
 		return listaMensaje;
 	}

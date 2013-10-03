@@ -25,9 +25,9 @@ public class GestorUsuario {
 	
 	public Usuario acceder(String correo){
 		Usuario usuario = null;
-		ListaMensaje listaMensaje = null;
+		ListaMensaje listaMensaje = new ListaMensaje();
 		
-		listaMensaje = this.existeUsuario(correo);
+		listaMensaje.addAll(this.existeUsuario(correo));
 		if(!listaMensaje.contieneErrores()){
 			usuario = new Usuario(correo);
 		}
@@ -43,12 +43,12 @@ public class GestorUsuario {
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
-		listaMensaje = this.existeUsuario(usuario.getCorreo());
+		listaMensaje.addAll(this.existeUsuario(usuario.getCorreo()));
 		
 		if(!listaMensaje.contieneErrores())
 		{
 			 if(checkparamObl(usuario)){
-			   listaMensaje = this.usuarioBbdd.putUsuario(usuario);
+			   listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
 			 }else{
 				 listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 			 }
