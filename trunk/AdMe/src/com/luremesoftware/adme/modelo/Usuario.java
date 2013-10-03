@@ -19,7 +19,7 @@ public class Usuario extends Propietario{
 	
 	private ListaGrupo listaGrupo = null;
 	
-	public Usuario(String correo) {
+	public Usuario(String correo){
 		super(correo);
 		this.setCorreo(correo);
 		//Se buscan los grupos en los que participa
