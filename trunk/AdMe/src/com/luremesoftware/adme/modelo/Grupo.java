@@ -6,7 +6,6 @@ public class Grupo extends Propietario{
 
 	private String nombre = null;
 	private ListaUsuario listaUsuario = null;
-	private boolean existebbdd = false; //Indica si el grupo ya existe en BBDD
 	
 	public Grupo(Usuario usuario, String nombre){
 		super(nombre);
@@ -33,10 +32,6 @@ public class Grupo extends Propietario{
 	
 	public ListaUsuario getListaUsuario(){
 		return listaUsuario;
-	}
-	
-	public boolean existebbdd(){
-		return this.existebbdd;
 	}
 	
 	public String toString(){

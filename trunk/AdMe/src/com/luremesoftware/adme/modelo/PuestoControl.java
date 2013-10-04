@@ -10,8 +10,17 @@ public class PuestoControl {
 	
 	public PuestoControl(Usuario usuario){
 		this.usuario = usuario;
-		this.listaPubli = usuario.getListaPubli();
-		this.listaGrupo = usuario.getListaGrupo();
+		this.listaGrupo = new ListaGrupo();
+		this.listaGrupo.addAll(usuario.getListaGrupo());
+		
+		//Se recuperan las publicaciones del Usuario 
+		//y de los equipos en los que participa
+		this.listaPubli = new ListaPubli();
+		this.listaPubli.addAll(usuario.getListaPubli());
+		for(Grupo grupo:this.listaGrupo){
+			this.listaPubli.addAll(grupo.getListaPubli());
+		}
+		
 	}
 	
 	public ListaPubli getListaPubli(){

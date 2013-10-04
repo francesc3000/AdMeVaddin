@@ -44,11 +44,11 @@ public class UsuarioBbdd extends Bbdd{
 
 		for (Entity result : pq.asIterable()) {			
 		  Usuario usuario = new Usuario(
-		  (String) result.getProperty(ConstanteUsuario.CORREO.toString()),
-		  (String) result.getProperty(ConstanteUsuario.CONTRASENA.toString()),
-		  (String) result.getProperty(ConstanteUsuario.NOMBRE.toString()),
-		  (String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()),
-		  (String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
+		  (String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+		  usuario.setContrasena((String) result.getProperty(ConstanteUsuario.CONTRASENA.toString()));
+		  usuario.setNombre((String) result.getProperty(ConstanteUsuario.NOMBRE.toString()));
+		  usuario.setApellido1((String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()));
+		  usuario.setApellido2((String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
 		  
 		  listaUsuario.add(usuario);
 		}

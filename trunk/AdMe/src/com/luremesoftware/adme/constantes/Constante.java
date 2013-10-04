@@ -75,6 +75,7 @@ public interface Constante {
 	 */
 	public enum ConstantePubli implements Constante{
 		PROPIETARIO("Propietario"),
+		CLASE("Clase"),
 		TITULO("Titulo"),
 		CIUDAD("Ciudad"),
 		DESCRIPCION("Descripcion");

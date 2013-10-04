@@ -18,6 +18,10 @@ public class GestorGrupo {
 	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
 		return this.grupoBbdd.putGrupo(usuario, grupo);
 	}
+	
+	public Grupo getGrupo(String nombreGrupo){
+		return this.grupoBbdd.getGrupo(nombreGrupo);
+	}
 
 	public ListaGrupo getListaGrupo(Usuario usuario){
 		return this.grupoBbdd.getListaGrupo(usuario);

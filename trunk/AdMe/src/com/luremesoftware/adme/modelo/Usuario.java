@@ -19,6 +19,13 @@ public class Usuario extends Propietario{
 	
 	private ListaGrupo listaGrupo = null;
 	
+	/**
+	 * Este Constructor crear un usuario a partir de su correo electronico
+	 * recupera los grupos donde participa y todas sus publicaciones pero ´
+	 * no rellena las caracteriticas del usuario
+	 * 
+	 * @param correo
+	 */
 	public Usuario(String correo){
 		super(correo);
 		this.setCorreo(correo);
