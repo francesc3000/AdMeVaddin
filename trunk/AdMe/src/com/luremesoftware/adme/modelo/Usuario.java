@@ -1,7 +1,9 @@
 package com.luremesoftware.adme.modelo;
 
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
 /**
  * Clase Usuario
@@ -29,6 +31,8 @@ public class Usuario extends Propietario{
 	public Usuario(String correo){
 		super(correo);
 		this.setCorreo(correo);
+		//Se recogen los datos del Usuario de BBDD
+		this.getDatosBbdd(correo);
 		//Se buscan los grupos en los que participa
 		this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 	}
@@ -84,6 +88,11 @@ public class Usuario extends Propietario{
 		return this.listaGrupo;
 	}
 	
+	public ListaGrupo getListaGrupoDeBbdd(){
+		this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+		return this.listaGrupo;
+	}
+	
 	public void setCorreo(String correo){
 		this.correo = correo;
 	}
@@ -105,8 +114,21 @@ public class Usuario extends Propietario{
 	}
 	
 	public String toString(){
-		
 		return getCorreo() + " " + getNombre() + " " + getApellido1() + " " + getApellido2();
 
+	}
+	
+	private boolean getDatosBbdd(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		listaMetadato = new GestorUsuario().getDatosUsuario(correo);
+		
+		for(Metadato metadato:listaMetadato){
+			switch(metadato.getNombreMetadato().toString()){
+			case NombreTabla
+			}
+		}
+		
+		return true;
 	}
 }

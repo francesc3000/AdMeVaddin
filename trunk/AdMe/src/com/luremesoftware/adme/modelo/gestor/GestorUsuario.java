@@ -73,6 +73,12 @@ public class GestorUsuario {
 		return ret_usuario;
 	}
 	
+	public ListaMetadato getDatosUsuario(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		return listaMetadato;
+	}
+	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);

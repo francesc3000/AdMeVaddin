@@ -9,6 +9,7 @@ import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -54,7 +55,18 @@ public class GrupoBbdd extends Bbdd{
 	}
 	
 	public Grupo getGrupo(String nombreGrupo){
+		ListaUsuario listaUsuario = new ListaUsuario();
 		
+		//Se buscan los usuarios dentro del Grupo
+		query.setFilter(new FilterPredicate(NombreTabla.GRUPO.toString(),FilterOperator.EQUAL,nombreGrupo));
+		
+		PreparedQuery pq = this.prepareDatastore(query);
+		
+		for (Entity result : pq.asIterable()) {
+			listaUsuario.add(new Usuario((String) result.getProperty(NombreTabla.USUARIO.toString())));
+		}
+		
+	    return new Grupo(listaUsuario,nombreGrupo);
 	}
 	
 	public ListaGrupo getListaGrupo(Usuario usuario){

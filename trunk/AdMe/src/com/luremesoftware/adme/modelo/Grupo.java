@@ -14,6 +14,13 @@ public class Grupo extends Propietario{
 		this.addUsuario(usuario);
 	}
 	
+	public Grupo(ListaUsuario listausuario, String nombre){
+		super(nombre);
+		this.nombre = nombre;
+		this.listaUsuario = new ListaUsuario();
+		this.addListaUsuario(listausuario);
+	}
+	
 	public boolean addUsuario(Usuario usuario){
 		return this.listaUsuario.add(usuario);
 	}
