@@ -1,8 +1,5 @@
 package com.luremesoftware.adme.modelo;
 
-import com.luremesoftware.adme.constantes.Constante;
-import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
-import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
@@ -16,7 +13,7 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
  *
 */
 public class Usuario extends Propietario{
-	private static final String NOMBRE = ConstanteGrupo.NOMBRE.toString();
+	
 	private String correo;
 	private String contrasena;
 	private String nombre;
@@ -28,8 +25,8 @@ public class Usuario extends Propietario{
 	
 	/**
 	 * Este Constructor crear un usuario a partir de su correo electronico
-	 * recupera los grupos donde participa y todas sus publicaciones pero ´
-	 * no rellena las caracteriticas del usuario
+	 * recupera todos sus datos personales, los grupos donde participa y 
+	 * todas sus publicaciones
 	 * 
 	 * @param correo
 	 */
@@ -39,11 +36,12 @@ public class Usuario extends Propietario{
 		//Se recogen los datos del Usuario de BBDD
 		this.getDatosBbdd(correo);
 		//Se buscan los grupos en los que participa
-		this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+		this.getListaGrupoDeBbdd();
 	}
 	
 	/**
-	* Completa los datos personales del usuario
+	* Completa los datos personales del usuario, no realiza busquedas
+	* en BBDD
     *
     * @param correo El correo del usuario
     * @param contrasena La contraseña elegida por el usuario
@@ -93,8 +91,18 @@ public class Usuario extends Propietario{
 		return this.listaGrupo;
 	}
 	
+	/**
+	 * Si el listado de grupos está vacío recupera los grupos 
+	 * donde participa el usuario en BBDD. Si el listado de grupos
+	 * ya ha sido cargado se comporta igual que el método getListaGrupo()
+	 * 
+	 * @return
+	 */
 	public ListaGrupo getListaGrupoDeBbdd(){
-		this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+		if(this.listaGrupo == null){
+			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+		}
+		
 		return this.listaGrupo;
 	}
 	
@@ -129,10 +137,25 @@ public class Usuario extends Propietario{
 		listaMetadato = new GestorUsuario().getDatosUsuario(correo);
 		
 		for(Metadato metadato:listaMetadato){
-			switch(metadato.getNombreMetadato().toString()){
-			case NOMBRE:
-				grupo
-				break;
+			//TODO Hacer que funciona enum en switch case
+			String nombreMetadato = metadato.getNombreMetadato().toString();
+			if(nombreMetadato == ConstanteUsuario.CORREO.toString()){
+				if(correo!=metadato.getValor().toString()){
+					return false;
+				}
+				this.setCorreo(metadato.getValor().toString());
+			}
+			else if(nombreMetadato == ConstanteUsuario.CONTRASENA.toString()){
+				this.setContrasena(metadato.getValor().toString());
+			}
+			else if(nombreMetadato == ConstanteUsuario.NOMBRE.toString()){
+				this.setNombre(metadato.getValor().toString());
+			}
+			else if(nombreMetadato == ConstanteUsuario.APELLIDO1.toString()){
+				this.setApellido1(metadato.getValor().toString());
+			}
+			else if(nombreMetadato == ConstanteUsuario.APELLIDO2.toString()){
+				this.setApellido2(metadato.getValor().toString());
 			}
 		}
 		

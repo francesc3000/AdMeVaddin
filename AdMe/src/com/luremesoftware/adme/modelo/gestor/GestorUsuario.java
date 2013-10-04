@@ -64,10 +64,12 @@ public class GestorUsuario {
 		listaMetadato.add( new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
 		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
 		
-		if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
-			throw new MultipleUsuario("Usuario duplicado en base de datos");
-		}else{
-			ret_usuario = listaUsuario.get(0);
+		if(!listaUsuario.isEmpty()){
+			if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
+				throw new MultipleUsuario("Usuario duplicado en base de datos");
+			}else{
+				ret_usuario = listaUsuario.get(0);
+			}
 		}
 		
 		return ret_usuario;

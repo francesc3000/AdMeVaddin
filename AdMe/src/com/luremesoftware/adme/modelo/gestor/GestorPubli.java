@@ -72,7 +72,6 @@ public class GestorPubli {
 	}
 	
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
-		
 		return this.publiBbdd.getListaPubli(listaMetadato);
 	}
 }
