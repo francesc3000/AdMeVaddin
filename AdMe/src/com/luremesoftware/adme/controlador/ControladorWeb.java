@@ -1,16 +1,12 @@
 package com.luremesoftware.adme.controlador;
 
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Grupo;
-import com.luremesoftware.adme.modelo.Metadato;
+import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
-import com.luremesoftware.adme.modelo.lista.ListaClases;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -37,14 +33,14 @@ public class ControladorWeb {
 		return gestorUsuario.acceder(correo);
 	}
 	
-	public ListaClases puestoControl(Usuario usuario){
-		ListaClases listaClases = new ListaClases();
-		ListaMetadato listaMetadato = new ListaMetadato();
-		listaMetadato.add(new Metadato(NombreTabla.PUBLICACION,ConstanteUsuario.CORREO,FilterOperator.EQUAL,usuario.getCorreo()));
-		
-		listaClases.setListaPubli(this.getListaPubli(listaMetadato));
-		
-		return listaClases;
+	/**
+	 * Se generan todas las clases asociadas al usuario y necesarias para el
+	 * puesto de control
+	 * @param usuario Usuario que se quiere recuperar su puesto de control
+	 * @return Puesto de control
+	 */
+	public PuestoControl puestoControl(Usuario usuario){
+		return new PuestoControl(usuario);
 	}
 	
 	/**
