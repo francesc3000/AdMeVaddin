@@ -12,6 +12,7 @@ import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
+import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
@@ -29,8 +30,13 @@ public class PubliBbdd extends Bbdd{
 	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entPublicacion = new Entity(NombreTabla.PUBLICACION.toString());
+		
+		String clase = publi.getPropietario().getClass().toString();
+		int ultimoPunto = clase.lastIndexOf(".");
+		clase = clase.substring(ultimoPunto + 1);
 
 		entPublicacion.setProperty(ConstantePubli.PROPIETARIO.toString(), publi.getPropietarioId());
+		entPublicacion.setProperty(ConstantePubli.CLASE.toString(), clase);
 		entPublicacion.setProperty(ConstantePubli.TITULO.toString(), publi.getTitulo());
 		entPublicacion.setProperty(ConstantePubli.CIUDAD.toString(), publi.getCiudad());
 		entPublicacion.setProperty(ConstantePubli.DESCRIPCION.toString(), publi.getDescripcion());
@@ -62,27 +68,24 @@ public class PubliBbdd extends Bbdd{
 
 		for (Entity result : pq.asIterable()) {
 			//TODO Diferenciar Usuario de Grupo
-			/*String class_string = (String) result.getProperty(ConstantePropietario.CLASS.toString());
+			String class_string = (String) result.getProperty(ConstantePropietario.CLASS.toString());
+			Propietario propietario = null;
+			
 			switch(class_string){
 			case "Usuario":
-				Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
+				GestorUsuario gestorUsuario = new GestorUsuario();
+				try{
+					propietario = gestorUsuario.getUsuario((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
+				}catch(MultipleUsuario mu){
+					//Nothing to do
+				}
 				break;
 			case "Grupo":
+				GestorGrupo gestorGrupo = new GestorGrupo();
+				propietario = gestorGrupo.getGrupo((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
 				break;
-				default:
-					Propietario propietario = usuarioBbdd.getUsuario((String) result.getProperty(ConstanteUsuario.CORREO.toString()));
-					break;
-			}*/
-			
-			Propietario propietario = null;
-			GestorUsuario gestorUsuario = new GestorUsuario();
-			try{
-				propietario = gestorUsuario.getUsuario((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
-			}catch(MultipleUsuario mu){
-				//Nothing to do
 			}
-			
-			
+
 			if(propietario!=null){
 				listaPubli.add(rellenaPubli(result, propietario));
 			}

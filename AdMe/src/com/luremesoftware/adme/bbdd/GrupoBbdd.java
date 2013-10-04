@@ -8,6 +8,7 @@ import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
+import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -35,17 +36,25 @@ public class GrupoBbdd extends Bbdd{
 		entUsuarioGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 		
 		//TODO Ejecutar en transacción o mirar de insertar como ancestros
-		if(!grupo.existebbdd()){//Si el grupo no exsite en bbdd se guarda
-		    //TODO Ir incluyendo propiedades del grupo
-			Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
+		//TODO Ir incluyendo propiedades del grupo
+		Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
 			
-			entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
+		entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 			
-			listaMensaje.addAll(this.putDatastore(entGrupo));
-		}
+		listaMensaje.addAll(this.putDatastore(entGrupo));
 		listaMensaje.addAll(this.putDatastore(entUsuarioGrupo));
 		
 		return listaMensaje;
+	}
+	
+	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
+		//TODO Hacer
+		
+		return new ListaGrupo();
+	}
+	
+	public Grupo getGrupo(String nombreGrupo){
+		
 	}
 	
 	public ListaGrupo getListaGrupo(Usuario usuario){

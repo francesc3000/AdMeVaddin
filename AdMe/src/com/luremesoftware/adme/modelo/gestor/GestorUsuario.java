@@ -99,17 +99,6 @@ public class GestorUsuario {
 		return listaPubli;
 	}
 	
-	private boolean checkparamObl(Usuario usuario){
-		boolean result = false;
-		if( usuario.getNombre()!=null
-		 && usuario.getCorreo()!=null
-		 && usuario.getApellido1()!=null){
-			result = true;
-		}
-		
-		return result;
-	}
-	
 	public ListaMensaje existeUsuario(String correo){
 		ListaMetadato listaMetadato = new ListaMetadato();
 		ListaMensaje listaMensaje = new ListaMensaje();
@@ -124,5 +113,16 @@ public class GestorUsuario {
 		}
 		
 		return listaMensaje;
+	}
+	
+	private boolean checkparamObl(Usuario usuario){
+		boolean result = false;
+		if( usuario.getNombre()!=null
+		 && usuario.getCorreo()!=null
+		 && usuario.getApellido1()!=null){
+			result = true;
+		}
+		
+		return result;
 	}
 }
