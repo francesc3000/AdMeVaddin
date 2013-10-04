@@ -1,5 +1,9 @@
 package com.luremesoftware.adme.modelo;
 
+import com.luremesoftware.adme.constantes.Constante;
+import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
+import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
@@ -12,6 +16,7 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
  *
 */
 public class Usuario extends Propietario{
+	private static final String NOMBRE = ConstanteGrupo.NOMBRE.toString();
 	private String correo;
 	private String contrasena;
 	private String nombre;
@@ -125,7 +130,9 @@ public class Usuario extends Propietario{
 		
 		for(Metadato metadato:listaMetadato){
 			switch(metadato.getNombreMetadato().toString()){
-			case NombreTabla
+			case NOMBRE:
+				grupo
+				break;
 			}
 		}
 		
