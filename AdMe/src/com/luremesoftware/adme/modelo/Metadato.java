@@ -30,5 +30,21 @@ public class Metadato {
 	public FilterPredicate getlikeFilterPredicate(){
 		return this.filterPredicate;
 	}
+	
+	public NombreTabla getNombreTabla(){
+		return this.nombreTabla;
+	}
+	
+	public Constante getNombreMetadato(){
+		return this.nombreMetadato;
+	}
+	
+	public FilterOperator getOperador(){
+		return this.operador;
+	}
+	
+	public Object getValor(){
+		return this.valor;
+	}
 
 }
