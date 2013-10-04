@@ -41,6 +41,11 @@ public class Grupo extends Propietario{
 		return listaUsuario;
 	}
 	
+	public boolean setNombre(String nombre){
+		this.nombre = nombre;
+		return true;
+	}
+	
 	public String toString(){
 		return "Nombre del grupo: " + this.nombre;
 	}
