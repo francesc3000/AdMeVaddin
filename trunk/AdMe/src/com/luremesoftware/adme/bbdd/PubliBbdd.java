@@ -7,7 +7,6 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante.ConstantePropietario;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
-import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
@@ -16,6 +15,7 @@ import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaPropietario;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 
 public class PubliBbdd extends Bbdd{
@@ -65,25 +65,36 @@ public class PubliBbdd extends Bbdd{
 		this.buildQuery(this.query, listaMetadato);
 		
 		PreparedQuery pq = this.prepareDatastore(query);
-
+		
 		for (Entity result : pq.asIterable()) {
-			//TODO Diferenciar Usuario de Grupo
-			String class_string = (String) result.getProperty(ConstantePropietario.CLASS.toString());
+			String class_string = (String) result.getProperty(ConstantePropietario.CLASE.toString());
 			Propietario propietario = null;
+			ListaPropietario listaPropietario = new ListaPropietario();
+			String id = null;
 			
-			switch(class_string){
-			case "Usuario":
-				GestorUsuario gestorUsuario = new GestorUsuario();
-				try{
-					propietario = gestorUsuario.getUsuario((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
-				}catch(MultipleUsuario mu){
-					//Nothing to do
+			//TODO Hacer que enum funcione en switch
+			if(class_string.compareTo(ConstantePropietario.USUARIO.toString()) == 0){
+				id = (String) result.getProperty(ConstantePubli.PROPIETARIO.toString());
+				
+				propietario = listaPropietario.getPropietarioById(id);
+				if(propietario == null){
+					//Se busca en BBDD
+					GestorUsuario gestorUsuario = new GestorUsuario();
+					try{
+						propietario = gestorUsuario.getUsuario(id);
+					}catch(MultipleUsuario mu){
+						//Nothing to do
+					}
 				}
-				break;
-			case "Grupo":
+			}
+			else if(class_string == ConstantePropietario.GRUPO.toString()){
 				GestorGrupo gestorGrupo = new GestorGrupo();
-				propietario = gestorGrupo.getGrupo((String) result.getProperty(ConstantePubli.PROPIETARIO.toString()));
-				break;
+				id = (String) result.getProperty(ConstantePubli.PROPIETARIO.toString());
+				propietario = listaPropietario.getPropietarioById(id);
+				if(propietario == null){
+					//Se busca en BBDD
+					propietario = gestorGrupo.getGrupo(id);
+				}
 			}
 
 			if(propietario!=null){

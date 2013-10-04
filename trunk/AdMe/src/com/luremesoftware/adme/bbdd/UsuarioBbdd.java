@@ -50,6 +50,9 @@ public class UsuarioBbdd extends Bbdd{
 		  usuario.setApellido1((String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()));
 		  usuario.setApellido2((String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
 		  
+		  //TODO Forzamos la búsqueda de publicaciones del Usuario
+		  //Forzamos la búsqueda de grupos del Usuario
+		  usuario.getListaGrupoDeBbdd();
 		  listaUsuario.add(usuario);
 		}
 		

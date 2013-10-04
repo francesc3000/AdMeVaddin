@@ -13,8 +13,8 @@ public interface Constante {
 	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
 	 * la clase Propietario
 	 */
-	public static enum ConstantePropietario implements Constante{
-		CLASS("Class"),
+	public enum ConstantePropietario implements Constante{
+		CLASE("Clase"),
 		USUARIO("Usuario"),
 		GRUPO("Grupo");
 		
@@ -33,7 +33,8 @@ public interface Constante {
 	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
 	 * la clase Usuario
 	 */
-	public static enum ConstanteUsuario implements Constante{
+	public enum ConstanteUsuario implements Constante{
+		
 		CORREO("Correo"),
 		CONTRASENA("Contrasena"),
 		NOMBRE("Nombre"),
@@ -49,13 +50,15 @@ public interface Constante {
 		public String toString(){
 			return this.constante;
 		}
+		
+		
 	}
 	
 	/**
 	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
 	 * la clase Grupo
 	 */
-	public static enum ConstanteGrupo implements Constante{
+	public static enum ConstanteGrupo  implements Constante{
 		NOMBRE("Nombre");
 		
 		private final String constante;
