@@ -3,8 +3,10 @@ package com.luremesoftware.adme.bbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
@@ -36,6 +38,18 @@ public class UsuarioBbdd extends Bbdd{
 	}
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
+		return this.getListaUsuario(listaMetadato, null, null);
+	}
+	
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaGrupo listaGrupo){
+		return this.getListaUsuario(listaMetadato, listaGrupo, null);
+	}
+
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaPubli listaPubli){
+		return this.getListaUsuario(listaMetadato, null, listaPubli);
+	}
+	
+	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaGrupo listaGrupo, ListaPubli listaPubli){
 		ListaUsuario listaUsuario = new ListaUsuario();
 		
 		this.buildQuery(this.query, listaMetadato);
@@ -50,13 +64,22 @@ public class UsuarioBbdd extends Bbdd{
 		  usuario.setApellido1((String) result.getProperty(ConstanteUsuario.APELLIDO1.toString()));
 		  usuario.setApellido2((String) result.getProperty(ConstanteUsuario.APELLIDO2.toString()));
 		  
-		  //TODO Forzamos la búsqueda de publicaciones del Usuario
 		  //Forzamos la búsqueda de grupos del Usuario
-		  usuario.getListaGrupoDeBbdd();
+		  if(listaGrupo == null){
+			  usuario.getListaGrupoDeBbdd();
+		  }else{
+			  usuario.setListaGrupo(listaGrupo);
+		  }
+
+		  //Forzamos la búsqueda de publicaciones del Usuario
+		  if(listaPubli == null){
+			  usuario.getListaPubliDeBbdd();
+		  }else{
+			  usuario.setListaPubli(listaPubli);
+		  }
 		  listaUsuario.add(usuario);
 		}
 		
 		return listaUsuario;
-		
 	}
 }

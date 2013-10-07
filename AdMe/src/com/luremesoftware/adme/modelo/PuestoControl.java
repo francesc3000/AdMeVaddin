@@ -20,7 +20,6 @@ public class PuestoControl {
 		for(Grupo grupo:this.listaGrupo){
 			this.listaPubli.addAll(grupo.getListaPubli());
 		}
-		
 	}
 	
 	public ListaPubli getListaPubli(){

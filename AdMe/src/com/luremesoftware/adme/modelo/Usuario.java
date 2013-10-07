@@ -39,6 +39,14 @@ public class Usuario extends Propietario{
 		this.getListaGrupoDeBbdd();
 	}
 	
+	public Usuario(String correo, ListaGrupo listaGrupo){
+		super(correo);
+		this.setCorreo(correo);
+		//Se recogen los datos del Usuario de BBDD
+		this.getDatosBbdd(correo);
+		this.setListaGrupo(listaGrupo);
+	}
+	
 	/**
 	* Completa los datos personales del usuario, no realiza busquedas
 	* en BBDD
@@ -106,24 +114,33 @@ public class Usuario extends Propietario{
 		return this.listaGrupo;
 	}
 	
-	public void setCorreo(String correo){
+	public boolean setCorreo(String correo){
 		this.correo = correo;
+		return true;
 	}
 	
-	public void setContrasena(String contrasena){
+	public boolean setContrasena(String contrasena){
 		this.contrasena = contrasena;
+		return true;
 	}
 	
-	public void setNombre(String nombre){
+	public boolean setNombre(String nombre){
 		this.nombre = nombre;
+		return true;
 	}
-	
-	public void setApellido1(String apellido1){
+	public boolean setApellido1(String apellido1){
 		this.apellido1 = apellido1;
+		return true;
 	}
 	
-	public void setApellido2(String apellido2){
+	public boolean setApellido2(String apellido2){
 		this.apellido2 = apellido2;
+		return true;
+	}
+	
+	public boolean setListaGrupo(ListaGrupo listaGrupo){
+		this.listaGrupo = listaGrupo;
+		return true;
 	}
 	
 	public String toString(){

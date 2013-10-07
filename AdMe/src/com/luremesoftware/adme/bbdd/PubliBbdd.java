@@ -65,11 +65,11 @@ public class PubliBbdd extends Bbdd{
 		this.buildQuery(this.query, listaMetadato);
 		
 		PreparedQuery pq = this.prepareDatastore(query);
+		ListaPropietario listaPropietario = new ListaPropietario();
 		
 		for (Entity result : pq.asIterable()) {
 			String class_string = (String) result.getProperty(ConstantePropietario.CLASE.toString());
 			Propietario propietario = null;
-			ListaPropietario listaPropietario = new ListaPropietario();
 			String id = null;
 			
 			//TODO Hacer que enum funcione en switch
@@ -85,6 +85,7 @@ public class PubliBbdd extends Bbdd{
 					}catch(MultipleUsuario mu){
 						//Nothing to do
 					}
+					listaPropietario.add(propietario);
 				}
 			}
 			else if(class_string == ConstantePropietario.GRUPO.toString()){
@@ -94,6 +95,7 @@ public class PubliBbdd extends Bbdd{
 				if(propietario == null){
 					//Se busca en BBDD
 					propietario = gestorGrupo.getGrupo(id);
+					listaPropietario.add(propietario);
 				}
 			}
 

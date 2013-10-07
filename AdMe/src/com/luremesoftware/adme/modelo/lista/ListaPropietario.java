@@ -22,7 +22,7 @@ public class ListaPropietario extends ArrayList<Propietario>{
 	
 	public Propietario getPropietarioById(String id){
 		for(Propietario propietario:this){
-			if(id == propietario.getId()){
+			if(id.compareTo(propietario.getId()) == 0){
 				return propietario;
 			}
 		}

@@ -3,8 +3,10 @@ package com.luremesoftware.adme.bbdd;
 import java.util.ArrayList;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
+import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -33,25 +35,18 @@ public class GrupoBbdd extends Bbdd{
 		ListaMensaje listaMensaje = new ListaMensaje();
 		Entity entUsuarioGrupo = new Entity(NombreTabla.USUARIOGRUPO.toString());
 
-		entUsuarioGrupo.setProperty(NombreTabla.USUARIO.toString(), usuario.getId());
-		entUsuarioGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
+		entUsuarioGrupo.setProperty(ConstanteUsuario.ID.toString(), usuario.getId());
+		entUsuarioGrupo.setProperty(ConstanteGrupo.ID.toString(), grupo.getNombre());
+		
+		Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
+		//TODO Ir incluyendo propiedades del grupo
+		entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 		
 		//TODO Ejecutar en transacción o mirar de insertar como ancestros
-		//TODO Ir incluyendo propiedades del grupo
-		Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
-			
-		entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
-			
 		listaMensaje.addAll(this.putDatastore(entGrupo));
 		listaMensaje.addAll(this.putDatastore(entUsuarioGrupo));
 		
 		return listaMensaje;
-	}
-	
-	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
-		//TODO Hacer
-		
-		return new ListaGrupo();
 	}
 	
 	public Grupo getGrupo(String nombreGrupo){
@@ -70,30 +65,62 @@ public class GrupoBbdd extends Bbdd{
 	}
 	
 	public ListaGrupo getListaGrupo(Usuario usuario){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		listaMetadato.add(new Metadato(NombreTabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
+		return this.getListaGrupo(listaMetadato);
+	}
+
+	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
 		ListaGrupo listaGrupo = new ListaGrupo();
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
+		Usuario usuarioGrupo = null;
+		ListaUsuario listaUsuario = new ListaUsuario();
 		
-		query_ug.setFilter(new FilterPredicate(NombreTabla.USUARIO.toString(),FilterOperator.EQUAL,usuario.getId()));
+		/*
+		 *Se buscan y se recogen todos los grupos en los que participa
+		 */
 		
+		this.buildQuery(this.query_ug, listaMetadato, NombreTabla.USUARIOGRUPO);
+
 		PreparedQuery pq_ug = this.prepareDatastore(query_ug);
 
-		for (Entity result_ug : pq_ug.asIterable()) {
+		/*
+		 * Se recogen los identificadores de los grupos y se introducen
+		 *en el filtro
+		*/
+		for(Entity result_ug : pq_ug.asIterable()){
 			listaFiltros.add(
-					new FilterPredicate(ConstanteGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(ConstanteGrupo.NOMBRE.toString())));
-			listaFiltros.add(
-					new FilterPredicate(ConstanteGrupo.NOMBRE.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(ConstanteGrupo.NOMBRE.toString())));
+					new FilterPredicate(ConstanteGrupo.ID.toString(),FilterOperator.EQUAL,(String) result_ug.getProperty(ConstanteGrupo.NOMBRE.toString())));
 		}
-		
-		if(!listaFiltros.isEmpty()){
+		switch(listaFiltros.size()){
+		case 1:
+			query.setFilter(listaFiltros.get(0));
+			break;
+			
+		case 2:
 			Filter filtroCompuesto = CompositeFilterOperator.and(listaFiltros);
 			query.setFilter(filtroCompuesto);
-			
-			PreparedQuery pq = this.prepareDatastore(query);
-			for (Entity result : pq.asIterable()) {
-			   Grupo grupo = new Grupo(usuario,
-			   (String) result.getProperty(ConstanteGrupo.NOMBRE.toString()));
-			   listaGrupo.add(grupo);
+			break;
+		}
+		/*if(usuario==null){
+			String id = (String) result_ug.getProperty(ConstanteUsuario.ID.toString());
+			usuarioGrupo = listaUsuario.getUsuarioById(id);
+			if(usuarioGrupo == null){
+				usuarioGrupo = new Usuario(id, );
+				listaUsuario.add(usuarioGrupo);
 			}
+		}*/
+		PreparedQuery pq = this.prepareDatastore(query);
+		for(Entity result : pq.asIterable()) {
+			if(usuario==null){
+				for(Entity result_ug: pq_ug.asIterable()){
+					
+				}
+			}else{
+				Grupo grupo = new Grupo(usuario_grupo,
+			    (String) result.getProperty(ConstanteGrupo.NOMBRE.toString()));
+			}
+		    listaGrupo.add(grupo);
 		}
 		return listaGrupo; 
 	}
