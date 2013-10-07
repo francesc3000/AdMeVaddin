@@ -67,10 +67,14 @@ public class GrupoBbdd extends Bbdd{
 	public ListaGrupo getListaGrupo(Usuario usuario){
 		ListaMetadato listaMetadato = new ListaMetadato();
 		listaMetadato.add(new Metadato(NombreTabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
-		return this.getListaGrupo(listaMetadato);
+		return this.getListaGrupo(listaMetadato, usuario);
+	}
+	
+	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
+		return this.getListaGrupo(listaMetadato, null);
 	}
 
-	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
+	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato, Usuario usuario){
 		ListaGrupo listaGrupo = new ListaGrupo();
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
 		Usuario usuarioGrupo = null;
@@ -78,6 +82,7 @@ public class GrupoBbdd extends Bbdd{
 		
 		/*
 		 *Se buscan y se recogen todos los grupos en los que participa
+		 *o participan los usuarios
 		 */
 		
 		this.buildQuery(this.query_ug, listaMetadato, NombreTabla.USUARIOGRUPO);
@@ -112,12 +117,22 @@ public class GrupoBbdd extends Bbdd{
 		}*/
 		PreparedQuery pq = this.prepareDatastore(query);
 		for(Entity result : pq.asIterable()) {
+			Grupo grupo = null;
 			if(usuario==null){
+				String nombreGrupo = (String)result.getProperty(ConstanteGrupo.ID.toString());
 				for(Entity result_ug: pq_ug.asIterable()){
-					
+					String nombreGrupo_ug = (String)result_ug.getProperty(ConstanteGrupo.ID.toString());
+					if(nombreGrupo.compareTo(nombreGrupo_ug)==0){
+						String id = (String) result_ug.getProperty(ConstanteUsuario.ID.toString());
+						usuarioGrupo = listaUsuario.getUsuarioById(id);
+						if(usuarioGrupo == null){
+							usuarioGrupo = new Usuario(id);
+							listaUsuario.add(usuarioGrupo);
+						}
+					}
 				}
 			}else{
-				Grupo grupo = new Grupo(usuario_grupo,
+				grupo = new Grupo(usuario,
 			    (String) result.getProperty(ConstanteGrupo.NOMBRE.toString()));
 			}
 		    listaGrupo.add(grupo);
