@@ -28,6 +28,13 @@ public class Propietario {
 		return listaPubli;
 	}
 	
+	public ListaPubli getListaPubliDeBbdd(){
+		if(this.listaPubli == null){
+			this.listaPubli = new GestorPubli().getListaPubli(this);	
+		}
+		return this.listaPubli;
+	}
+
 	public Puntuacion getAltaPuntuacion(){
 		return this.listaPuntuacion.getAltaPuntuacion();
 	}
@@ -52,4 +59,5 @@ public class Propietario {
 	public boolean setListaPubli(ListaPubli listaPubli){
 		return this.listaPubli.addAll(listaPubli);
 	}
+	
 }

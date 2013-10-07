@@ -34,7 +34,7 @@ public interface Constante {
 	 * la clase Usuario
 	 */
 	public enum ConstanteUsuario implements Constante{
-		
+		ID("IdUsuario"),
 		CORREO("Correo"),
 		CONTRASENA("Contrasena"),
 		NOMBRE("Nombre"),
@@ -59,6 +59,7 @@ public interface Constante {
 	 * la clase Grupo
 	 */
 	public static enum ConstanteGrupo  implements Constante{
+		ID("IdGrupo"),
 		NOMBRE("Nombre");
 		
 		private final String constante;
