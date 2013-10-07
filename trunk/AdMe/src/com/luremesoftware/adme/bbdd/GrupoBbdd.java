@@ -12,6 +12,7 @@ import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
+import com.google.appengine.api.datastore.DatastoreFailureException;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -19,6 +20,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Transaction;
 
 public class GrupoBbdd extends Bbdd{
 
@@ -41,10 +43,18 @@ public class GrupoBbdd extends Bbdd{
 		Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
 		//TODO Ir incluyendo propiedades del grupo
 		entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
-		
-		//TODO Ejecutar en transacción o mirar de insertar como ancestros
-		listaMensaje.addAll(this.putDatastore(entGrupo));
-		listaMensaje.addAll(this.putDatastore(entUsuarioGrupo));
+
+		Transaction txn = this.datastore.beginTransaction();
+		try {            
+            listaMensaje.addAll(this.putDatastore(entGrupo));
+            listaMensaje.addAll(this.putDatastore(entUsuarioGrupo));
+		} catch (DatastoreFailureException e) {
+            // Log
+        } finally {
+            if (txn.isActive()) {
+                txn.rollback();
+            }
+        }
 		
 		return listaMensaje;
 	}
@@ -55,7 +65,7 @@ public class GrupoBbdd extends Bbdd{
 		//Se buscan los usuarios dentro del Grupo
 		query.setFilter(new FilterPredicate(NombreTabla.GRUPO.toString(),FilterOperator.EQUAL,nombreGrupo));
 		
-		PreparedQuery pq = this.prepareDatastore(query);
+		PreparedQuery pq = this.datastore.prepare(query);
 		
 		for (Entity result : pq.asIterable()) {
 			listaUsuario.add(new Usuario((String) result.getProperty(NombreTabla.USUARIO.toString())));
@@ -65,20 +75,31 @@ public class GrupoBbdd extends Bbdd{
 	}
 	
 	public ListaGrupo getListaGrupo(Usuario usuario){
-		ListaMetadato listaMetadato = new ListaMetadato();
-		listaMetadato.add(new Metadato(NombreTabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
-		return this.getListaGrupo(listaMetadato, usuario);
+		return this.getListaGrupo(null, usuario);
 	}
 	
 	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
 		return this.getListaGrupo(listaMetadato, null);
 	}
 
+	/**
+	 * Este método busca 
+	 * @param listaMetadato
+	 * @param usuario
+	 * @return
+	 */
 	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato, Usuario usuario){
 		ListaGrupo listaGrupo = new ListaGrupo();
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
 		Usuario usuarioGrupo = null;
 		ListaUsuario listaUsuario = new ListaUsuario();
+
+		if(listaMetadato==null){
+			listaMetadato = new ListaMetadato();
+		}
+		if(usuario!=null){
+			listaMetadato.add(new Metadato(NombreTabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
+		}
 		
 		/*
 		 *Se buscan y se recogen todos los grupos en los que participa
@@ -87,7 +108,7 @@ public class GrupoBbdd extends Bbdd{
 		
 		this.buildQuery(this.query_ug, listaMetadato, NombreTabla.USUARIOGRUPO);
 
-		PreparedQuery pq_ug = this.prepareDatastore(query_ug);
+		PreparedQuery pq_ug = this.datastore.prepare(query_ug);
 
 		/*
 		 * Se recogen los identificadores de los grupos y se introducen
@@ -107,15 +128,12 @@ public class GrupoBbdd extends Bbdd{
 			query.setFilter(filtroCompuesto);
 			break;
 		}
-		/*if(usuario==null){
-			String id = (String) result_ug.getProperty(ConstanteUsuario.ID.toString());
-			usuarioGrupo = listaUsuario.getUsuarioById(id);
-			if(usuarioGrupo == null){
-				usuarioGrupo = new Usuario(id, );
-				listaUsuario.add(usuarioGrupo);
-			}
-		}*/
-		PreparedQuery pq = this.prepareDatastore(query);
+		
+		/*
+		 * Se extraen los datos del grupo y se buscan sus usuarios o se le
+		 * asigna el que le llega por parámetros
+		 */
+		PreparedQuery pq = this.datastore.prepare(query);
 		for(Entity result : pq.asIterable()) {
 			Grupo grupo = null;
 			if(usuario==null){

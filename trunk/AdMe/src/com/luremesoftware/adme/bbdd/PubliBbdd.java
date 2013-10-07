@@ -51,7 +51,7 @@ public class PubliBbdd extends Bbdd{
 		
 		query.setFilter(new FilterPredicate(ConstantePubli.PROPIETARIO.toString(),FilterOperator.EQUAL,propietario.getId()));
 		
-		PreparedQuery pq = this.prepareDatastore(query);
+		PreparedQuery pq = this.datastore.prepare(query);
 		
 		for (Entity result : pq.asIterable()) {
 		    listaPubli.add(rellenaPubli(result, propietario));
@@ -64,7 +64,7 @@ public class PubliBbdd extends Bbdd{
 		
 		this.buildQuery(this.query, listaMetadato);
 		
-		PreparedQuery pq = this.prepareDatastore(query);
+		PreparedQuery pq = this.datastore.prepare(query);
 		ListaPropietario listaPropietario = new ListaPropietario();
 		
 		for (Entity result : pq.asIterable()) {

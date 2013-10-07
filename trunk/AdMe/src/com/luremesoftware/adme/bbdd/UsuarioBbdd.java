@@ -54,7 +54,7 @@ public class UsuarioBbdd extends Bbdd{
 		
 		this.buildQuery(this.query, listaMetadato);
 		
-		PreparedQuery pq = this.prepareDatastore(query);
+		PreparedQuery pq = this.datastore.prepare(query);
 
 		for (Entity result : pq.asIterable()) {			
 		  Usuario usuario = new Usuario(

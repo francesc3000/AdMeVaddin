@@ -7,7 +7,6 @@ import com.google.appengine.api.datastore.DatastoreFailureException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
@@ -21,16 +20,10 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
 public class Bbdd {
 	
-	private DatastoreService datastore = null;
+	protected DatastoreService datastore = null;
 	
 	public Bbdd(){
 		datastore = DatastoreServiceFactory.getDatastoreService();
-	}
-	
-	public PreparedQuery prepareDatastore(Query query){
-		// PreparedQuery contains the methods for fetching query results
-		// from the datastore
-		return datastore.prepare(query);
 	}
 	
 	public ListaMensaje putDatastore(Entity entity){
