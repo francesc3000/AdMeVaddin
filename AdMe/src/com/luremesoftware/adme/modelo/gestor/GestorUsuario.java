@@ -23,18 +23,6 @@ public class GestorUsuario {
 		this.gestorPubli = new GestorPubli();
 	}
 	
-	public Usuario acceder(String correo){
-		Usuario usuario = null;
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.existeUsuario(correo));
-		if(!listaMensaje.contieneErrores()){
-			usuario = new Usuario(correo);
-		}
-		
-		return usuario;
-	}
-	
 	/**
 	 * Regista un usuario en el sistema
 	 * 
@@ -57,28 +45,36 @@ public class GestorUsuario {
 		return listaMensaje;
 	}
 	
-	public Usuario getUsuario(String correo) throws MultipleUsuario{
-		ListaMetadato listaMetadato = new ListaMetadato();
-		Usuario ret_usuario = null;
-		
-		listaMetadato.add( new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
-		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
-		
-		if(!listaUsuario.isEmpty()){
-			if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
-				throw new MultipleUsuario("Usuario duplicado en base de datos");
-			}else{
-				ret_usuario = listaUsuario.get(0);
-			}
-		}
-		
-		return ret_usuario;
-	}
-	
 	public ListaMetadato getDatosUsuario(String correo){
 		ListaMetadato listaMetadato = new ListaMetadato();
 		
 		return listaMetadato;
+	}
+
+	public Usuario getUsuario(String correo) throws MultipleUsuario{
+		ListaMetadato listaMetadato = new ListaMetadato();
+		Usuario ret_usuario = null;
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		listaMensaje.addAll(this.existeUsuario(correo));
+		
+		if(!listaMensaje.contieneErrores()){
+		
+			listaMetadato.add( new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
+			ListaUsuario listaUsuario = this.getListaUsuario(listaMetadato);
+			
+			if(!listaUsuario.isEmpty()){
+				if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
+					throw new MultipleUsuario("Usuario duplicado en base de datos");
+				}else{
+					ret_usuario = listaUsuario.get(0);
+				}
+			}
+		}else{
+			ret_usuario = new Usuario(correo);
+		}
+		
+		return ret_usuario;
 	}
 	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){

@@ -1,4 +1,4 @@
-package com.luremesoftware.adme.controlador.jsp;
+package com.luremesoftware.adme.controlador.vista;
 
 import java.io.IOException;
 
@@ -9,23 +9,39 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class Acceder implements javax.servlet.Servlet, javax.servlet.jsp.HttpJspPage{
 	
-	public Acceder(){}
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 	
-	public String runAcceder(HttpServletRequest request){
+	public Acceder( HttpServletRequest request, HttpServletResponse response){
+		this.request = request;
+		this.response = response;
+	}
+	
+	public String runAcceder() throws IOException{
 		UserService userService = UserServiceFactory.getUserService();
 		String thisURL = request.getRequestURI();
 		
         if(request.getUserPrincipal() != null) {
+        	response.sendRedirect("Perfil.jsp");
         	return request.getUserPrincipal().toString();
         	
         }else{
-            return userService.createLoginURL(thisURL);
-        }		
+            this.response.sendRedirect(userService.createLoginURL(thisURL));
+            User user =  userService.getCurrentUser();
+            if(user!=null){
+            	response.sendRedirect("Perfil.jsp");
+            	return user.getEmail();
+            }else{
+            	return null;
+            }
+            
+        }
 
 	}
 

@@ -3,6 +3,7 @@
 
 <%@ page session="true"%>
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
+<%@ page import="com.luremesoftware.adme.controlador.vista.ControladorVista" %>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
 
 <!DOCTYPE html>
@@ -18,37 +19,33 @@
 
 	<%
 	
-		if (!(request.getParameter("env") == null)) {
+		//if (!(request.getParameter("env") == null)) {
 
 			   String usuario = request.getParameter("user");
                String pass = request.getParameter("pass");
                
                
                ControladorWeb cw = new ControladorWeb();
+               ControladorVista cv = new ControladorVista();
                
          		out.print(usuario);
-               Usuario login= cw.acceder(usuario);
+               Usuario login= cv.acceder(request, response);
                
                if(login!=null){
             	   
             	   
             	   String correo= login.getCorreo();
             	   
-            	   session.setAttribute( "user", login );
-                   response.sendRedirect("Perfil.jsp");
-            	   
-               }else{
-            	   
-            	   response.sendRedirect("Registro.jsp");
-            	   
+            	   //session.setAttribute( "user", login );
+                   //response.sendRedirect("Perfil.jsp");
                }
 	
-		}
+		//}
 	%>
 
 
 
-	<form name="formulario" method="post" action="Login.jsp?env=1">
+	<!-- <form name="formulario" method="post" action="Login.jsp?env=1">
 
 		<h4>Usuario</h4>
 		<input type="text" name="user">
@@ -57,7 +54,7 @@
 			type="submit" value="Login">
 
 
-	</form>
+	</form> -->
 
 
 </body>

@@ -1,12 +1,10 @@
 package com.luremesoftware.adme.controlador;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.luremesoftware.adme.controlador.jsp.Acceder;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
+import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
@@ -25,16 +23,6 @@ public class ControladorWeb{
 		this.gestorUsuario = new GestorUsuario();
 		this.gestorGrupo = new GestorGrupo();
 		this.gestorPubli = new GestorPubli();
-	}
-	/**
-	 * Si el usuario esta registrado se retornan los datos del usuario a 
-	 * partir de su correo electronico
-	 * @param correo
-	 * @return Si el usuario no esta registrado se retorna null
-	 */
-	public Usuario acceder(HttpServletRequest request){
-		Acceder acceder = new Acceder();
-		return gestorUsuario.acceder(acceder.runAcceder(request));
 	}
 	
 	/**
@@ -75,6 +63,10 @@ public class ControladorWeb{
 	 */
 	public ListaMensaje putPubli(Publi publi){
 		return gestorPubli.putPubli(publi);
+	}
+	
+	public Usuario getUsuario(String correo) throws MultipleUsuario{
+		return gestorUsuario.getUsuario(correo);
 	}
 
 	/**
