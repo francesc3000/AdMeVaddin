@@ -1,5 +1,8 @@
 package com.luremesoftware.adme.controlador;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.luremesoftware.adme.controlador.jsp.Acceder;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
@@ -12,7 +15,7 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
-public class ControladorWeb {
+public class ControladorWeb{
 	
 	private GestorUsuario gestorUsuario = null;
 	private GestorGrupo gestorGrupo = null;
@@ -29,8 +32,9 @@ public class ControladorWeb {
 	 * @param correo
 	 * @return Si el usuario no esta registrado se retorna null
 	 */
-	public Usuario acceder(String correo){
-		return gestorUsuario.acceder(correo);
+	public Usuario acceder(HttpServletRequest request){
+		Acceder acceder = new Acceder();
+		return gestorUsuario.acceder(acceder.runAcceder(request));
 	}
 	
 	/**
