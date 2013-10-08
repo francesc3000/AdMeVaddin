@@ -47,7 +47,10 @@ public class GestorUsuario {
 	
 	public ListaMetadato getDatosUsuario(String correo){
 		ListaMetadato listaMetadato = new ListaMetadato();
-		
+		try{
+			Usuario usuario = this.getUsuario(correo);
+			listaMetadato.transforma(Usuario);
+		}catch(MultipleUsuario e){}
 		return listaMetadato;
 	}
 
