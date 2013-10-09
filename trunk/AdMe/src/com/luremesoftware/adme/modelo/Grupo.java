@@ -1,5 +1,6 @@
 package com.luremesoftware.adme.modelo;
 
+import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 public class Grupo extends Propietario{
@@ -38,7 +39,10 @@ public class Grupo extends Propietario{
 	}
 	
 	public ListaUsuario getListaUsuario(){
-		return listaUsuario;
+		if(this.listaUsuario==null){
+			this.listaUsuario = new GestorUsuario().getListaUsuarioXGrupo(this.getNombre());
+		}
+		return this.listaUsuario;
 	}
 	
 	public boolean setNombre(String nombre){

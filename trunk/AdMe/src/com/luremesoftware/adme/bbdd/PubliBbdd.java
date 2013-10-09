@@ -35,7 +35,7 @@ public class PubliBbdd extends Bbdd{
 		int ultimoPunto = clase.lastIndexOf(".");
 		clase = clase.substring(ultimoPunto + 1);
 
-		entPublicacion.setProperty(ConstantePubli.PROPIETARIO.toString(), publi.getPropietarioId());
+		entPublicacion.setProperty(ConstantePubli.PROPIETARIO.toString(), publi.getPropietario().getId());
 		entPublicacion.setProperty(ConstantePubli.CLASE.toString(), clase);
 		entPublicacion.setProperty(ConstantePubli.TITULO.toString(), publi.getTitulo());
 		entPublicacion.setProperty(ConstantePubli.CIUDAD.toString(), publi.getCiudad());

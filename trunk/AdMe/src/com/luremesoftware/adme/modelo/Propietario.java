@@ -15,9 +15,7 @@ public class Propietario {
 	public Propietario(){}
 			
 	public Propietario(String id){
-		this.setId(id);
-		//Se buscan los identificadores de las publicaciones del propietario
-		this.listaPubli = new GestorPubli().getListaPubli(this);		
+		this.setId(id);	
 	}
 	
 	public String getId(){
@@ -25,10 +23,6 @@ public class Propietario {
 	}
 	
 	public ListaPubli getListaPubli(){
-		return listaPubli;
-	}
-	
-	public ListaPubli getListaPubliDeBbdd(){
 		if(this.listaPubli == null){
 			this.listaPubli = new GestorPubli().getListaPubli(this);	
 		}

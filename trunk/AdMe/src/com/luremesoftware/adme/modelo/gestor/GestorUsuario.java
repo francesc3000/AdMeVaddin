@@ -44,15 +44,6 @@ public class GestorUsuario {
 		
 		return listaMensaje;
 	}
-	
-	public ListaMetadato getDatosUsuario(String correo){
-		ListaMetadato listaMetadato = new ListaMetadato();
-		try{
-			Usuario usuario = this.getUsuario(correo);
-			listaMetadato.transforma(Usuario);
-		}catch(MultipleUsuario e){}
-		return listaMetadato;
-	}
 
 	public Usuario getUsuario(String correo) throws MultipleUsuario{
 		ListaMetadato listaMetadato = new ListaMetadato();
@@ -78,6 +69,13 @@ public class GestorUsuario {
 		}
 		
 		return ret_usuario;
+	}
+	
+	public ListaUsuario getListaUsuarioXGrupo(String nombreGrupo){
+		ListaUsuario listaUsuario = new ListaUsuario();
+		
+		
+		return listaUsuario;
 	}
 	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){

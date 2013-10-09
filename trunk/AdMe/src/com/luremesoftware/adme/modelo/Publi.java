@@ -46,10 +46,6 @@ public class Publi{
 		return this.descripcion;
 	}
 	
-	public String getPropietarioId(){
-		return this.propietario.getId();
-	}
-	
 	public Propietario getPropietario(){
 		return this.propietario;
 	}
