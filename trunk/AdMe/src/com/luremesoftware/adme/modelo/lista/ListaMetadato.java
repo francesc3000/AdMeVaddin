@@ -30,6 +30,9 @@ public class ListaMetadato extends ArrayList<Metadato>{
 		}
 	}*/
 	
-
+	public boolean settransforma(Object objecto){
+		case(objecto.)
+		return true;
+	}
 	
 }
