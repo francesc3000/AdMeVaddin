@@ -27,7 +27,7 @@ public class GestorPubli {
 	public ListaMensaje putPubli(Publi publi){
 		GestorUsuario gestorUsuario = new GestorUsuario();
 		ListaMensaje listaMensaje = new ListaMensaje();
-		listaMensaje.addAll(gestorUsuario.existeUsuario(publi.getPropietarioId()));
+		listaMensaje.addAll(gestorUsuario.existeUsuario(publi.getPropietario().getId()));
 		if(!listaMensaje.contieneErrores()){
 			listaMensaje.addAll(publiBbdd.putPublicacion(publi));
 		}

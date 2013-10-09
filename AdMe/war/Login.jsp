@@ -28,16 +28,16 @@
                ControladorWeb cw = new ControladorWeb();
                ControladorVista cv = new ControladorVista();
                
-         		out.print(usuario);
+         		
                Usuario login= cv.acceder(request, response);
                
                if(login!=null){
             	   
+            	   //out.print(usuario);
+            	   //String correo= login.getCorreo();
             	   
-            	   String correo= login.getCorreo();
-            	   
-            	   //session.setAttribute( "user", login );
-                   //response.sendRedirect("Perfil.jsp");
+            	   session.setAttribute( "user", login );
+                   response.sendRedirect("Perfil.jsp");
                }
 	
 		//}

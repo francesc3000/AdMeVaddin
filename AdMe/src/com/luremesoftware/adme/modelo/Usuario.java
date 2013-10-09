@@ -1,10 +1,13 @@
 package com.luremesoftware.adme.modelo;
 
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
+import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
+import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 /**
  * Clase Usuario
@@ -34,16 +37,14 @@ public class Usuario extends Propietario{
 		super(correo);
 		this.setCorreo(correo);
 		//Se recogen los datos del Usuario de BBDD
-		this.getDatosBbdd(correo);
-		//Se buscan los grupos en los que participa
-		this.getListaGrupoDeBbdd();
+		this.setDatosBbdd();
 	}
 	
 	public Usuario(String correo, ListaGrupo listaGrupo){
 		super(correo);
 		this.setCorreo(correo);
 		//Se recogen los datos del Usuario de BBDD
-		this.getDatosBbdd(correo);
+		this.setDatosBbdd();
 		this.setListaGrupo(listaGrupo);
 	}
 	
@@ -95,10 +96,6 @@ public class Usuario extends Propietario{
 		return this.listaGrupo.get(indice);
 	}
 	
-	public ListaGrupo getListaGrupo(){
-		return this.listaGrupo;
-	}
-	
 	/**
 	 * Si el listado de grupos está vacío recupera los grupos 
 	 * donde participa el usuario en BBDD. Si el listado de grupos
@@ -106,7 +103,7 @@ public class Usuario extends Propietario{
 	 * 
 	 * @return
 	 */
-	public ListaGrupo getListaGrupoDeBbdd(){
+	public ListaGrupo getListaGrupo(){
 		if(this.listaGrupo == null){
 			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 		}
@@ -142,22 +139,48 @@ public class Usuario extends Propietario{
 		this.listaGrupo = listaGrupo;
 		return true;
 	}
-	
+
 	public String toString(){
 		return getCorreo() + " " + getNombre() + " " + getApellido1() + " " + getApellido2();
 
 	}
 	
-	private boolean getDatosBbdd(String correo){
+	private Usuario getDatosBbdd(){
 		ListaMetadato listaMetadato = new ListaMetadato();
 		
-		listaMetadato = new GestorUsuario().getDatosUsuario(correo);
+		listaMetadato.add(
+				new Metadato(NombreTabla.USUARIO,
+							 ConstanteUsuario.CORREO,
+							 FilterOperator.EQUAL,
+							 this.correo));
+		
+		ListaUsuario listausuario = new UsuarioBbdd().getListaUsuario(listaMetadato);
+		
+		return listausuario.get(0);
+	}
+	
+	private boolean setDatosBbdd(){
+		Usuario usuario = this.getDatosBbdd();
+		
+		this.setContrasena(usuario.getContrasena());
+		this.setNombre(usuario.getNombre());
+		this.setApellido1(usuario.getApellido1());
+		this.setApellido2(usuario.getApellido2());
+		
+		return true;
+	}
+	
+	/*
+	private boolean setDatosBbdd(){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		listaMetadato = this.getDatosBbdd();
 		
 		for(Metadato metadato:listaMetadato){
 			//TODO Hacer que funciona enum en switch case
 			String nombreMetadato = metadato.getNombreMetadato().toString();
 			if(nombreMetadato == ConstanteUsuario.CORREO.toString()){
-				if(correo!=metadato.getValor().toString()){
+				if(this.correo!=metadato.getValor().toString()){
 					return false;
 				}
 				this.setCorreo(metadato.getValor().toString());
@@ -177,5 +200,5 @@ public class Usuario extends Propietario{
 		}
 		
 		return true;
-	}
+	}*/
 }
