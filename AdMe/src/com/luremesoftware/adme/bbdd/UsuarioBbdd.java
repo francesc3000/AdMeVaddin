@@ -2,6 +2,7 @@ package com.luremesoftware.adme.bbdd;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -9,8 +10,10 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 public class UsuarioBbdd extends Bbdd{
 
@@ -35,6 +38,21 @@ public class UsuarioBbdd extends Bbdd{
 		listaMensaje.addAll(this.putDatastore(entUsuario));
 		
 		return listaMensaje;
+	}
+	
+	public boolean existeUsuario(String correo){
+		ListaMetadato listaMetadato = new ListaMetadato();
+		
+		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
+		this.buildQuery(this.query, listaMetadato);
+		
+		PreparedQuery pq = this.datastore.prepare(query);
+
+		for (@SuppressWarnings("unused") Entity result : pq.asIterable()){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
