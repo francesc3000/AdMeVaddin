@@ -4,7 +4,6 @@ import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
@@ -65,7 +64,7 @@ public class ControladorWeb{
 		return gestorPubli.putPubli(publi);
 	}
 	
-	public Usuario getUsuario(String correo) throws MultipleUsuario{
+	public Usuario getUsuario(String correo){
 		return gestorUsuario.getUsuario(correo);
 	}
 

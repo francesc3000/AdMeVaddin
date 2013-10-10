@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.luremesoftware.adme.controlador.ControladorWeb;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 
 public class ControladorVista {
 	
@@ -25,12 +24,16 @@ public class ControladorVista {
 	 * @throws IOException 
 	 * @throws MultipleUsuario 
 	 */
-	public Usuario acceder(HttpServletRequest request, HttpServletResponse response) throws IOException, MultipleUsuario{
+	public Usuario acceder(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Acceder acceder = new Acceder(request, response);
 		String correo = acceder.runAcceder();
 		if(correo==null){
 			return null;
 		}
-		return cw.getUsuario(correo);
+		Usuario usuario = cw.getUsuario(correo);
+		if(usuario==null){
+			usuario = new Usuario(correo,null,null,null,null);
+		}
+		return usuario;
 	}
 }

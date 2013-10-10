@@ -10,7 +10,6 @@ import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
 import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
-import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -80,11 +79,7 @@ public class PubliBbdd extends Bbdd{
 				if(propietario == null){
 					//Se busca en BBDD
 					GestorUsuario gestorUsuario = new GestorUsuario();
-					try{
-						propietario = gestorUsuario.getUsuario(id);
-					}catch(MultipleUsuario mu){
-						//Nothing to do
-					}
+			        propietario = gestorUsuario.getUsuario(id);
 					listaPropietario.add(propietario);
 				}
 			}

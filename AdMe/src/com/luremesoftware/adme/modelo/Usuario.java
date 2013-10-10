@@ -1,5 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
+
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
@@ -15,8 +17,12 @@ import com.luremesoftware.adme.modelo.lista.ListaUsuario;
  * @author francesc3000@gmail.com
  *
 */
-public class Usuario extends Propietario{
+public class Usuario extends Propietario implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String correo;
 	private String contrasena;
 	private String nombre;

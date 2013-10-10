@@ -1,14 +1,9 @@
 package com.luremesoftware.adme.modelo.gestor;
 
-import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
-import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.NombreTabla;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
-import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.excepcion.MultipleUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -45,26 +40,13 @@ public class GestorUsuario {
 		return listaMensaje;
 	}
 
-	public Usuario getUsuario(String correo) throws MultipleUsuario{
-		ListaMetadato listaMetadato = new ListaMetadato();
+	public Usuario getUsuario(String correo){
 		Usuario ret_usuario = null;
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
 		listaMensaje.addAll(this.existeUsuario(correo));
 		
-		if(!listaMensaje.contieneErrores()){
-		
-			listaMetadato.add( new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
-			ListaUsuario listaUsuario = this.getListaUsuario(listaMetadato);
-			
-			if(!listaUsuario.isEmpty()){
-				if(listaUsuario.size()>1){//Si encuentra mas de un usuario con el mismo correo
-					throw new MultipleUsuario("Usuario duplicado en base de datos");
-				}else{
-					ret_usuario = listaUsuario.get(0);
-				}
-			}
-		}else{
+		if(listaMensaje.contieneErrores()){			
 			ret_usuario = new Usuario(correo);
 		}
 		

@@ -32,12 +32,13 @@
                Usuario login= cv.acceder(request, response);
                
                if(login!=null){
-            	   
-            	   //out.print(usuario);
-            	   //String correo= login.getCorreo();
-            	   
-            	   session.setAttribute( "user", login );
+            	   if(login.getNombre()==null){
+            		   session.setAttribute( "userMail", login.getCorreo());
+                       response.sendRedirect("Registro.jsp");
+            	   }else{
+            	   	session.setAttribute( "user", login );
                    response.sendRedirect("Perfil.jsp");
+            	   }
                }
 	
 		//}
