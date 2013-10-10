@@ -28,14 +28,12 @@ public class Acceder implements javax.servlet.Servlet, javax.servlet.jsp.HttpJsp
 		String thisURL = request.getRequestURI();
 		
         if(request.getUserPrincipal() != null) {
-        	response.sendRedirect("Perfil.jsp");
         	return request.getUserPrincipal().toString();
         	
         }else{
             this.response.sendRedirect(userService.createLoginURL(thisURL));
             User user =  userService.getCurrentUser();
             if(user!=null){
-            	response.sendRedirect("Perfil.jsp");
             	return user.getEmail();
             }else{
             	return null;

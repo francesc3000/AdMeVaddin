@@ -63,11 +63,12 @@
            <%
             int ok = 1;
             if (!(request.getParameter("env") == null)) {
-
+            	
                 String nom = request.getParameter("txtNombre");
                 String apellido1 = request.getParameter("txtApellido1");
                 String apellido2 = request.getParameter("txtApellido2");
-                String email = request.getParameter("txtEmail");
+                String email = (String) session.getAttribute("userMail");
+                //String email = request.getParameter("txtEmail");
                 String pass = request.getParameter("txtPass");
                 String pass2 = request.getParameter("txtPass2");
 
@@ -87,7 +88,7 @@
                     ok = 0;
                 }
 
-                if (!(email.contains("@") && email.contains("."))) {
+                /*if (!(email.contains("@") && email.contains("."))) {
                     ok = 0;
                     out.print("Email no válido <br>");
                 }
@@ -105,7 +106,7 @@
 
                     out.print("<p color= \"red\">Las contraseñas no son iguales</p> <br>");
                     ok = 0;
-                }
+                }*/
 
                 if (ok == 1) {
                     
@@ -122,7 +123,6 @@
                   
 
                 }
-
             }
         %>
 
@@ -140,7 +140,7 @@
             <input type="text" name="txtApellido2" value="<%if (!(request.getParameter("env") == null)) {
                     out.print(request.getParameter("txtApellido2"));
                 }%>">
-            <h4>Email</h4>
+            <!-- <h4>Email</h4>
             <input type="text" name="txtEmail" value="<%if (!(request.getParameter("env") == null)) {
                     out.print(request.getParameter("txtEmail"));
                 }%>">
@@ -150,7 +150,7 @@
             <h4>Confirma Password</h4>
             <input type="password" name="txtPass2">
             <br>
-            <br>
+            <br> -->
             <input type="submit" value="Enviar"> 
 
         </form> 
