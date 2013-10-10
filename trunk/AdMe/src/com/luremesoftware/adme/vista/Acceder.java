@@ -1,4 +1,4 @@
-package com.luremesoftware.adme.controlador.vista;
+package com.luremesoftware.adme.vista;
 
 import java.io.IOException;
 

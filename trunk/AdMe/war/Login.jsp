@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
-<%@ page import="com.luremesoftware.adme.controlador.vista.ControladorVista" %>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
 
 <!DOCTYPE html>
@@ -24,10 +23,9 @@
                
                
                ControladorWeb cw = new ControladorWeb();
-               ControladorVista cv = new ControladorVista();
                
          		
-               Usuario login= cv.acceder(request, response);
+               Usuario login= cw.acceder(request, response);
                
                if(login!=null){
             	   if(login.getNombre()==null){
