@@ -105,15 +105,12 @@ public class GestorUsuario {
 	}
 	
 	public ListaMensaje existeUsuario(String correo){
-		ListaMetadato listaMetadato = new ListaMetadato();
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
 		//TODO Meter en MemCache
-		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
+		boolean existe = this.usuarioBbdd.existeUsuario(correo);
 		
-		ListaUsuario listaUsuario = this.usuarioBbdd.getListaUsuario(listaMetadato);
-		
-		if(!listaUsuario.isEmpty()){
+		if(existe){
 			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe"));
 		}
 		
