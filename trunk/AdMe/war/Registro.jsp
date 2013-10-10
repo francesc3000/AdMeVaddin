@@ -1,9 +1,4 @@
-
-    
-    
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%@ page session="true" %>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario" %>

@@ -3,7 +3,7 @@
     Created on : 29/04/2013, 01:14:48
     Author     : cfgs
 --%>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*"%>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb"%>

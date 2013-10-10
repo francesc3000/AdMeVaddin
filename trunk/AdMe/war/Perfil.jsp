@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
     
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 
@@ -15,7 +14,7 @@
 <a href="NuevoGrupo.jsp">Crear nuevo grupo</a> 
 <br></br>
 
-<a href="NuevaPublicacion.jsp">Crear nueva publicación</a>
+<a href="NuevaPublicacion.jsp">Crear nueva publicaciÃ³n</a>
 <br></br>
 
 <a href="Busca.jsp">Realizar busqueda</a>
