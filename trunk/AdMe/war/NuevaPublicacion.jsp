@@ -18,7 +18,7 @@
 	<h1>NUEVA PUBLICACIÓN</h1>
 
 	<%
-		String usuario = session.getAttribute("user").toString();
+		Usuario usuario = (Usuario)session.getAttribute("user");
 	
             int ok = 1;
             if (!(request.getParameter("env") == null)) {
@@ -42,10 +42,10 @@
 
                 if (ok == 1) {
                    
-                Usuario usu = new Usuario(usuario);	
+                //Usuario usu = new Usuario(usuario);	
                 
    
-				Publi publi = new Publi(usu,titulo,ciudad,mensaje);
+				Publi publi = new Publi(usuario,titulo,ciudad,mensaje);
                 	
                     ControladorWeb cw = new ControladorWeb();
                          	         
