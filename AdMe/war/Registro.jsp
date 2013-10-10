@@ -118,7 +118,7 @@
                  
    
                     String name = request.getParameter( "txtNombre" );
-                    session.setAttribute( "user", nom );
+                    session.setAttribute( "user", usu );
                     response.sendRedirect("Perfil.jsp");
                   
 

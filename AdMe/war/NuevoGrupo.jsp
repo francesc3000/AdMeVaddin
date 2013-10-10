@@ -16,7 +16,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>CREAR NUEVO GRUPO</h1>
+	<!-- <h1>CREAR NUEVO GRUPO</h1>
 	<%
 	String usuario = session.getAttribute("user").toString();
 
@@ -47,6 +47,6 @@
   </textarea>
 	</form>
 
-
+ -->
 </body>
 </html>
