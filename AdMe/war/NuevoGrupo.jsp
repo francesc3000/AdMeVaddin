@@ -10,8 +10,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<link rel="stylesheet" type="text/css" href="estils.css">
+<div style="color:green" align="left">
+<font size="7">AdMe!</font>
+</div>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Nuevo Grupo here</title>
 </head>
 <body>
 	<!-- <h1>CREAR NUEVO GRUPO</h1>
