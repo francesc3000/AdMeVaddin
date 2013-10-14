@@ -3,6 +3,7 @@ package com.luremesoftware.adme.modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -27,6 +28,7 @@ public class Usuario extends Propietario implements Serializable{
 	/**
 	 * 
 	 */
+	@NotPersistent
 	private static final long serialVersionUID = 1L;
 	@Persistent
 	private String correo;
@@ -38,8 +40,10 @@ public class Usuario extends Propietario implements Serializable{
 	private String apellido1;
 	@Persistent
 	private String apellido2;
-	//@Persistent
+	@Persistent
 	private ArrayList<Grupo> listaGrupo = null;
+	
+	public Usuario(){}
 	
 	/**
 	 * Este Constructor crear un usuario a partir de su correo electronico
@@ -50,14 +54,10 @@ public class Usuario extends Propietario implements Serializable{
 	 */
 	public Usuario(String id){
 		super(id);
-		//Se recogen los datos del Usuario de BBDD
-		this.setDatosBbdd();
 	}
 	
 	public Usuario(String id, ListaGrupo listaGrupo){
 		super(id);
-		//Se recogen los datos del Usuario de BBDD
-		this.setDatosBbdd();
 		this.setListaGrupo(listaGrupo);
 	}
 	
@@ -170,16 +170,5 @@ public class Usuario extends Propietario implements Serializable{
 		ListaUsuario listausuario = new UsuarioBbdd().getListaUsuario(listaMetadato);
 		
 		return listausuario.get(0);
-	}
-	
-	private boolean setDatosBbdd(){
-		Usuario usuario = this.getDatosBbdd();
-		
-		this.setContrasena(usuario.getContrasena());
-		this.setNombre(usuario.getNombre());
-		this.setApellido1(usuario.getApellido1());
-		this.setApellido2(usuario.getApellido2());
-		
-		return true;
 	}
 }

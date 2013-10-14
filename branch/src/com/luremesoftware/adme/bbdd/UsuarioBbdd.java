@@ -6,7 +6,6 @@ import javax.jdo.PersistenceManager;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
-import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -16,7 +15,6 @@ import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.PMF;
 
 public class UsuarioBbdd extends Bbdd{
@@ -30,17 +28,6 @@ public class UsuarioBbdd extends Bbdd{
 	
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		/*Entity entUsuario = new Entity(NombreTabla.USUARIO.toString(), usuario.getCorreo());
-		
-
-		entUsuario.setProperty(ConstanteUsuario.CORREO.toString(), usuario.getCorreo());
-		entUsuario.setProperty(ConstanteUsuario.CONTRASENA.toString(), usuario.getContrasena());
-		entUsuario.setProperty(ConstanteUsuario.NOMBRE.toString(), usuario.getNombre());
-		entUsuario.setProperty(ConstanteUsuario.APELLIDO1.toString(), usuario.getApellido1());
-		entUsuario.setProperty(ConstanteUsuario.APELLIDO2.toString(), usuario.getApellido2());
-		
-		listaMensaje.addAll(this.putDatastore(entUsuario));*/
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
         try {
@@ -52,28 +39,14 @@ public class UsuarioBbdd extends Bbdd{
 		return listaMensaje;
 	}
 	
-	public boolean existeUsuario(String correo){
-		/*ListaMetadato listaMetadato = new ListaMetadato();
-		
-		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
-		this.buildQuery(this.query, listaMetadato);
-		
-		PreparedQuery pq = this.datastore.prepare(query);
-
-		for (@SuppressWarnings("unused") Entity result : pq.asIterable()){
-			return true;
-		}*/
-		
+	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	    String query = "select from " + Usuario.class.getName() + " where id == :correo";
 
 	    @SuppressWarnings("unchecked")
-		List<Usuario> object = (List<Usuario>) pm.newQuery(query).execute(correo);
-	    if(object.isEmpty()){
-	    	return false;
-	    }
-		return true;
-		
+		List<Usuario> listaUsuario = (List<Usuario>) pm.newQuery(query).execute(correo);
+	    pm.close();
+	    return listaUsuario.get(0);
 	}
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){

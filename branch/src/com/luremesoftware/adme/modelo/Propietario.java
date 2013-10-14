@@ -19,10 +19,6 @@ import com.luremesoftware.adme.modelo.lista.ListaPuntuacion;
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Propietario{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	protected Key key;
