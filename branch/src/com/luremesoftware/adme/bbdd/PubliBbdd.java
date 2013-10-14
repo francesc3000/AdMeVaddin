@@ -7,7 +7,7 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante.ConstantePropietario;
 import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
@@ -23,12 +23,12 @@ public class PubliBbdd extends Bbdd{
 	
 	public PubliBbdd(){
 		super();
-		query = new Query(NombreTabla.PUBLICACION.toString());
+		query = new Query(Tabla.PUBLICACION.toString());
 	}
 	
 	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		Entity entPublicacion = new Entity(NombreTabla.PUBLICACION.toString());
+		Entity entPublicacion = new Entity(Tabla.PUBLICACION.toString());
 		
 		String clase = publi.getPropietario().getClass().toString();
 		int ultimoPunto = clase.lastIndexOf(".");

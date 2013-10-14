@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
@@ -29,18 +29,18 @@ public class GrupoBbdd extends Bbdd{
 	
 	public GrupoBbdd(){
 		super();
-		query_ug = new Query(NombreTabla.USUARIOGRUPO.toString());
-		query = new Query(NombreTabla.GRUPO.toString());
+		query_ug = new Query(Tabla.USUARIOGRUPO.toString());
+		query = new Query(Tabla.GRUPO.toString());
 	}
 	
 	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		Entity entUsuarioGrupo = new Entity(NombreTabla.USUARIOGRUPO.toString());
+		Entity entUsuarioGrupo = new Entity(Tabla.USUARIOGRUPO.toString());
 
 		entUsuarioGrupo.setProperty(ConstanteUsuario.ID.toString(), usuario.getId());
 		entUsuarioGrupo.setProperty(ConstanteGrupo.ID.toString(), grupo.getNombre());
 		
-		Entity entGrupo = new Entity(NombreTabla.GRUPO.toString());
+		Entity entGrupo = new Entity(Tabla.GRUPO.toString());
 		//TODO Ir incluyendo propiedades del grupo
 		entGrupo.setProperty(ConstanteGrupo.NOMBRE.toString(), grupo.getNombre());
 
@@ -63,12 +63,12 @@ public class GrupoBbdd extends Bbdd{
 		ListaUsuario listaUsuario = new ListaUsuario();
 		
 		//Se buscan los usuarios dentro del Grupo
-		query.setFilter(new FilterPredicate(NombreTabla.GRUPO.toString(),FilterOperator.EQUAL,nombreGrupo));
+		query.setFilter(new FilterPredicate(Tabla.GRUPO.toString(),FilterOperator.EQUAL,nombreGrupo));
 		
 		PreparedQuery pq = this.datastore.prepare(query);
 		
 		for (Entity result : pq.asIterable()) {
-			listaUsuario.add(new Usuario((String) result.getProperty(NombreTabla.USUARIO.toString())));
+			listaUsuario.add(new Usuario((String) result.getProperty(Tabla.USUARIO.toString())));
 		}
 		
 	    return new Grupo(listaUsuario,nombreGrupo);
@@ -98,7 +98,7 @@ public class GrupoBbdd extends Bbdd{
 			listaMetadato = new ListaMetadato();
 		}
 		if(usuario!=null){
-			listaMetadato.add(new Metadato(NombreTabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
+			listaMetadato.add(new Metadato(Tabla.USUARIOGRUPO,ConstanteUsuario.ID,FilterOperator.EQUAL,usuario.getId()));
 		}
 		
 		/*
@@ -106,7 +106,7 @@ public class GrupoBbdd extends Bbdd{
 		 *o participan los usuarios
 		 */
 		
-		this.buildQuery(this.query_ug, listaMetadato, NombreTabla.USUARIOGRUPO);
+		this.buildQuery(this.query_ug, listaMetadato, Tabla.USUARIOGRUPO);
 
 		PreparedQuery pq_ug = this.datastore.prepare(query_ug);
 

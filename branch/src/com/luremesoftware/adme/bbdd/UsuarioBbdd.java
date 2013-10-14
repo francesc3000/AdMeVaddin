@@ -1,7 +1,11 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
@@ -13,6 +17,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.luremesoftware.adme.bbdd.PMF;
 
 public class UsuarioBbdd extends Bbdd{
 
@@ -20,12 +25,13 @@ public class UsuarioBbdd extends Bbdd{
 	
 	public UsuarioBbdd(){
 		super();
-		query = new Query(NombreTabla.USUARIO.toString());
+		query = new Query(Tabla.USUARIO.toString());
 	}
 	
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		Entity entUsuario = new Entity(NombreTabla.USUARIO.toString(), usuario.getCorreo());
+		
+		/*Entity entUsuario = new Entity(NombreTabla.USUARIO.toString(), usuario.getCorreo());
 		
 
 		entUsuario.setProperty(ConstanteUsuario.CORREO.toString(), usuario.getCorreo());
@@ -34,13 +40,20 @@ public class UsuarioBbdd extends Bbdd{
 		entUsuario.setProperty(ConstanteUsuario.APELLIDO1.toString(), usuario.getApellido1());
 		entUsuario.setProperty(ConstanteUsuario.APELLIDO2.toString(), usuario.getApellido2());
 		
-		listaMensaje.addAll(this.putDatastore(entUsuario));
+		listaMensaje.addAll(this.putDatastore(entUsuario));*/
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+        try {
+            pm.makePersistent(usuario);
+        } finally {
+            pm.close();
+        }
 		
 		return listaMensaje;
 	}
 	
 	public boolean existeUsuario(String correo){
-		ListaMetadato listaMetadato = new ListaMetadato();
+		/*ListaMetadato listaMetadato = new ListaMetadato();
 		
 		listaMetadato.add(new Metadato(NombreTabla.USUARIO, ConstanteUsuario.CORREO, FilterOperator.EQUAL, correo));
 		this.buildQuery(this.query, listaMetadato);
@@ -49,9 +62,18 @@ public class UsuarioBbdd extends Bbdd{
 
 		for (@SuppressWarnings("unused") Entity result : pq.asIterable()){
 			return true;
-		}
+		}*/
 		
-		return false;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+	    String query = "select from " + Usuario.class.getName() + " where id == :correo";
+
+	    @SuppressWarnings("unchecked")
+		List<Usuario> object = (List<Usuario>) pm.newQuery(query).execute(correo);
+	    if(object.isEmpty()){
+	    	return false;
+	    }
+		return true;
+		
 	}
 
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){

@@ -11,7 +11,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
@@ -46,7 +46,7 @@ public class Bbdd {
 		return this.buildQuery(query, listaMetadato, null);
 	}
 	
-	public boolean buildQuery(Query query, ListaMetadato listaMetadato_in, NombreTabla nombreTabla){
+	public boolean buildQuery(Query query, ListaMetadato listaMetadato_in, Tabla nombreTabla){
 		ArrayList<Filter> listaFiltros = new ArrayList<Filter>();
 		ListaMetadato listaMetadato = new ListaMetadato();
 		

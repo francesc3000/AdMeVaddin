@@ -25,16 +25,10 @@ public class GestorUsuario {
 	 */	
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.existeUsuario(usuario.getCorreo()));
-		
-		if(!listaMensaje.contieneErrores())
-		{
-			 if(checkparamObl(usuario)){
-			   listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
-			 }else{
-				 listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
-			 }
+		if(checkparamObl(usuario)){
+		  listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
+		}else{
+		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 		}
 		
 		return listaMensaje;

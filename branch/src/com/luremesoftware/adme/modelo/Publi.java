@@ -1,13 +1,34 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
+
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+import com.google.appengine.api.datastore.Key;
+
 /**
  * Clase Publicación
  *
 */
-public class Publi{
+@PersistenceCapable
+public class Publi implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;
+	@Persistent
 	private Propietario propietario; //Puede ser un usuario o un grupo
+	@Persistent
 	private String titulo;	 		//Titulo de la publicacion
+	@Persistent
 	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
+	@Persistent
 	private String descripcion; 	//Descripción de la publicación
 	
 	/**

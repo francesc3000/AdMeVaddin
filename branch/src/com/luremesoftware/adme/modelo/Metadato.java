@@ -3,18 +3,18 @@ package com.luremesoftware.adme.modelo;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 
 public class Metadato {
 
 	FilterPredicate filterPredicate = null;
-	private NombreTabla nombreTabla;
+	private Tabla tabla;
 	private Constante nombreMetadato;
     private FilterOperator operador;
     private Object valor;
 	
-	public Metadato(NombreTabla nombreTabla, Constante nombreMetadato, FilterOperator operador, Object valor ) {
-		this.nombreTabla = nombreTabla;
+	public Metadato(Tabla tabla, Constante nombreMetadato, FilterOperator operador, Object valor ) {
+		this.tabla = tabla;
 		this.nombreMetadato = nombreMetadato;
 	    this.operador = operador;
 	    this.valor = valor;
@@ -24,15 +24,15 @@ public class Metadato {
 
 
 	public String getTabla(){
-		return this.nombreTabla.toString();
+		return this.tabla.toString();
 	}
 	
 	public FilterPredicate getlikeFilterPredicate(){
 		return this.filterPredicate;
 	}
 	
-	public NombreTabla getNombreTabla(){
-		return this.nombreTabla;
+	public Tabla getNombreTabla(){
+		return this.tabla;
 	}
 	
 	public Constante getNombreMetadato(){
