@@ -52,12 +52,14 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @param correo
 	 */
-	public Usuario(String id){
-		super(id);
+	public Usuario(String correo){
+		super(correo);
+		this.setCorreo(correo);
 	}
 	
-	public Usuario(String id, ListaGrupo listaGrupo){
-		super(id);
+	public Usuario(String correo, ListaGrupo listaGrupo){
+		super(correo);
+		this.setCorreo(correo);
 		this.setListaGrupo(listaGrupo);
 	}
 	
@@ -72,7 +74,7 @@ public class Usuario extends Propietario implements Serializable{
     * @param apellido2 Segundo apellido del usuario
 	*/	
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		this.setId(correo);
+		super(correo);
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.nombre = nombre;

@@ -2,6 +2,8 @@ package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
 
+import javax.jdo.PersistenceManager;
+
 import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
@@ -26,15 +28,22 @@ public class GrupoBbdd{
 	
 	public GrupoBbdd(){}
 	
-	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
+	public ListaMensaje putGrupo(Grupo grupo){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+        try {
+            pm.makePersistent(grupo);
+        } finally {
+            pm.close();
+        }
+
 		return listaMensaje;
 	}
 	
 	public Grupo getGrupo(String nombreGrupo){
 		ListaUsuario listaUsuario = new ListaUsuario();
-		
+		//TODO hacer consulta de grupo por nombre de grupo
 	    return new Grupo(listaUsuario,nombreGrupo);
 	}
 	

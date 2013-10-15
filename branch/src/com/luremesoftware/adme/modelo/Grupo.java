@@ -3,9 +3,11 @@ package com.luremesoftware.adme.modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
@@ -19,19 +21,19 @@ public class Grupo extends Propietario implements Serializable{
 	@Persistent
 	private String nombre = null;
 	@Persistent
-	private ArrayList<Usuario> listaUsuario = null;
+	private ArrayList<Key> listaUsuarioKey = null;
+	@NotPersistent
+	private ListaUsuario listaUsuario = new ListaUsuario();
 	
 	public Grupo(Usuario usuario, String nombre){
-		super(nombre);
-		this.nombre = nombre;
-		this.listaUsuario = (ArrayList<Usuario>)new ListaUsuario();
+		super();
+		this.setNombre(nombre);
 		this.addUsuario(usuario);
 	}
 	
 	public Grupo(ListaUsuario listausuario, String nombre){
-		super(nombre);
-		this.nombre = nombre;
-		this.listaUsuario = new ListaUsuario();
+		super();
+		this.setNombre(nombre);
 		this.addListaUsuario(listausuario);
 	}
 	

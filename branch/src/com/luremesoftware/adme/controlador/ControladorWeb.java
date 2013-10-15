@@ -57,8 +57,8 @@ public class ControladorWeb{
 	 * @param grupo
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
-		return gestorGrupo.putGrupo(usuario, grupo);
+	public ListaMensaje putGrupo(Grupo grupo){
+		return gestorGrupo.putGrupo(grupo);
 	}
 
 	/**

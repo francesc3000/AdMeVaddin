@@ -20,7 +20,7 @@ public class Publi{
 	@Persistent
 	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
 	//private Propietario propietario; //Puede ser un usuario o un grupo
-	private String propietarioId; //En futuras versiones de GAE/JDO podria solucionarse
+	private Key propietarioKey; //En futuras versiones de GAE/JDO podria solucionarse
 	@NotPersistent
 	private Propietario propietario; //Puede ser un usuario o un grupo
 	@Persistent
@@ -36,7 +36,7 @@ public class Publi{
 	 * @param propietario Propietario de la publicacion(Puede pasarse un Usuario o un Grupo directamente).
 	 */
 	public Publi(Propietario propietario){
-		this.propietarioId = propietario.getId();
+		this.propietarioKey = propietario.getKey();
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class Publi{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String ciudad, String descripcion){
-		this.propietarioId = propietario.getId();
+		this.propietarioKey = propietario.getKey();
 		this.propietario = propietario;
 		this.titulo = titulo;
 		this.ciudad = ciudad;

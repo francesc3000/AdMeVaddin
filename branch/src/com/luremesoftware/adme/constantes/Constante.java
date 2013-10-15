@@ -15,10 +15,9 @@ import com.luremesoftware.adme.modelo.Usuario;
 public interface Constante {
 	
 	public enum Tabla implements Constante{
-		USUARIO(Usuario.class.getName()),
-		GRUPO(Grupo.class.getName()),
-		PUBLICACION(Publi.class.getName()),
-		USUARIOGRUPO("UsuarioGrupo");//TODO Quitar esta constante
+		USUARIO(Usuario.class.getSimpleName()),
+		GRUPO(Grupo.class.getSimpleName()),
+		PUBLICACION(Publi.class.getSimpleName());
 		
 		private final String constante;
 		
