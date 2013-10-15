@@ -1,6 +1,5 @@
 package com.luremesoftware.adme.modelo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -27,7 +26,7 @@ public abstract class Propietario{
 	//private String video;
 	//private Image avatar;
 	//@Persistent
-	protected ArrayList<Publi> listaPubli = null;
+	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 	//@Persistent
 	protected ArrayList<Puntuacion> listaPuntuacion = null;
 	

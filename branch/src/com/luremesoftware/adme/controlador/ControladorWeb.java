@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
@@ -67,7 +68,12 @@ public class ControladorWeb{
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
 	public ListaMensaje putPubli(Publi publi){
-		return gestorPubli.putPubli(publi);
+		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
+		if(!listaMensaje.contieneErrores()){
+			Propietario propietario = publi.getPropietario();
+			propietario.setPubli(publi);
+		}
+		return listaMensaje;
 	}
 	
 	public Usuario getUsuario(String correo){
@@ -100,7 +106,6 @@ public class ControladorWeb{
 	 * @param correo
 	 * @return Si el usuario no esta registrado se retorna null
 	 * @throws IOException 
-	 * @throws MultipleUsuario 
 	 */
 	public Usuario acceder(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Acceder acceder = new Acceder(request, response);

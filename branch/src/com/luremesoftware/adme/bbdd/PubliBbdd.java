@@ -1,46 +1,31 @@
 package com.luremesoftware.adme.bbdd;
 
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.luremesoftware.adme.constantes.Constante.ConstantePropietario;
-import com.luremesoftware.adme.constantes.Constante.ConstantePubli;
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+
 import com.luremesoftware.adme.constantes.Constante.Tabla;
+import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
-import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaPropietario;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 
-public class PubliBbdd extends Bbdd{
-
-	private Query query = null;
+public class PubliBbdd{
 	
 	public PubliBbdd(){
-		super();
-		query = new Query(Tabla.PUBLICACION.toString());
 	}
 	
 	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		Entity entPublicacion = new Entity(Tabla.PUBLICACION.toString());
-		
-		String clase = publi.getPropietario().getClass().toString();
-		int ultimoPunto = clase.lastIndexOf(".");
-		clase = clase.substring(ultimoPunto + 1);
 
-		entPublicacion.setProperty(ConstantePubli.PROPIETARIO.toString(), publi.getPropietario().getId());
-		entPublicacion.setProperty(ConstantePubli.CLASE.toString(), clase);
-		entPublicacion.setProperty(ConstantePubli.TITULO.toString(), publi.getTitulo());
-		entPublicacion.setProperty(ConstantePubli.CIUDAD.toString(), publi.getCiudad());
-		entPublicacion.setProperty(ConstantePubli.DESCRIPCION.toString(), publi.getDescripcion());
-		
-		listaMensaje.addAll(this.putDatastore(entPublicacion));
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+        try {
+            pm.makePersistent(publi);
+        } finally {
+            pm.close();
+        }
 		
 		return listaMensaje;
 	}
@@ -48,12 +33,17 @@ public class PubliBbdd extends Bbdd{
 	public ListaPubli getListaPubli(Propietario propietario){
 		ListaPubli listaPubli = new ListaPubli();
 		
-		query.setFilter(new FilterPredicate(ConstantePubli.PROPIETARIO.toString(),FilterOperator.EQUAL,propietario.getId()));
-		
-		PreparedQuery pq = this.datastore.prepare(query);
-		
-		for (Entity result : pq.asIterable()) {
-		    listaPubli.add(rellenaPubli(result, propietario));
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+	    String query = "select from " + Publi.class.getName() + " where propietarioKey == :propietarioKey";
+
+	    @SuppressWarnings("unchecked")
+		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getId());
+	    pm.close();
+	    if(listaPubli.isEmpty()){
+	    	return null;
+	    }
+	    for(Publi publi:listaPubliList){
+			listaPubli.add(publi);
 		}
 		return listaPubli;
 	}
@@ -61,52 +51,25 @@ public class PubliBbdd extends Bbdd{
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		ListaPubli listaPubli = new ListaPubli();
 		
-		this.buildQuery(this.query, listaMetadato);
-		
-		PreparedQuery pq = this.datastore.prepare(query);
-		ListaPropietario listaPropietario = new ListaPropietario();
-		
-		for (Entity result : pq.asIterable()) {
-			String class_string = (String) result.getProperty(ConstantePropietario.CLASE.toString());
-			Propietario propietario = null;
-			String id = null;
-			
-			//TODO Hacer que enum funcione en switch
-			if(class_string.compareTo(ConstantePropietario.USUARIO.toString()) == 0){
-				id = (String) result.getProperty(ConstantePubli.PROPIETARIO.toString());
-				
-				propietario = listaPropietario.getPropietarioById(id);
-				if(propietario == null){
-					//Se busca en BBDD
-					GestorUsuario gestorUsuario = new GestorUsuario();
-			        propietario = gestorUsuario.getUsuario(id);
-					listaPropietario.add(propietario);
-				}
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		//Se construye la sentencia de selección
+		String query = "select from " + Publi.class.getName();
+		boolean first=false;
+		for(Metadato metadato:listaMetadato){
+			if(first==false){
+				query = query + " where ";
+				first = true;
 			}
-			else if(class_string == ConstantePropietario.GRUPO.toString()){
-				GestorGrupo gestorGrupo = new GestorGrupo();
-				id = (String) result.getProperty(ConstantePubli.PROPIETARIO.toString());
-				propietario = listaPropietario.getPropietarioById(id);
-				if(propietario == null){
-					//Se busca en BBDD
-					propietario = gestorGrupo.getGrupo(id);
-					listaPropietario.add(propietario);
-				}
-			}
-
-			if(propietario!=null){
-				listaPubli.add(rellenaPubli(result, propietario));
+			if(metadato.getNombreTabla().compareTo(Tabla.PUBLICACION)==0){
+				query = query + metadato.getNombreMetadato() + metadato.getOperador().toString() + metadato.getValor().toString();
 			}
 		}
 		
+		@SuppressWarnings("unchecked")
+		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute();
+		for(Publi publi:listaPubliList){
+			listaPubli.add(publi);
+		}
 		return listaPubli;
-	}
-	
-	private Publi rellenaPubli(Entity result, Propietario propietario){
-
-		    return new Publi(propietario,
-				   			(String) result.getProperty(ConstantePubli.TITULO.toString()),
-				   			(String) result.getProperty(ConstantePubli.CIUDAD.toString()),
-				   			(String) result.getProperty(ConstantePubli.DESCRIPCION.toString()));
 	}
 }

@@ -7,7 +7,6 @@ import com.luremesoftware.adme.constantes.Constante.Tabla;
 
 public class Metadato {
 
-	FilterPredicate filterPredicate = null;
 	private Tabla tabla;
 	private Constante nombreMetadato;
     private FilterOperator operador;
@@ -18,19 +17,8 @@ public class Metadato {
 		this.nombreMetadato = nombreMetadato;
 	    this.operador = operador;
 	    this.valor = valor;
-	    
-	    this.filterPredicate = new FilterPredicate(this.nombreMetadato.toString(), this.operador, this.valor);
 	}
 
-
-	public String getTabla(){
-		return this.tabla.toString();
-	}
-	
-	public FilterPredicate getlikeFilterPredicate(){
-		return this.filterPredicate;
-	}
-	
 	public Tabla getNombreTabla(){
 		return this.tabla;
 	}

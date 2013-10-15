@@ -18,7 +18,7 @@ public interface Constante {
 		USUARIO(Usuario.class.getName()),
 		GRUPO(Grupo.class.getName()),
 		PUBLICACION(Publi.class.getName()),
-		USUARIOGRUPO("UsuarioGrupo");
+		USUARIOGRUPO("UsuarioGrupo");//TODO Quitar esta constante
 		
 		private final String constante;
 		
