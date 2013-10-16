@@ -4,11 +4,31 @@
  */
 package com.luremesoftware.adme.constantes;
 
+import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.Usuario;
+
 /**
  * @author francesc3000@gmail.com
  *
  */
 public interface Constante {
+	
+	public enum Tabla implements Constante{
+		USUARIO(Usuario.class.getSimpleName()),
+		GRUPO(Grupo.class.getSimpleName()),
+		PUBLICACION(Publi.class.getSimpleName());
+		
+		private final String constante;
+		
+		private Tabla(String constante){
+			this.constante = constante;
+		}
+		
+		public String toString(){
+			return this.constante;
+		}
+	}
 	/**
 	 * En esta clase introduciremos las constantes y metadatos pertenecientes a 
 	 * la clase Propietario

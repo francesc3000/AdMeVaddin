@@ -1,11 +1,16 @@
 package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.NombreTabla;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
@@ -17,20 +22,28 @@ import com.luremesoftware.adme.modelo.lista.ListaUsuario;
  * @author francesc3000@gmail.com
  *
 */
+@PersistenceCapable
 public class Usuario extends Propietario implements Serializable{
 	
 	/**
 	 * 
 	 */
+	@NotPersistent
 	private static final long serialVersionUID = 1L;
+	@Persistent
 	private String correo;
+	@Persistent
 	private String contrasena;
+	@Persistent
 	private String nombre;
+	@Persistent
 	private String apellido1;
+	@Persistent
 	private String apellido2;
+	@Persistent
+	private ArrayList<Grupo> listaGrupo = null;
 	
-	
-	private ListaGrupo listaGrupo = null;
+	public Usuario(){}
 	
 	/**
 	 * Este Constructor crear un usuario a partir de su correo electronico
@@ -42,15 +55,11 @@ public class Usuario extends Propietario implements Serializable{
 	public Usuario(String correo){
 		super(correo);
 		this.setCorreo(correo);
-		//Se recogen los datos del Usuario de BBDD
-		this.setDatosBbdd();
 	}
 	
 	public Usuario(String correo, ListaGrupo listaGrupo){
 		super(correo);
 		this.setCorreo(correo);
-		//Se recogen los datos del Usuario de BBDD
-		this.setDatosBbdd();
 		this.setListaGrupo(listaGrupo);
 	}
 	
@@ -65,7 +74,7 @@ public class Usuario extends Propietario implements Serializable{
     * @param apellido2 Segundo apellido del usuario
 	*/	
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		this.setId(correo);
+		super(correo);
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
@@ -114,7 +123,7 @@ public class Usuario extends Propietario implements Serializable{
 			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 		}
 		
-		return this.listaGrupo;
+		return (ListaGrupo) this.listaGrupo;
 	}
 	
 	public boolean setCorreo(String correo){
@@ -155,56 +164,13 @@ public class Usuario extends Propietario implements Serializable{
 		ListaMetadato listaMetadato = new ListaMetadato();
 		
 		listaMetadato.add(
-				new Metadato(NombreTabla.USUARIO,
-							 ConstanteUsuario.CORREO,
+				new Metadato(Tabla.USUARIO,
+							 ConstanteUsuario.ID,
 							 FilterOperator.EQUAL,
-							 this.correo));
+							 this.getId()));
 		
 		ListaUsuario listausuario = new UsuarioBbdd().getListaUsuario(listaMetadato);
 		
 		return listausuario.get(0);
 	}
-	
-	private boolean setDatosBbdd(){
-		Usuario usuario = this.getDatosBbdd();
-		
-		this.setContrasena(usuario.getContrasena());
-		this.setNombre(usuario.getNombre());
-		this.setApellido1(usuario.getApellido1());
-		this.setApellido2(usuario.getApellido2());
-		
-		return true;
-	}
-	
-	/*
-	private boolean setDatosBbdd(){
-		ListaMetadato listaMetadato = new ListaMetadato();
-		
-		listaMetadato = this.getDatosBbdd();
-		
-		for(Metadato metadato:listaMetadato){
-			//TODO Hacer que funciona enum en switch case
-			String nombreMetadato = metadato.getNombreMetadato().toString();
-			if(nombreMetadato == ConstanteUsuario.CORREO.toString()){
-				if(this.correo!=metadato.getValor().toString()){
-					return false;
-				}
-				this.setCorreo(metadato.getValor().toString());
-			}
-			else if(nombreMetadato == ConstanteUsuario.CONTRASENA.toString()){
-				this.setContrasena(metadato.getValor().toString());
-			}
-			else if(nombreMetadato == ConstanteUsuario.NOMBRE.toString()){
-				this.setNombre(metadato.getValor().toString());
-			}
-			else if(nombreMetadato == ConstanteUsuario.APELLIDO1.toString()){
-				this.setApellido1(metadato.getValor().toString());
-			}
-			else if(nombreMetadato == ConstanteUsuario.APELLIDO2.toString()){
-				this.setApellido2(metadato.getValor().toString());
-			}
-		}
-		
-		return true;
-	}*/
 }

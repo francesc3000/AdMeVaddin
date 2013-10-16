@@ -1,13 +1,33 @@
 package com.luremesoftware.adme.modelo;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+import com.google.appengine.api.datastore.Key;
+
 /**
  * Clase Publicación
  *
 */
+@PersistenceCapable
 public class Publi{
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;
+	@Persistent
+	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
+	//private Propietario propietario; //Puede ser un usuario o un grupo
+	private Key propietarioKey; //En futuras versiones de GAE/JDO podria solucionarse
+	@NotPersistent
 	private Propietario propietario; //Puede ser un usuario o un grupo
+	@Persistent
 	private String titulo;	 		//Titulo de la publicacion
+	@Persistent
 	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
+	@Persistent
 	private String descripcion; 	//Descripción de la publicación
 	
 	/**
@@ -16,7 +36,7 @@ public class Publi{
 	 * @param propietario Propietario de la publicacion(Puede pasarse un Usuario o un Grupo directamente).
 	 */
 	public Publi(Propietario propietario){
-		this.propietario = propietario;
+		this.propietarioKey = propietario.getKey();
 	}
 	
 	/**
@@ -28,6 +48,7 @@ public class Publi{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String ciudad, String descripcion){
+		this.propietarioKey = propietario.getKey();
 		this.propietario = propietario;
 		this.titulo = titulo;
 		this.ciudad = ciudad;
