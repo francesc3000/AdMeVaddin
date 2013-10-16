@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.luremesoftware.adme.constantes.Constante.Accion;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
@@ -42,17 +43,30 @@ public class ControladorWeb{
 	}
 	
 	/**
-	 * Se crea o modifica un usuario en base de datos
+	 * Se crea, modifica o borra un usuario en base de datos
 	 * 
 	 * @param usuario Clase tipo usuario
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putUsuario(Usuario usuario){
-		return gestorUsuario.putUsuario(usuario);
+	public ListaMensaje putUsuario(Usuario usuario, Accion accion){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		switch(accion.toString()){
+		case "I":
+			listaMensaje.addAll(gestorUsuario.creaUsuario(usuario));
+			break;
+		case "U":
+			listaMensaje.addAll(gestorUsuario.actualizaUsuario(usuario));
+			break;
+		case "D":
+			listaMensaje.addAll(gestorUsuario.borraUsuario(usuario));
+			break;
+		}
+		return listaMensaje;
 	}
 	
 	/**
-	 * Crea o modifica un grupo
+	 * Se crea, modifica o borra un grupo
 	 * @param usuario
 	 * @param grupo
 	 * @return Se retorna un listado de mensajes del sistema
@@ -62,7 +76,7 @@ public class ControladorWeb{
 	}
 
 	/**
-	 * Se crea o modifica una Publicación
+	 * Se crea, modifica o borra una Publicación
 	 * 
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
