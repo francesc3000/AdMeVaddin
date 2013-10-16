@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -12,12 +13,13 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.luremesoftware.adme.bbdd.PMF;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 
 public class UsuarioBbdd{
 	
 	public UsuarioBbdd(){}
 	
-	public ListaMensaje putUsuario(Usuario usuario){
+	public ListaMensaje creaUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -30,9 +32,47 @@ public class UsuarioBbdd{
 		return listaMensaje;
 	}
 	
+	public ListaMensaje actualizaUsuario(Key key){
+		//TODO implementar actualización
+		Usuario usuario = null;
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+	    	usuario = pm.getObjectById(Usuario.class,key);
+	    	
+	    }catch (JDOObjectNotFoundException e) {
+	        //TODO Crear mensaje de error
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		return listaMensaje;
+	}
+	
+	public ListaMensaje borraUsuario(Usuario usuario){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		try{
+			pm.deletePersistent(usuario);
+	    }catch (JDOObjectNotFoundException e) {
+	        //TODO Crear mensaje de error
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		
+		
+		return listaMensaje;
+	}
+
 	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    String query = "select from " + Usuario.class.getName() + " where id == :correo";
+	    String query = "select from " + Tabla.USUARIO + " where id == :correo";
 	    
 	    Usuario usuario = null;
 	    try{
@@ -50,7 +90,7 @@ public class UsuarioBbdd{
 	    
 	    return usuario;
 	}
-
+	
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		return this.getListaUsuario(listaMetadato, null, null);
 	}

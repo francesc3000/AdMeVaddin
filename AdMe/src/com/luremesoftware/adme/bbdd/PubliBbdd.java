@@ -2,6 +2,7 @@ package com.luremesoftware.adme.bbdd;
 
 import java.util.List;
 
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
 import com.luremesoftware.adme.constantes.Constante.Tabla;
@@ -34,17 +35,21 @@ public class PubliBbdd{
 		ListaPubli listaPubli = new ListaPubli();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    String query = "select from " + Publi.class.getName() + " where propietarioKey == :propietarioKey";
-
-	    @SuppressWarnings("unchecked")
-		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getId());
-	    pm.close();
-	    if(listaPubli.isEmpty()){
-	    	return null;
+	    String query = "select from " + Tabla.PUBLICACION + " where propietarioKey == :propietarioKey";
+	    
+	    try{
+	    	@SuppressWarnings("unchecked")
+	    	List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getId());
+	    	for(Publi publi:listaPubliList){
+				listaPubli.add(publi);
+			}
+	    }catch (JDOObjectNotFoundException e) {
+	        //Do nothing
+	    } 
+	    finally {
+	        pm.close();
 	    }
-	    for(Publi publi:listaPubliList){
-			listaPubli.add(publi);
-		}
+	    
 		return listaPubli;
 	}
 	
@@ -53,7 +58,7 @@ public class PubliBbdd{
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		//Se construye la sentencia de selección
-		String query = "select from " + Publi.class.getName();
+		String query = "select from " + Tabla.PUBLICACION;
 		boolean first=false;
 		for(Metadato metadato:listaMetadato){
 			if(first==false){

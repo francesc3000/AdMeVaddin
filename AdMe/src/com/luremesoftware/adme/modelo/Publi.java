@@ -7,6 +7,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 
 /**
  * Clase Publicación
@@ -68,6 +69,9 @@ public class Publi{
 	}
 	
 	public Propietario getPropietario(){
+		if(this.propietario==null){
+			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietarioKey);
+		}
 		return this.propietario;
 	}
 	

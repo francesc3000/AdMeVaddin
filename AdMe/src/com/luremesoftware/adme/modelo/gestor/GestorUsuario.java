@@ -6,16 +6,14 @@ import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 public class GestorUsuario {
 	private UsuarioBbdd usuarioBbdd = null;
-	private GestorPubli gestorPubli = null;
+	
 	
 	public GestorUsuario(){
 		this.usuarioBbdd = new UsuarioBbdd();
-		this.gestorPubli = new GestorPubli();
 	}
 	
 	/**
@@ -23,13 +21,29 @@ public class GestorUsuario {
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
-	public ListaMensaje putUsuario(Usuario usuario){
+	public ListaMensaje creaUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		if(checkparamObl(usuario)){
-		  listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
+		  listaMensaje.addAll(this.usuarioBbdd.creaUsuario(usuario));
 		}else{
 		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 		}
+		
+		return listaMensaje;
+	}
+	
+	public ListaMensaje actualizaUsuario(Usuario usuario){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		listaMensaje.addAll(this.usuarioBbdd.actualizaUsuario(usuario.getKey()));
+		
+		return listaMensaje;
+	}
+	
+	public ListaMensaje borraUsuario(Usuario usuario){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		listaMensaje.addAll(this.usuarioBbdd.borraUsuario(usuario));
 		
 		return listaMensaje;
 	}
@@ -48,27 +62,6 @@ public class GestorUsuario {
 	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
 		
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);
-	}
-
-	public ListaPubli getListaPubli(Usuario usuario){
-	
-	    if(usuario.getId() == null && checkparamObl(usuario)){
-		  usuario.setListaPubli(gestorPubli.getListaPubli(usuario));
-		}
-	
-		return usuario.getListaPubli();
-	}
-
-	public ListaPubli getListaPubli(ListaUsuario listaUsuario){
-		
-		ListaPubli listaPubli = new ListaPubli();
-
-		for(Usuario usuario:listaUsuario){
-			usuario.setListaPubli(this.getListaPubli(usuario));
-			listaPubli.addAll(usuario.getListaPubli());
-		}
-
-		return listaPubli;
 	}
 	
 	private boolean checkparamObl(Usuario usuario){
