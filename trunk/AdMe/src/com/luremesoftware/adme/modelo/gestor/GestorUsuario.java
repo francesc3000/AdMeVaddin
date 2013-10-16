@@ -25,32 +25,17 @@ public class GestorUsuario {
 	 */	
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.existeUsuario(usuario.getCorreo()));
-		
-		if(!listaMensaje.contieneErrores())
-		{
-			 if(checkparamObl(usuario)){
-			   listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
-			 }else{
-				 listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
-			 }
+		if(checkparamObl(usuario)){
+		  listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
+		}else{
+		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 		}
 		
 		return listaMensaje;
 	}
 
 	public Usuario getUsuario(String correo){
-		Usuario ret_usuario = null;
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.existeUsuario(correo));
-		
-		if(listaMensaje.contieneErrores()){			
-			ret_usuario = new Usuario(correo);
-		}
-		
-		return ret_usuario;
+		return this.usuarioBbdd.getUsuario(correo);
 	}
 	
 	public ListaUsuario getListaUsuarioXGrupo(String nombreGrupo){
@@ -84,19 +69,6 @@ public class GestorUsuario {
 		}
 
 		return listaPubli;
-	}
-	
-	public ListaMensaje existeUsuario(String correo){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		//TODO Meter en MemCache
-		boolean existe = this.usuarioBbdd.existeUsuario(correo);
-		
-		if(existe){
-			listaMensaje.add(new Mensaje(TipoError.ERROR,"El Usuario ya existe"));
-		}
-		
-		return listaMensaje;
 	}
 	
 	private boolean checkparamObl(Usuario usuario){
