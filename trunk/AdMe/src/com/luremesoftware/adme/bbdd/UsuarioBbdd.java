@@ -72,7 +72,7 @@ public class UsuarioBbdd{
 
 	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    String query = "select from " + Tabla.USUARIO + " where id == :correo";
+	    String query = "select from " + Tabla.USUARIO + " where correo == :correo";
 	    
 	    Usuario usuario = null;
 	    try{

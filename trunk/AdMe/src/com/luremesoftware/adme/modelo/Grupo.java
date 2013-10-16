@@ -21,13 +21,19 @@ public class Grupo extends Propietario implements Serializable{
 	@Persistent
 	private String nombre = null;
 	@Persistent
+	private String descripcion = null;
+	@Persistent
+	private String ciudad = null;
+	@Persistent
 	private ArrayList<Key> listaUsuarioKey = null;
 	@NotPersistent
 	private ListaUsuario listaUsuario = new ListaUsuario();
 	
-	public Grupo(Usuario usuario, String nombre){
+	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
 		this.setNombre(nombre);
+		this.setDescripcion(descripcion);
+		this.setCiudad(ciudad);
 		this.addUsuario(usuario);
 	}
 	
@@ -53,6 +59,14 @@ public class Grupo extends Propietario implements Serializable{
 		return this.nombre;
 	}
 	
+	public String getDescripcion(){
+		return this.descripcion;
+	}
+	
+	public String getCiudad(){
+		return this.ciudad;
+	}
+	
 	public ListaUsuario getListaUsuario(){
 		if(this.listaUsuario==null){
 			this.listaUsuario = new GestorUsuario().getListaUsuarioXGrupo(this.getNombre());
@@ -62,6 +76,16 @@ public class Grupo extends Propietario implements Serializable{
 	
 	public boolean setNombre(String nombre){
 		this.nombre = nombre;
+		return true;
+	}
+	
+	public boolean setDescripcion(String descripcion){
+		this.descripcion = descripcion;
+		return true;
+	}
+	
+	public boolean setCiudad(String ciudad){
+		this.ciudad = ciudad;
 		return true;
 	}
 	
