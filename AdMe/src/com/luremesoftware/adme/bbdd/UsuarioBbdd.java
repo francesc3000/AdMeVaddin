@@ -1,18 +1,18 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
+import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
-import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 import com.luremesoftware.adme.bbdd.PMF;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 
@@ -42,20 +42,12 @@ public class UsuarioBbdd{
 	    return detached;
 	}
 	
-	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato){
+	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		return this.getListaUsuario(listaMetadato, null, null);
 	}
 	
-	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaGrupo listaGrupo){
-		return this.getListaUsuario(listaMetadato, listaGrupo, null);
-	}
-
-	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaPubli listaPubli){
-		return this.getListaUsuario(listaMetadato, null, listaPubli);
-	}
-	
-	public ListaUsuario getListaUsuario(ListaMetadato listaMetadato, ListaGrupo listaGrupo, ListaPubli listaPubli){
-		ListaUsuario listaUsuario = new ListaUsuario();
+	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato, ArrayList<Grupo> listaGrupo, ArrayList<Publi> listaPubli){
+		ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
 		
 		return listaUsuario;
 	}

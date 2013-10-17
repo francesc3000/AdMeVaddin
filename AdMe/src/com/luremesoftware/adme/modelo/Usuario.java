@@ -7,14 +7,7 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.luremesoftware.adme.bbdd.UsuarioBbdd;
-import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
-import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 /**
  * Clase Usuario
@@ -45,7 +38,7 @@ public class Usuario extends Propietario implements Serializable{
 	
 	public Usuario(){}
 	
-	public Usuario(String correo, ListaGrupo listaGrupo){
+	public Usuario(String correo, ArrayList<Grupo> listaGrupo){
 		super(correo);
 		this.setCorreo(correo);
 		this.setListaGrupo(listaGrupo);
@@ -106,12 +99,16 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @return
 	 */
-	public ListaGrupo getListaGrupo(){
+	public ArrayList<Grupo> getListaGrupo(){
 		if(this.listaGrupo == null){
 			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 		}
 		
-		return (ListaGrupo) this.listaGrupo;
+		return this.listaGrupo;
+	}
+	
+	public Puntuaciones getControlPuntuacion(){
+		return this.puntuaciones;
 	}
 	
 	public boolean setCorreo(String correo){
@@ -138,7 +135,7 @@ public class Usuario extends Propietario implements Serializable{
 		return true;
 	}
 	
-	public boolean setListaGrupo(ListaGrupo listaGrupo){
+	public boolean setListaGrupo(ArrayList<Grupo> listaGrupo){
 		this.listaGrupo = listaGrupo;
 		return true;
 	}
@@ -146,19 +143,5 @@ public class Usuario extends Propietario implements Serializable{
 	public String toString(){
 		return getCorreo() + " " + getNombre() + " " + getApellido1() + " " + getApellido2();
 
-	}
-	
-	private Usuario getDatosBbdd(){
-		ListaMetadato listaMetadato = new ListaMetadato();
-		
-		listaMetadato.add(
-				new Metadato(Tabla.USUARIO,
-							 ConstanteUsuario.ID,
-							 FilterOperator.EQUAL,
-							 this.getId()));
-		
-		ListaUsuario listausuario = new UsuarioBbdd().getListaUsuario(listaMetadato);
-		
-		return listausuario.get(0);
 	}
 }

@@ -1,7 +1,6 @@
 package com.luremesoftware.adme.modelo;
 
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.luremesoftware.adme.constantes.Constante;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 

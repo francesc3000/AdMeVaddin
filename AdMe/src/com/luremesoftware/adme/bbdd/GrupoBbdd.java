@@ -1,5 +1,7 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.ArrayList;
+
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
@@ -8,7 +10,6 @@ import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
@@ -34,11 +35,11 @@ public class GrupoBbdd{
 	    return detached;
 	}
 	
-	public ListaGrupo getListaGrupo(Usuario usuario){
+	public ArrayList<Grupo> getListaGrupo(Usuario usuario){
 		return this.getListaGrupo(null, usuario);
 	}
 	
-	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato){
+	public ArrayList<Grupo> getListaGrupo(ListaMetadato listaMetadato){
 		return this.getListaGrupo(listaMetadato, null);
 	}
 
@@ -48,8 +49,8 @@ public class GrupoBbdd{
 	 * @param usuario
 	 * @return
 	 */
-	public ListaGrupo getListaGrupo(ListaMetadato listaMetadato, Usuario usuario){
-		ListaGrupo listaGrupo = new ListaGrupo();
+	public ArrayList<Grupo> getListaGrupo(ListaMetadato listaMetadato, Usuario usuario){
+		ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
 		
 		return listaGrupo; 
 	}

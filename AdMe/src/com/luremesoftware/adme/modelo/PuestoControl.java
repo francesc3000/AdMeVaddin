@@ -1,33 +1,41 @@
 package com.luremesoftware.adme.modelo;
 
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
+import java.util.ArrayList;
 
 public class PuestoControl {
 	private Usuario usuario = null;
-	private ListaPubli listaPubli = null;
-	private ListaGrupo listaGrupo = null;
+	private ArrayList<Publi> listaPubli = null;
+	private ArrayList<Grupo> listaGrupo = null;
+	private Puntuaciones puntuaciones = null;
 	
 	public PuestoControl(Usuario usuario){
 		this.usuario = usuario;
-		this.listaGrupo = new ListaGrupo();
-		this.listaGrupo.addAll(usuario.getListaGrupo());
+		this.listaGrupo = usuario.getListaGrupo();
 		
 		//Se recuperan las publicaciones del Usuario 
 		//y de los equipos en los que participa
-		this.listaPubli = new ListaPubli();
-		this.listaPubli.addAll(usuario.getListaPubli());
+		this.listaPubli = (usuario.getListaPubli());
 		for(Grupo grupo:this.listaGrupo){
 			this.listaPubli.addAll(grupo.getListaPubli());
 		}
+		
+		this.puntuaciones = usuario.getControlPuntuacion();
 	}
 	
-	public ListaPubli getListaPubli(){
+	public Usuario getUsuario(){
+		return this.usuario;
+	}
+	
+	public ArrayList<Publi> getListaPubli(){
 		return this.listaPubli;
 	}
 	
-	public ListaGrupo getListaGrupo(){
+	public ArrayList<Grupo> getListaGrupo(){
 		return this.listaGrupo;
+	}
+	
+	public int getPuntuacionPromedio(){
+		return this.puntuaciones.getPuntuacionPromedio();
 	}
 
 }
