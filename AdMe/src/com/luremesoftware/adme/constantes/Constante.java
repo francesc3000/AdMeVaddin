@@ -114,24 +114,4 @@ public interface Constante {
 			return this.constante;
 		}
 	}
-	
-	/**
-	 * En esta clase introduciremos las constantes para las acciones  
-	 * disponibles en el sistema
-	 */
-	public static enum Accion implements Constante{
-		CREAR("I"),
-		ACTUALIZAR("U"),
-		BORRAR("D");
-		
-		private final String constante;
-		
-		private Accion(String constante){
-			this.constante = constante;
-		}
-		
-		public String toString(){
-			return this.constante;
-		}
-	}
 }

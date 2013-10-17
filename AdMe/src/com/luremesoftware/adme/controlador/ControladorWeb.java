@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.luremesoftware.adme.constantes.Constante.Accion;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
@@ -42,56 +41,12 @@ public class ControladorWeb{
 		return new PuestoControl(usuario);
 	}
 	
-	/**
-	 * Se crea, modifica o borra un usuario en base de datos
-	 * 
-	 * @param usuario Clase tipo usuario
-	 * @return Se retorna un listado de mensajes del sistema
-	 */
-	public ListaMensaje putUsuario(Usuario usuario, Accion accion){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		switch(accion.toString()){
-		case "I":
-			listaMensaje.addAll(gestorUsuario.creaUsuario(usuario));
-			break;
-		case "U":
-			listaMensaje.addAll(gestorUsuario.actualizaUsuario(usuario));
-			break;
-		case "D":
-			listaMensaje.addAll(gestorUsuario.borraUsuario(usuario));
-			break;
-		}
-		return listaMensaje;
-	}
-	
-	/**
-	 * Se crea, modifica o borra un grupo
-	 * @param usuario
-	 * @param grupo
-	 * @return Se retorna un listado de mensajes del sistema
-	 */
-	public ListaMensaje putGrupo(Grupo grupo){
-		return gestorGrupo.putGrupo(grupo);
-	}
-
-	/**
-	 * Se crea, modifica o borra una Publicación
-	 * 
-	 * @param publi Clase Publicación
-	 * @return Se retorna un listado de mensajes del sistema
-	 */
-	public ListaMensaje putPubli(Publi publi){
-		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
-		if(!listaMensaje.contieneErrores()){
-			Propietario propietario = publi.getPropietario();
-			propietario.setPubli(publi);
-		}
-		return listaMensaje;
-	}
-	
 	public Usuario getUsuario(String correo){
 		return gestorUsuario.getUsuario(correo);
+	}
+	
+	public Grupo getGrupo(String titulo){
+		return gestorGrupo.getGrupo(titulo);
 	}
 
 	/**
@@ -114,6 +69,68 @@ public class ControladorWeb{
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
 	
+	/**
+	 * Se crea o modifica un usuario en base de datos
+	 * 
+	 * @param usuario Clase tipo usuario
+	 * @return Se retorna un listado de mensajes del sistema
+	 */
+	public ListaMensaje putUsuario(Usuario usuario){
+		return gestorUsuario.putUsuario(usuario);
+	}
+
+	/**
+	 * Se crea o modifica un grupo
+	 * @param usuario
+	 * @param grupo
+	 * @return Se retorna un listado de mensajes del sistema
+	 */
+	public ListaMensaje putGrupo(Grupo grupo){
+		return gestorGrupo.putGrupo(grupo);
+	}
+
+	/**
+	 * Se crea o modifica una Publicación
+	 * 
+	 * @param publi Clase Publicación
+	 * @return Se retorna un listado de mensajes del sistema
+	 */
+	public ListaMensaje putPubli(Publi publi){
+		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
+		if(!listaMensaje.contieneErrores()){
+			Propietario propietario = publi.getPropietario();
+			propietario.setPubli(publi);
+		}
+		return listaMensaje;
+	}
+	
+	/**
+	 * Se borra un Usuario de base de datos
+	 * @param usuario Usuario a borrar
+	 * @return retorna listado de los errores ocurridos
+	 */
+	public ListaMensaje borraUsuario(Usuario usuario){
+		return this.gestorUsuario.borraUsuario(usuario);
+	}
+	
+	/**
+	 * Se borra un Grupo de base de datos
+	 * @param grupo Grupo a borrar
+	 * @return retorna listado de los errores ocurridos
+	 */
+	public ListaMensaje borraGrupo(Grupo grupo){
+		return this.gestorGrupo.borraGrupo(grupo);
+	}
+	
+	/**
+	 * Se borra una Publicación de base de datos
+	 * @param publi Publicación a borrar
+	 * @return retorna listado de los errores ocurridos
+	 */
+	public ListaMensaje borraPubli(Publi publi){
+		return this.gestorPubli.borraPubli(publi);
+	}
+
 	/**
 	 * Si el usuario esta registrado se retornan los datos del usuario a 
 	 * partir de su correo electronico

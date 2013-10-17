@@ -11,7 +11,7 @@ import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Grupo extends Propietario implements Serializable{
 
 	/**
@@ -29,18 +29,14 @@ public class Grupo extends Propietario implements Serializable{
 	@NotPersistent
 	private ListaUsuario listaUsuario = new ListaUsuario();
 	
+	public Grupo(){};
+	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);
 		this.addUsuario(usuario);
-	}
-	
-	public Grupo(ListaUsuario listausuario, String nombre){
-		super();
-		this.setNombre(nombre);
-		this.addListaUsuario(listausuario);
 	}
 	
 	public boolean addUsuario(Usuario usuario){

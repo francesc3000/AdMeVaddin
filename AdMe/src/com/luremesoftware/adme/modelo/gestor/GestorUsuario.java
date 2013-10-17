@@ -21,10 +21,10 @@ public class GestorUsuario {
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
-	public ListaMensaje creaUsuario(Usuario usuario){
+	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		if(checkparamObl(usuario)){
-		  listaMensaje.addAll(this.usuarioBbdd.creaUsuario(usuario));
+		  listaMensaje.addAll(this.usuarioBbdd.putUsuario(usuario));
 		}else{
 		  listaMensaje.add(new Mensaje(TipoError.ERROR, "Complete todos los campos obligatorios"));
 		}
@@ -32,20 +32,8 @@ public class GestorUsuario {
 		return listaMensaje;
 	}
 	
-	public ListaMensaje actualizaUsuario(Usuario usuario){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.usuarioBbdd.actualizaUsuario(usuario.getKey()));
-		
-		return listaMensaje;
-	}
-	
 	public ListaMensaje borraUsuario(Usuario usuario){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		listaMensaje.addAll(this.usuarioBbdd.borraUsuario(usuario));
-		
-		return listaMensaje;
+		return this.usuarioBbdd.borraUsuario(usuario);
 	}
 
 	public Usuario getUsuario(String correo){

@@ -1,50 +1,37 @@
 package com.luremesoftware.adme.bbdd;
 
-import java.util.ArrayList;
-
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
-import com.luremesoftware.adme.constantes.Constante.ConstanteGrupo;
-import com.luremesoftware.adme.constantes.Constante.ConstanteUsuario;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Grupo;
-import com.luremesoftware.adme.modelo.Metadato;
+import com.luremesoftware.adme.modelo.Mensaje;
+import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaUsuario;
-import com.google.appengine.api.datastore.DatastoreFailureException;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Transaction;
 
 public class GrupoBbdd{
 	
 	public GrupoBbdd(){}
 	
-	public ListaMensaje putGrupo(Grupo grupo){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-        try {
-            pm.makePersistent(grupo);
-        } finally {
-            pm.close();
-        }
-
-		return listaMensaje;
-	}
-	
 	public Grupo getGrupo(String nombreGrupo){
-		ListaUsuario listaUsuario = new ListaUsuario();
-		//TODO hacer consulta de grupo por nombre de grupo
-	    return new Grupo(listaUsuario,nombreGrupo);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+	    String query = "select from " + Tabla.GRUPO + " where nombre == :nombreGrupo";
+	    
+	    Grupo grupo = null, detached = null;
+	    try{
+	    	grupo = (Grupo) pm.newQuery(query).execute(nombreGrupo);
+		    detached = pm.detachCopy(grupo);
+	    }catch (JDOObjectNotFoundException e) {
+	        return null;
+	    } 
+	    finally {
+	        pm.close();
+	    }
+	    
+	    return detached;
 	}
 	
 	public ListaGrupo getListaGrupo(Usuario usuario){
@@ -65,5 +52,38 @@ public class GrupoBbdd{
 		ListaGrupo listaGrupo = new ListaGrupo();
 		
 		return listaGrupo; 
+	}
+
+	public ListaMensaje putGrupo(Grupo grupo){
+		ListaMensaje listaMensaje = new ListaMensaje();
+	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+	    try {
+	        pm.makePersistent(grupo);
+	    }catch (JDOObjectNotFoundException e) {
+	        listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		return listaMensaje;
+	}
+
+	public ListaMensaje borraGrupo(Grupo grupo){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		try{
+			pm.deletePersistent(grupo);
+	    }catch (JDOObjectNotFoundException e) {
+	        listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		return listaMensaje;
 	}
 }
