@@ -20,18 +20,6 @@ public class GestorPubli {
 	}
 	
 	/**
-	 * Crea una publicación en el sistema
-	 * 
-	 * @return Retorna el identificador de la publicación
-	 */
-	public ListaMensaje putPubli(Publi publi){
-		ListaMensaje listaMensaje = new ListaMensaje();
-		listaMensaje.addAll(publiBbdd.putPublicacion(publi));
-
-		return listaMensaje;
-	}
-	
-	/**
 	 * Se retorna el listado de Publicaciones a partir de un Id
 	 * @param id Identificador que se quiere buscar sus publicaciones
 	 * @return Listado de Publicaciones
@@ -70,5 +58,18 @@ public class GestorPubli {
 	
 	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
 		return this.publiBbdd.getListaPubli(listaMetadato);
+	}
+
+	/**
+	 * Crea una publicación en el sistema
+	 * 
+	 * @return Retorna el identificador de la publicación
+	 */
+	public ListaMensaje putPubli(Publi publi){
+		return publiBbdd.putPublicacion(publi);
+	}
+	
+	public ListaMensaje borraPubli(Publi publi){
+		return publiBbdd.borraPublicacion(publi);
 	}
 }

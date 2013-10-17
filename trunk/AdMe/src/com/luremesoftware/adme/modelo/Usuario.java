@@ -22,7 +22,7 @@ import com.luremesoftware.adme.modelo.lista.ListaUsuario;
  * @author francesc3000@gmail.com
  *
 */
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Usuario extends Propietario implements Serializable{
 	
 	/**
@@ -44,18 +44,6 @@ public class Usuario extends Propietario implements Serializable{
 	private ArrayList<Grupo> listaGrupo = null;
 	
 	public Usuario(){}
-	
-	/**
-	 * Este Constructor crear un usuario a partir de su correo electronico
-	 * recupera todos sus datos personales, los grupos donde participa y 
-	 * todas sus publicaciones
-	 * 
-	 * @param correo
-	 */
-	public Usuario(String correo){
-		super(correo);
-		this.setCorreo(correo);
-	}
 	
 	public Usuario(String correo, ListaGrupo listaGrupo){
 		super(correo);

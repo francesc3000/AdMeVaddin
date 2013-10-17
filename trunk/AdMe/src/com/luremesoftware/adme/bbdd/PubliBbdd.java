@@ -6,9 +6,11 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
 import com.luremesoftware.adme.constantes.Constante.Tabla;
+import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.modelo.lista.ListaPubli;
@@ -16,19 +18,6 @@ import com.luremesoftware.adme.modelo.lista.ListaPubli;
 public class PubliBbdd{
 	
 	public PubliBbdd(){
-	}
-	
-	public ListaMensaje putPublicacion(Publi publi){
-		ListaMensaje listaMensaje = new ListaMensaje();
-
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-        try {
-            pm.makePersistent(publi);
-        } finally {
-            pm.close();
-        }
-		
-		return listaMensaje;
 	}
 	
 	public ListaPubli getListaPubli(Propietario propietario){
@@ -76,5 +65,37 @@ public class PubliBbdd{
 			listaPubli.add(publi);
 		}
 		return listaPubli;
+	}
+
+	public ListaMensaje putPublicacion(Publi publi){
+		ListaMensaje listaMensaje = new ListaMensaje();
+	
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+	    try {
+	        pm.makePersistent(publi);
+	    }catch (JDOObjectNotFoundException e) {
+	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
+	    } finally {
+	        pm.close();
+	    }
+		
+		return listaMensaje;
+	}
+	
+	public ListaMensaje borraPublicacion(Publi publi){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		try{
+			pm.deletePersistent(publi);
+	    }catch (JDOObjectNotFoundException e) {
+	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		return listaMensaje;
 	}
 }

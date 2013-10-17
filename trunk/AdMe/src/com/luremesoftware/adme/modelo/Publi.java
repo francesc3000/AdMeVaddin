@@ -32,15 +32,6 @@ public class Publi{
 	private String descripcion; 	//Descripción de la publicación
 	
 	/**
-	 * Crea la clase Publicación sin parámetros descriptivos
-	 * 
-	 * @param propietario Propietario de la publicacion(Puede pasarse un Usuario o un Grupo directamente).
-	 */
-	public Publi(Propietario propietario){
-		this.propietarioKey = propietario.getKey();
-	}
-	
-	/**
 	* Crea la clase Publicación rellenando todos sus parámetros
 	* Al ser el título obligatorio, si es nulo o vacío se lanzará
 	* una excepción.
@@ -48,7 +39,7 @@ public class Publi{
     * @param propietario Propietario de la publicacion(Puede pasarse un Usuario o un Grupo directamente).
     * @param titulo El nuevo título de la publicacion.
 	*/	
-	public Publi(Propietario propietario, String titulo, String ciudad, String descripcion){
+	public Publi(Propietario propietario, String titulo, String descripcion, String ciudad){
 		this.propietarioKey = propietario.getKey();
 		this.propietario = propietario;
 		this.titulo = titulo;

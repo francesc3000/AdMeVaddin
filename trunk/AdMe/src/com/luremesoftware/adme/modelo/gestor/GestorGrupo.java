@@ -15,10 +15,6 @@ public class GestorGrupo {
 		this.grupoBbdd = new GrupoBbdd();
 	}
 	
-	public ListaMensaje putGrupo(Grupo grupo){
-		return this.grupoBbdd.putGrupo(grupo);
-	}
-	
 	public Grupo getGrupo(String nombreGrupo){
 		return this.grupoBbdd.getGrupo(nombreGrupo);
 	}
@@ -46,5 +42,18 @@ public class GestorGrupo {
 		}
 		
 		return listaPubli;
+	}
+
+	/**
+	 * Regista un grupo en el sistema
+	 * 
+	 * @return Se retorna un listado de mensajes del sistema
+	 */	
+	public ListaMensaje putGrupo(Grupo grupo){	
+		return this.grupoBbdd.putGrupo(grupo);
+	}
+
+	public ListaMensaje borraGrupo(Grupo grupo){
+		return this.grupoBbdd.borraGrupo(grupo);
 	}
 }
