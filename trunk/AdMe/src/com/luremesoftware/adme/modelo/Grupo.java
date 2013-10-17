@@ -9,7 +9,6 @@ import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
-import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 @PersistenceCapable(detachable="true")
 public class Grupo extends Propietario implements Serializable{
@@ -27,7 +26,7 @@ public class Grupo extends Propietario implements Serializable{
 	@Persistent
 	private ArrayList<Key> listaUsuarioKey = null;
 	@NotPersistent
-	private ListaUsuario listaUsuario = new ListaUsuario();
+	private ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
 	
 	public Grupo(){};
 	
@@ -43,7 +42,7 @@ public class Grupo extends Propietario implements Serializable{
 		return this.listaUsuario.add(usuario);
 	}
 	
-	public boolean addListaUsuario(ListaUsuario listaUsuario){
+	public boolean addListaUsuario(ArrayList<Usuario> listaUsuario){
 		return this.listaUsuario.addAll(listaUsuario);
 	}
 	
@@ -63,11 +62,11 @@ public class Grupo extends Propietario implements Serializable{
 		return this.ciudad;
 	}
 	
-	public ListaUsuario getListaUsuario(){
+	public ArrayList<Usuario> getListaUsuario(){
 		if(this.listaUsuario==null){
 			this.listaUsuario = new GestorUsuario().getListaUsuarioXGrupo(this.getNombre());
 		}
-		return (ListaUsuario) this.listaUsuario;
+		return this.listaUsuario;
 	}
 	
 	public boolean setNombre(String nombre){

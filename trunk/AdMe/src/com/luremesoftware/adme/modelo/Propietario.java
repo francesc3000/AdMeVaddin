@@ -15,8 +15,6 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.images.Image;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
-import com.luremesoftware.adme.modelo.lista.ListaPuntuacion;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -31,7 +29,7 @@ public abstract class Propietario{
 	//@Persistent
 	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 	//@Persistent
-	protected ArrayList<Puntuacion> listaPuntuacion = null;
+	protected Puntuaciones puntuaciones = null;
 	
 	public Propietario(){}
 			
@@ -50,25 +48,25 @@ public abstract class Propietario{
 		return this.id;
 	}
 	
-	public ListaPubli getListaPubli(){
+	public ArrayList<Publi> getListaPubli(){
 		if(this.listaPubli == null){
 			this.listaPubli = new GestorPubli().getListaPubli(this);	
 		}
-		return (ListaPubli) this.listaPubli;
+		return this.listaPubli;
 	}
-/*
+
 	public Puntuacion getAltaPuntuacion(){
-		return this.listaPuntuacion.getAltaPuntuacion();
+		return this.puntuaciones.getAltaPuntuacion();
 	}
 	
 	public Puntuacion getBajaPuntuacion(){
-		return this.listaPuntuacion.getBajaPuntuacion();
+		return this.puntuaciones.getBajaPuntuacion();
 	}
 	
 	public int getPuntuacionPromedio(){
-		return this.listaPuntuacion.getPuntuacionPromedio();
+		return this.puntuaciones.getPuntuacionPromedio();
 	}
-*/
+
 	public boolean setKey(Key key){
 		this.key = key;
 		return true;
@@ -83,8 +81,11 @@ public abstract class Propietario{
 		return this.listaPubli.add(publi);
 	}
 	
-	public boolean setListaPubli(ListaPubli listaPubli){
+	public boolean setListaPubli(ArrayList<Publi> listaPubli){
 		return this.listaPubli.addAll(listaPubli);
 	}
 	
+	public boolean setPuntuacion(Puntuacion puntuacion){
+		return this.puntuaciones.setPuntuacion(puntuacion);
+	}
 }

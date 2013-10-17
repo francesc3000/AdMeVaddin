@@ -1,15 +1,12 @@
 package com.luremesoftware.adme.modelo.gestor;
 
+import java.util.ArrayList;
+
 import com.luremesoftware.adme.bbdd.PubliBbdd;
-import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
-import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.lista.ListaGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
-import com.luremesoftware.adme.modelo.lista.ListaUsuario;
 
 public class GestorPubli {
 	
@@ -24,39 +21,11 @@ public class GestorPubli {
 	 * @param id Identificador que se quiere buscar sus publicaciones
 	 * @return Listado de Publicaciones
 	 */
-	public ListaPubli getListaPubli(Propietario propietario){
+	public ArrayList<Publi> getListaPubli(Propietario propietario){
 		return publiBbdd.getListaPubli(propietario);
 	}
 	
-	/**
-	 * Se retorna el listado de Pubicaciones a partir de una lista de Usuarios
-	 * @param listaUsuario Listado de Usuario que se quieren buscar sus publicaciones
-	 * @return Listado de Publicaciones
-	 */
-	public ListaPubli getListaPubli(ListaUsuario listaUsuario){
-		ListaPubli listaPubli = new ListaPubli();
-		
-		for(Usuario usuario:listaUsuario){
-			listaPubli.addAll(this.getListaPubli(usuario));
-		}
-		return listaPubli;
-	}
-	
-	/**
-	 * Se retorna el listado de Publicaciones a partir de un listado de Grupos
-	 * @param listaGrupo Listado de grupos que se quieren buscar sus publicaciones
-	 * @return Se retorna el listado de Publicaciones
-	 */
-	public ListaPubli getListaPubli(ListaGrupo listaGrupo){
-		ListaPubli listaPubli = new ListaPubli();
-		
-		for(Grupo grupo:listaGrupo){
-			listaPubli.addAll(this.getListaPubli(grupo));
-		}
-		return listaPubli;
-	}
-	
-	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
+	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
 		return this.publiBbdd.getListaPubli(listaMetadato);
 	}
 

@@ -1,5 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -13,15 +14,14 @@ import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.modelo.lista.ListaPubli;
 
 public class PubliBbdd{
 	
 	public PubliBbdd(){
 	}
 	
-	public ListaPubli getListaPubli(Propietario propietario){
-		ListaPubli listaPubli = new ListaPubli();
+	public ArrayList<Publi> getListaPubli(Propietario propietario){
+		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	    String query = "select from " + Tabla.PUBLICACION + " where propietarioKey == :propietarioKey";
@@ -42,8 +42,8 @@ public class PubliBbdd{
 		return listaPubli;
 	}
 	
-	public ListaPubli getListaPubli(ListaMetadato listaMetadato){
-		ListaPubli listaPubli = new ListaPubli();
+	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
+		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		//Se construye la sentencia de selección
