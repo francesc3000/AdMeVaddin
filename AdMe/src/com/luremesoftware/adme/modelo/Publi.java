@@ -7,6 +7,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 
 /**
@@ -40,11 +42,19 @@ public class Publi{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String descripcion, String ciudad){
+		
 		this.propietarioKey = propietario.getKey();
 		this.propietario = propietario;
 		this.titulo = titulo;
 		this.ciudad = ciudad;
 		this.descripcion = descripcion;
+		
+		String name = Publi.class.getSimpleName() + this.titulo;
+		this.key = KeyFactory.createKey(Tabla.PUBLICACION.toString(), name);
+	}
+	
+	public Key getKey(){
+		return this.key;
 	}
 	
 	public String getTitulo(){
