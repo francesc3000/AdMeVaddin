@@ -26,7 +26,7 @@ public abstract class Propietario{
 	protected String id;
 	//private String video;
 	//private Image avatar;
-	//@Persistent
+	//@Persistent(mappedBy = "propietario")
 	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 	//@Persistent
 	protected Puntuaciones puntuaciones = null;

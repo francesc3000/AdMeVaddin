@@ -12,6 +12,7 @@ import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -20,11 +21,13 @@ import com.luremesoftware.adme.vista.Acceder;
 
 public class ControladorWeb{
 	
+	private GestorPropietario gestorPropietario = null;
 	private GestorUsuario gestorUsuario = null;
 	private GestorGrupo gestorGrupo = null;
 	private GestorPubli gestorPubli = null;
 	
 	public ControladorWeb(){
+		this.gestorPropietario = new GestorPropietario();
 		this.gestorUsuario = new GestorUsuario();
 		this.gestorGrupo = new GestorGrupo();
 		this.gestorPubli = new GestorPubli();
@@ -98,7 +101,9 @@ public class ControladorWeb{
 		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
 		if(!listaMensaje.contieneErrores()){
 			Propietario propietario = publi.getPropietario();
-			propietario.setPubli(publi);
+			if(propietario.setPubli(publi)){
+				this.gestorUsuario.putUsuario((Usuario)propietario);
+			}
 		}
 		return listaMensaje;
 	}
