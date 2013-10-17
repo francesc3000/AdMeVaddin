@@ -44,7 +44,7 @@ public class GrupoBbdd{
 	}
 
 	/**
-	 * Este método busca 
+	 * Este método busca los grupos de un usuario
 	 * @param listaMetadato
 	 * @param usuario
 	 * @return

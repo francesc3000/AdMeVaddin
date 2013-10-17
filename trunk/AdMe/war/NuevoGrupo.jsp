@@ -20,9 +20,9 @@
 <title>Nuevo Grupo here</title>
 </head>
 <body>
-	<!-- <h1>CREAR NUEVO GRUPO</h1>
+ <h1>CREAR NUEVO GRUPO</h1>
 	<%
-	String usuario = session.getAttribute("user").toString();
+	Usuario usuario = (Usuario) session.getAttribute("user");
 
 
 	int ok = 1;
@@ -31,12 +31,15 @@
    		 String nombreGrupo = request.getParameter("nombre");
     	 String mensaje = request.getParameter("mensaje");
    		 String ciudad = request.getParameter("ciudad");
+   		 
+   		 ControladorWeb cw = new ControladorWeb();
+   		 cw.putGrupo(new Grupo(usuario,nombreGrupo,mensaje,ciudad));
 
-
-    if (titulo.equals("")) {
-        out.print("Falta rellenar el campo titulo <br>");
-        ok = 0;
-    }
+	    if (nombreGrupo.equals("")) {
+	        out.print("Falta rellenar el campo titulo <br>");
+	        ok = 0;
+	    }
+	}
 %>
 
 <form name="formulario" method="post"
@@ -51,6 +54,5 @@
   </textarea>
 	</form>
 
- -->
 </body>
 </html>

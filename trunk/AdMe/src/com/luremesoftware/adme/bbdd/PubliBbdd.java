@@ -1,7 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -28,7 +27,7 @@ public class PubliBbdd{
 	    
 	    try{
 	    	@SuppressWarnings("unchecked")
-	    	List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getId());
+			ArrayList<Publi> listaPubliList = (ArrayList<Publi>) pm.newQuery(query).execute(propietario.getId());
 	    	for(Publi publi:listaPubliList){
 				listaPubli.add(publi);
 			}
@@ -60,7 +59,7 @@ public class PubliBbdd{
 		}
 		
 		@SuppressWarnings("unchecked")
-		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute();
+		ArrayList<Publi> listaPubliList = (ArrayList<Publi>) pm.newQuery(query).execute();
 		for(Publi publi:listaPubliList){
 			listaPubli.add(publi);
 		}
