@@ -1,6 +1,6 @@
 package com.luremesoftware.adme.modelo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -11,7 +11,7 @@ public class Puntuaciones {
 	@Persistent
 	private Propietario propietario = null;
 	@Persistent
-	private ArrayList<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
+	private List<Puntuacion> listaPuntuacion = new List<Puntuacion>();
 	
 	public Puntuaciones(Propietario propietario){
 		this.setPropietario(propietario);

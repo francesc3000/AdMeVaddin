@@ -1,6 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -42,12 +42,12 @@ public class UsuarioBbdd{
 	    return detached;
 	}
 	
-	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		return this.getListaUsuario(listaMetadato, null, null);
 	}
 	
-	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato, ArrayList<Grupo> listaGrupo, ArrayList<Publi> listaPubli){
-		ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato, List<Grupo> listaGrupo, List<Publi> listaPubli){
+		List<Usuario> listaUsuario = new List<Usuario>();
 		
 		return listaUsuario;
 	}

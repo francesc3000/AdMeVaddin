@@ -1,7 +1,7 @@
 package com.luremesoftware.adme.controlador;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +57,7 @@ public class ControladorWeb{
 	 * @param listaMetadato Clase tipo usuario
 	 * @return Se retorna un listado de Usuarios
 	 */
-	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		return gestorUsuario.getListaUsuario(listaMetadato);
 	}
 	
@@ -67,7 +67,7 @@ public class ControladorWeb{
 	 * @param listaMetadato 
 	 * @return Se retorna un listado de Publicaciones
 	 */
-	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
+	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
 	

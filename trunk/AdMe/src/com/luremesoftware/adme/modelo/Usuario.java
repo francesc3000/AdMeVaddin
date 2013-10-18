@@ -1,12 +1,13 @@
 package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 
 /**
@@ -34,15 +35,11 @@ public class Usuario extends Propietario implements Serializable{
 	@Persistent
 	private String apellido2;
 	@Persistent
-	private ArrayList<Grupo> listaGrupo = null;
+	private List<Key> listaGrupoKey = new List<Key>();
+	@NotPersistent
+	private List<Grupo> listaGrupo = new List<Grupo>();
 	
 	public Usuario(){}
-	
-	public Usuario(String correo, ArrayList<Grupo> listaGrupo){
-		super(correo);
-		this.setCorreo(correo);
-		this.setListaGrupo(listaGrupo);
-	}
 	
 	/**
 	* Completa los datos personales del usuario, no realiza busquedas
@@ -99,7 +96,7 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @return
 	 */
-	public ArrayList<Grupo> getListaGrupo(){
+	public List<Grupo> getListaGrupo(){
 		if(this.listaGrupo == null){
 			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 		}
@@ -135,8 +132,28 @@ public class Usuario extends Propietario implements Serializable{
 		return true;
 	}
 	
-	public boolean setListaGrupo(ArrayList<Grupo> listaGrupo){
-		this.listaGrupo = listaGrupo;
+	public boolean setGrupoKey(Key key){
+		return this.listaGrupoKey.add(key);
+	}
+	
+	public boolean setGrupo(Grupo grupo){
+		if(this.listaGrupo.add(grupo)){
+			return this.setGrupoKey(grupo.getKey());
+		}
+		return false;
+	}
+	
+	public boolean setListaGrupoKey(List<Key> listaGrupoKey){
+		this.listaGrupoKey.addAll(listaGrupoKey);
+		return true;
+	}
+	
+	public boolean setListaGrupo(List<Grupo> listaGrupo){
+		if(this.listaGrupo.addAll(listaGrupo)){
+			for(Grupo grupo:listaGrupo){
+				this.setGrupoKey(grupo.getKey());
+			}
+		}
 		return true;
 	}
 

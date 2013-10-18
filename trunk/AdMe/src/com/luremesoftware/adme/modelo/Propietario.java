@@ -1,6 +1,6 @@
 package com.luremesoftware.adme.modelo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.InheritanceStrategy;
@@ -16,8 +16,9 @@ import com.google.appengine.api.images.Image;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+//@Inheritance(customStrategy = "complete-table")
 public abstract class Propietario{
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -26,9 +27,9 @@ public abstract class Propietario{
 	protected String id;
 	//private String video;
 	//private Image avatar;
-	//@Persistent(mappedBy = "propietario")
-	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
-	//@Persistent
+	@Persistent(mappedBy = "propietario")
+	protected List<Publi> listaPubli = new List<Publi>();
+	@Persistent
 	protected Puntuaciones puntuaciones = null;
 	
 	public Propietario(){}
@@ -48,7 +49,7 @@ public abstract class Propietario{
 		return this.id;
 	}
 	
-	public ArrayList<Publi> getListaPubli(){
+	public List<Publi> getListaPubli(){
 		if(this.listaPubli == null){
 			this.listaPubli = new GestorPubli().getListaPubli(this);	
 		}
@@ -81,7 +82,7 @@ public abstract class Propietario{
 		return this.listaPubli.add(publi);
 	}
 	
-	public boolean setListaPubli(ArrayList<Publi> listaPubli){
+	public boolean setListaPubli(List<Publi> listaPubli){
 		return this.listaPubli.addAll(listaPubli);
 	}
 	

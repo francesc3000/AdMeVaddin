@@ -1,6 +1,6 @@
 package com.luremesoftware.adme.modelo.gestor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.modelo.Mensaje;
@@ -41,14 +41,14 @@ public class GestorUsuario {
 		return this.usuarioBbdd.getUsuario(correo);
 	}
 	
-	public ArrayList<Usuario> getListaUsuarioXGrupo(String nombreGrupo){
-		ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+	public List<Usuario> getListaUsuarioXGrupo(String nombreGrupo){
+		List<Usuario> listaUsuario = new List<Usuario>();
 		
 		
 		return listaUsuario;
 	}
 	
-	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}
