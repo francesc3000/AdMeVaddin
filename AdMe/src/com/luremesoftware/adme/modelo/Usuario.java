@@ -1,7 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -35,9 +35,9 @@ public class Usuario extends Propietario implements Serializable{
 	@Persistent
 	private String apellido2;
 	@Persistent
-	private List<Key> listaGrupoKey = new List<Key>();
+	private ArrayList<Key> listaGrupoKey = new ArrayList<Key>();
 	@NotPersistent
-	private List<Grupo> listaGrupo = new List<Grupo>();
+	private ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
 	
 	public Usuario(){}
 	
@@ -96,7 +96,7 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @return
 	 */
-	public List<Grupo> getListaGrupo(){
+	public ArrayList<Grupo> getListaGrupo(){
 		if(this.listaGrupo == null){
 			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
 		}
@@ -143,12 +143,12 @@ public class Usuario extends Propietario implements Serializable{
 		return false;
 	}
 	
-	public boolean setListaGrupoKey(List<Key> listaGrupoKey){
+	public boolean setListaGrupoKey(ArrayList<Key> listaGrupoKey){
 		this.listaGrupoKey.addAll(listaGrupoKey);
 		return true;
 	}
 	
-	public boolean setListaGrupo(List<Grupo> listaGrupo){
+	public boolean setListaGrupo(ArrayList<Grupo> listaGrupo){
 		if(this.listaGrupo.addAll(listaGrupo)){
 			for(Grupo grupo:listaGrupo){
 				this.setGrupoKey(grupo.getKey());

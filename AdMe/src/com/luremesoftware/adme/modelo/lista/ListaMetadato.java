@@ -1,10 +1,10 @@
 package com.luremesoftware.adme.modelo.lista;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.luremesoftware.adme.modelo.Metadato;
 
-public class ListaMetadato extends List<Metadato>{
+public class ListaMetadato extends ArrayList<Metadato>{
 
 	/**
 	 * 

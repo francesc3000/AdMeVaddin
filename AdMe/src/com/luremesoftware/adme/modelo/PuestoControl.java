@@ -1,11 +1,11 @@
 package com.luremesoftware.adme.modelo;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PuestoControl {
 	private Usuario usuario = null;
-	private List<Publi> listaPubli = null;
-	private List<Grupo> listaGrupo = null;
+	private ArrayList<Publi> listaPubli = null;
+	private ArrayList<Grupo> listaGrupo = null;
 	private Puntuaciones puntuaciones = null;
 	
 	public PuestoControl(Usuario usuario){
@@ -26,11 +26,11 @@ public class PuestoControl {
 		return this.usuario;
 	}
 	
-	public List<Publi> getListaPubli(){
+	public ArrayList<Publi> getListaPubli(){
 		return this.listaPubli;
 	}
 	
-	public List<Grupo> getListaGrupo(){
+	public ArrayList<Grupo> getListaGrupo(){
 		return this.listaGrupo;
 	}
 	

@@ -114,4 +114,19 @@ public interface Constante {
 			return this.constante;
 		}
 	}
+		
+	public static enum ConstanteSession implements Constante{
+		USUARIO("User"),
+		USUARIOMAIL("UserMail");
+		
+		private final String constante;
+		
+		private ConstanteSession(String constante){
+			this.constante = constante;
+		}
+		
+		public String toString(){
+			return this.constante;
+		}
+	}
 }

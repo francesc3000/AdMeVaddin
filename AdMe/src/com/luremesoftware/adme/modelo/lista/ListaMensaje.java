@@ -1,11 +1,11 @@
 package com.luremesoftware.adme.modelo.lista;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 
-public class ListaMensaje extends List<Mensaje> {
+public class ListaMensaje extends ArrayList<Mensaje> {
 
 	/**
 	 * 
