@@ -48,12 +48,13 @@ public class Publi{
 		this.titulo = titulo;
 		this.ciudad = ciudad;
 		this.descripcion = descripcion;
-		
-		String name = Publi.class.getSimpleName() + this.titulo;
-		this.key = KeyFactory.createKey(Tabla.PUBLICACION.toString(), name);
 	}
 	
 	public Key getKey(){
+		if(this.key == null){
+			String name = this.getPropietario().getKey() + this.titulo;
+			this.key = KeyFactory.createKey(Tabla.PUBLICACION.toString(), name);
+		}
 		return this.key;
 	}
 	

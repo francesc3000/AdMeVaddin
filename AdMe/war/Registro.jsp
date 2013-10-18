@@ -3,8 +3,6 @@
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
 <%@ page import="com.luremesoftware.adme.modelo.Publi" %>
-
-<%@ page import="com.luremesoftware.adme.constantes.Constante" %>
    
 <!DOCTYPE html>
 <html>
@@ -111,7 +109,7 @@
      
                  
                     ControladorWeb cw = new ControladorWeb();
-                    cw.putUsuario(usu, Constante.Accion.CREAR);
+                    cw.putUsuario(usu);
                  
    
                     String name = request.getParameter( "txtNombre" );
