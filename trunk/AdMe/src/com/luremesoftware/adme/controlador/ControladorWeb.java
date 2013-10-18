@@ -1,11 +1,13 @@
 package com.luremesoftware.adme.controlador;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.luremesoftware.adme.constantes.Constante.ConstanteSession;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
@@ -17,7 +19,7 @@ import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
-import com.luremesoftware.adme.vista.Acceder;
+import com.luremesoftware.adme.vista.UtilidadesVista;
 
 public class ControladorWeb{
 	
@@ -57,7 +59,7 @@ public class ControladorWeb{
 	 * @param listaMetadato Clase tipo usuario
 	 * @return Se retorna un listado de Usuarios
 	 */
-	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		return gestorUsuario.getListaUsuario(listaMetadato);
 	}
 	
@@ -67,7 +69,7 @@ public class ControladorWeb{
 	 * @param listaMetadato 
 	 * @return Se retorna un listado de Publicaciones
 	 */
-	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
+	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
 	
@@ -142,16 +144,23 @@ public class ControladorWeb{
 	 * @return Si el usuario no esta registrado se retorna null
 	 * @throws IOException 
 	 */
-	public Usuario acceder(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		Acceder acceder = new Acceder(request, response);
-		String correo = acceder.runAcceder();
-		if(correo==null){
-			return null;
+	public Usuario acceder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+		UtilidadesVista utilidadesVista = new UtilidadesVista(request, response, session);
+		Usuario usuario = null;
+		
+		String correo = utilidadesVista.acceder();
+		
+		if(correo!=null){
+			usuario = this.getUsuario(correo);
+			if(usuario!=null){
+				utilidadesVista.sendRedirect("Registro.jsp");
+			}else{
+				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
+				utilidadesVista.setSessionAttribute( ConstanteSession.USUARIOMAIL, usuario.getCorreo());
+				utilidadesVista.sendRedirect("Perfil.jsp");
+			}
 		}
-		Usuario usuario = this.getUsuario(correo);
-		if(usuario==null){
-			usuario = new Usuario(correo,null,null,null,null);
-		}
+		
 		return usuario;
 	}
 }

@@ -1,7 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -24,9 +24,9 @@ public class Grupo extends Propietario implements Serializable{
 	@Persistent
 	private String ciudad = null;
 	@Persistent
-	private List<Key> listaUsuarioKey = null;
+	private ArrayList<Key> listaUsuarioKey = null;
 	@NotPersistent
-	private List<Usuario> listaUsuario = new List<Usuario>();
+	private ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
 	
 	public Grupo(){};
 	
@@ -42,7 +42,7 @@ public class Grupo extends Propietario implements Serializable{
 		return this.listaUsuario.add(usuario);
 	}
 	
-	public boolean addListaUsuario(List<Usuario> listaUsuario){
+	public boolean addListaUsuario(ArrayList<Usuario> listaUsuario){
 		return this.listaUsuario.addAll(listaUsuario);
 	}
 	
@@ -62,7 +62,7 @@ public class Grupo extends Propietario implements Serializable{
 		return this.ciudad;
 	}
 	
-	public List<Usuario> getListaUsuario(){
+	public ArrayList<Usuario> getListaUsuario(){
 		if(this.listaUsuario==null){
 			this.listaUsuario = new GestorUsuario().getListaUsuarioXGrupo(this.getNombre());
 		}

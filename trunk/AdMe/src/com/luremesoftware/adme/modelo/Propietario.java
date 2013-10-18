@@ -1,6 +1,6 @@
 package com.luremesoftware.adme.modelo;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.InheritanceStrategy;
@@ -28,7 +28,7 @@ public abstract class Propietario{
 	//private String video;
 	//private Image avatar;
 	@Persistent(mappedBy = "propietario")
-	protected List<Publi> listaPubli = new List<Publi>();
+	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 	@Persistent
 	protected Puntuaciones puntuaciones = null;
 	
@@ -49,7 +49,7 @@ public abstract class Propietario{
 		return this.id;
 	}
 	
-	public List<Publi> getListaPubli(){
+	public ArrayList<Publi> getListaPubli(){
 		if(this.listaPubli == null){
 			this.listaPubli = new GestorPubli().getListaPubli(this);	
 		}
@@ -82,7 +82,7 @@ public abstract class Propietario{
 		return this.listaPubli.add(publi);
 	}
 	
-	public boolean setListaPubli(List<Publi> listaPubli){
+	public boolean setListaPubli(ArrayList<Publi> listaPubli){
 		return this.listaPubli.addAll(listaPubli);
 	}
 	

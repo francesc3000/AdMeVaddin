@@ -8,39 +8,51 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.luremesoftware.adme.constantes.Constante;
 
-public class Acceder implements javax.servlet.Servlet, javax.servlet.jsp.HttpJspPage{
+public class UtilidadesVista implements javax.servlet.Servlet, javax.servlet.jsp.HttpJspPage{
 	
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private HttpSession session;
 	
-	public Acceder( HttpServletRequest request, HttpServletResponse response){
+	public UtilidadesVista( HttpServletRequest request, HttpServletResponse response, HttpSession session){
 		this.request = request;
 		this.response = response;
+		this.session = session;
 	}
 	
-	public String runAcceder() throws IOException{
+	public String acceder() throws IOException{
 		UserService userService = UserServiceFactory.getUserService();
-		String thisURL = request.getRequestURI();
 		
         if(request.getUserPrincipal() != null) {
         	return request.getUserPrincipal().toString();
         	
         }else{
+        	String thisURL = request.getRequestURI();
             this.response.sendRedirect(userService.createLoginURL(thisURL));
             User user =  userService.getCurrentUser();
-            if(user!=null){
+            if(user.getEmail()!=null){
             	return user.getEmail();
             }else{
             	return null;
             }
-            
         }
-
+	}
+	
+	public boolean sendRedirect(String url) throws IOException{
+		this.response.sendRedirect(url);
+		return true;
+	}
+	
+	public boolean setSessionAttribute(Constante constanteSession, Object object){
+		this.session.setAttribute(constanteSession.toString(), object);
+		return true;
 	}
 
 	@Override
