@@ -152,14 +152,12 @@ public class ControladorWeb{
 		
 		if(correo!=null){
 			usuario = this.getUsuario(correo);
-			if(usuario!=null){
+			if(usuario==null){
+				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIOMAIL, correo);
 				utilidadesVista.sendRedirect("Registro.jsp");
 			}else{
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
-				utilidadesVista.setSessionAttribute( ConstanteSession.USUARIOMAIL, usuario.getCorreo());
-				utilidadesVista.sendRedirect("Perfil.jsp");
-			}
-		}
+			}		}
 		
 		return usuario;
 	}

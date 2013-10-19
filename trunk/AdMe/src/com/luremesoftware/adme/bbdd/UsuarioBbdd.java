@@ -39,6 +39,8 @@ public class UsuarioBbdd{
 	        pm.close();
 	    }
 	    
+	    
+	    
 	    return detached;
 	}
 	

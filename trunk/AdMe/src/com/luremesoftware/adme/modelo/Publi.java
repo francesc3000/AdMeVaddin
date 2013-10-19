@@ -24,7 +24,7 @@ public class Publi{
 	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
 	//private Propietario propietario; //Puede ser un usuario o un grupo
 	private Key propietarioKey; //En futuras versiones de GAE/JDO podria solucionarse
-	@NotPersistent
+	@Persistent
 	private Propietario propietario; //Puede ser un usuario o un grupo
 	@Persistent
 	private String titulo;	 		//Titulo de la publicacion
