@@ -9,8 +9,10 @@
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb"%>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 <%@ page import="com.luremesoftware.adme.modelo.Publi"%>
+<%@ page import="com.luremesoftware.adme.modelo.Metadato"%>
+<%@ page import="com.google.appengine.api.datastore.Query.FilterOperator"%>
+<%@ page import="com.luremesoftware.adme.constantes.Constante"%>
 <%@ page import="com.luremesoftware.adme.modelo.lista.ListaMetadato"%>
-<%@ page import="com.luremesoftware.adme.modelo.lista.ListaPubli"%>
 
 
 <!DOCTYPE html>
@@ -36,11 +38,19 @@
 
 
 	<%
-		ListaPubli a = new ListaPubli();
+		ArrayList<Publi> a = new ArrayList<Publi>();
 		int ok = 1;
 		if (!(request.getParameter("env") == null)) {
 
 			ListaMetadato listaMetadato = new ListaMetadato();
+			
+			Metadato metadato =
+						new Metadato(Constante.Tabla.PUBLICACION,
+									 Constante.ConstantePubli.CIUDAD,
+									 FilterOperator.EQUAL,
+									 "Barcelona");
+			
+			listaMetadato.add(metadato);
 
 			ControladorWeb cw = new ControladorWeb();
 
