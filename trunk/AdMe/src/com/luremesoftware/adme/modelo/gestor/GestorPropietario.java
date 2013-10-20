@@ -22,7 +22,7 @@ public class GestorPropietario {
 	
 	public ArrayList<Publi> getListaPubli(Propietario propietario){
 		
-	    if(propietario.getId() == null){
+	    if(propietario.getListaPubli().isEmpty()){
 	    	propietario.setListaPubli(gestorPubli.getListaPubli(propietario));
 		}
 	
