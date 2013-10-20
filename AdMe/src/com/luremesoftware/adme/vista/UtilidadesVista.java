@@ -37,7 +37,7 @@ public class UtilidadesVista implements javax.servlet.Servlet, javax.servlet.jsp
         	String thisURL = request.getRequestURI();
             this.response.sendRedirect(userService.createLoginURL(thisURL));
             User user =  userService.getCurrentUser();
-            if(user.getEmail()!=null){
+            if(user!=null){
             	return user.getEmail();
             }else{
             	return null;
