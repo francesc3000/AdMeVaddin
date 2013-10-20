@@ -38,9 +38,13 @@ public class UsuarioBbdd{
 	    finally {
 	        pm.close();
 	    }
-	    
-	    
-	    
+	    /*
+	    tx.begin();
+	    Extent e = pm.getExtent(com.mydomain.samples.store.Product.class, true);
+	    Query  q = pm.newQuery(e);
+	    Collection c=(Collection)q.execute();
+	    tx.commit();
+	    */
 	    return detached;
 	}
 	
