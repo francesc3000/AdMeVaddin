@@ -78,6 +78,6 @@ public class Publi{
 	}
 	
 	public String toString(){
-		return this.propietario.getId() + " es propietario de: " + this.getTitulo();
+		return this.propietario.getKey() + " es propietario de: " + this.getTitulo();
 	}
 }

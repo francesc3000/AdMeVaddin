@@ -16,41 +16,32 @@ import com.google.appengine.api.images.Image;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 
-@PersistenceCapable(detachable="true")
-@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
-//@Inheritance(customStrategy = "complete-table")
+@PersistenceCapable
+//@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+@Inheritance(customStrategy = "complete-table")
 public abstract class Propietario{
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	protected Key key;
-	@NotPersistent
-	protected String id;
 	//private String video;
 	//private Image avatar;
 	@Persistent(mappedBy = "propietario")
 	protected ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 	@Persistent
-	protected Puntuaciones puntuaciones = null;
+	protected Puntuaciones puntuaciones = new Puntuaciones(this);
 	
 	public Propietario(){}
-			
-	public Propietario(String id){
-		this.setId(id);	
+	
+	protected boolean buildKey(String id){
+		return this.setKey(KeyFactory.createKey(Tabla.USUARIO.toString(), id));
 	}
 	
 	public Key getKey(){
-		if(this.key==null){
-			this.setKey(KeyFactory.createKey(Tabla.USUARIO.toString(), this.getId()));
-		}
 		return this.key;
 	}
 	
-	public String getId(){
-		return this.id;
-	}
-	
 	public ArrayList<Publi> getListaPubli(){
-		if(this.listaPubli == null){
+		if(this.listaPubli.isEmpty()){
 			this.listaPubli = new GestorPubli().getListaPubli(this);	
 		}
 		return this.listaPubli;
@@ -70,11 +61,6 @@ public abstract class Propietario{
 
 	public boolean setKey(Key key){
 		this.key = key;
-		return true;
-	}
-	
-	public boolean setId(String id){
-		this.id = id;
 		return true;
 	}
 	

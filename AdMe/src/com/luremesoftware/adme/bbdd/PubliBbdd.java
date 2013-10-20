@@ -28,7 +28,7 @@ public class PubliBbdd{
 	    
 	    try{
 	    	@SuppressWarnings("unchecked")
-			List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getId());
+			List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getKey());
 	    	for(Publi publi:listaPubliList){
 				listaPubli.add(publi);
 			}

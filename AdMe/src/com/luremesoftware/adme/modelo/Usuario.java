@@ -16,7 +16,7 @@ import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
  * @author francesc3000@gmail.com
  *
 */
-@PersistenceCapable(detachable="true")
+@PersistenceCapable
 public class Usuario extends Propietario implements Serializable{
 	
 	/**
@@ -52,7 +52,8 @@ public class Usuario extends Propietario implements Serializable{
     * @param apellido2 Segundo apellido del usuario
 	*/	
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		super(correo);
+		super();
+		this.buildKey(correo);
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
