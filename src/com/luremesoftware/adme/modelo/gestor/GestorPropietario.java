@@ -1,6 +1,7 @@
 package com.luremesoftware.adme.modelo.gestor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.bbdd.PropietaroBbdd;
@@ -20,7 +21,7 @@ public class GestorPropietario {
 		return this.propietarioBbdd.getPropietarioByKey(key);
 	}
 	
-	public ArrayList<Publi> getListaPubli(Propietario propietario){
+	public List<Publi> getListaPubli(Propietario propietario){
 		
 	    if(propietario.getListaPubli().isEmpty()){
 	    	propietario.setListaPubli(gestorPubli.getListaPubli(propietario));
@@ -29,7 +30,7 @@ public class GestorPropietario {
 		return propietario.getListaPubli();
 	}
 
-	public ArrayList<Publi> getListaPubli(ArrayList<Propietario> listaPropietario){
+	public List<Publi> getListaPubli(ArrayList<Propietario> listaPropietario){
 		
 		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
 

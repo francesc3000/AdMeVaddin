@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 
 @PersistenceCapable(detachable="true")
@@ -32,7 +33,7 @@ public class Grupo extends Propietario implements Serializable{
 	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
-		this.buildKey(usuario.getKey()+nombre);
+		this.buildKey(usuario.getKey()+nombre, Tabla.GRUPO.getSimpleName());
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);

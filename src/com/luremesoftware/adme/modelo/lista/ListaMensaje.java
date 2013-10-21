@@ -1,6 +1,10 @@
 package com.luremesoftware.adme.modelo.lista;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
@@ -24,5 +28,4 @@ public class ListaMensaje extends ArrayList<Mensaje> {
 		}
 		return false;
 	}
-
 }

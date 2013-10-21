@@ -1,10 +1,14 @@
 package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import javax.jdo.Extent;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
 
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
@@ -24,8 +28,9 @@ public class UsuarioBbdd{
 	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Usuario usuario = null;
-		
-	    String query = "select from " + Tabla.USUARIO + " where correo == :correo";
+		Extent extent = pm.getExtent(Usuario.class, true);
+		Query query = pm.newQuery(extent);
+		query.setFilter("correo == :correo");
 	    
 	    
 	    try{
@@ -41,12 +46,26 @@ public class UsuarioBbdd{
 	        pm.close();
 	    }
 	    
-	    if(usuario != null){
-	    	usuario.setPubli(new Publi(usuario,"1","2","3"));
-	    	this.putUsuario(usuario);
-	    }
+	    /*List<Publi> listaPubli = null;
+	    if(usuario!=null){
+	    	listaPubli = usuario.getListaPubli();
+	    }*/
 	    
 	    return usuario;
+		
+		/*PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		Transaction tx = pm.currentTransaction();
+		
+		tx.begin();
+		Extent e = pm.getExtent(Propietario.class, true);
+		Query  q = pm.newQuery(e);
+		@SuppressWarnings("unchecked")
+		Collection c=(Collection)q.execute();
+		tx.commit();
+		
+		return new Usuario();
+		*/
 	}
 	
 	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
@@ -61,18 +80,10 @@ public class UsuarioBbdd{
 
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-	
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
-		Usuario usuarioPMF = (Usuario) pm.getObjectById(usuario.getKey());
-		if(usuarioPMF != null){
-			usuarioPMF.setListaPubli(usuario.getListaPubli());
-		}else{
-			usuarioPMF = usuario;
-		}
-		
 	    try {
-	        pm.makePersistent(usuarioPMF);
+	        pm.makePersistent(usuario);
 	    }catch (JDOObjectNotFoundException e) {
 	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
 	    }finally {

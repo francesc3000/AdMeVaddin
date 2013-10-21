@@ -157,7 +157,8 @@ public class ControladorWeb{
 				utilidadesVista.sendRedirect("Registro.jsp");
 			}else{
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
-			}		}
+			}		
+		}
 		
 		return usuario;
 	}

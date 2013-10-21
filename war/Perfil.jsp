@@ -24,7 +24,7 @@
 <%
 
 response.getWriter().println("Bienvenido: ");
-Usuario usuario = (Usuario)session.getAttribute("user");
+Usuario usuario = (Usuario)session.getAttribute("User");
 response.getWriter().println(usuario.getNombre());
 		%>
 </body>
