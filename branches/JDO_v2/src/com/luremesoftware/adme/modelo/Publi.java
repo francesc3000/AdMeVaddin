@@ -20,18 +20,24 @@ public class Publi{
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
+	/*
 	@Persistent
-	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
-	//private Propietario propietario; //Puede ser un usuario o un grupo
-	private Key propietarioKey; //En futuras versiones de GAE/JDO podria solucionarse
-	@Persistent
+	private Key propietarioKey;
+	@Persistent(mappedBy = "listaPubli")
 	private Propietario propietario; //Puede ser un usuario o un grupo
+	*/
+	@Persistent(mappedBy = "listaPubli")
+	private Usuario usuario;
+	@Persistent(mappedBy = "listaPubli")
+	private Grupo grupo;
 	@Persistent
 	private String titulo;	 		//Titulo de la publicacion
 	@Persistent
 	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
 	@Persistent
 	private String descripcion; 	//Descripción de la publicación
+	
+	public Publi(){}
 	
 	/**
 	* Crea la clase Publicación rellenando todos sus parámetros
@@ -42,19 +48,19 @@ public class Publi{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String descripcion, String ciudad){
-		
-		this.propietarioKey = propietario.getKey();
-		this.propietario = propietario;
+		//this.propietarioKey = propietario.getKey();
+		//this.propietario = propietario;
+		this.setPropietario(propietario);
 		this.titulo = titulo;
 		this.ciudad = ciudad;
 		this.descripcion = descripcion;
 	}
 	
 	public Key getKey(){
-		if(this.key == null){
+		/*if(this.key == null){
 			String name = this.getPropietario().getKey() + this.titulo;
-			this.key = KeyFactory.createKey(Tabla.PUBLICACION.toString(), name);
-		}
+			this.key = KeyFactory.createKey(Tabla.PUBLICACION.getSimpleName(), name);
+		}*/
 		return this.key;
 	}
 	
@@ -69,15 +75,47 @@ public class Publi{
 	public String getDescripcion(){
 		return this.descripcion;
 	}
-	
+	/*
 	public Propietario getPropietario(){
 		if(this.propietario==null){
-			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietarioKey);
+			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietario.getKey());
 		}
 		return this.propietario;
 	}
 	
+	public boolean setPropietario(Propietario propietario){
+		this.propietario = propietario;
+		return true;
+	}
+	
 	public String toString(){
 		return this.propietario.getKey() + " es propietario de: " + this.getTitulo();
+	}*/
+	public Propietario getPropietario(){
+		Propietario propietario = null;
+		if(this.usuario!=null){
+			propietario = this.usuario;
+		}
+		if(this.grupo!=null){
+			propietario = this.grupo;
+		}
+		return propietario;
+	}
+	
+	public boolean setPropietario(Propietario propietario){
+		String clase = Propietario.class.getSimpleName();
+		switch(clase){
+		case "Usuario":
+			this.usuario = (Usuario) propietario;
+			break;
+		case "Grupo":
+			this.grupo = (Grupo) propietario;
+		}
+		return true;
+	}
+	
+	public String toString(){
+		Propietario propietario = this.getPropietario();
+		return propietario.getKey() + " es propietario de: " + this.getTitulo();
 	}
 }

@@ -62,7 +62,7 @@
                 String nom = request.getParameter("txtNombre");
                 String apellido1 = request.getParameter("txtApellido1");
                 String apellido2 = request.getParameter("txtApellido2");
-                String email = (String) session.getAttribute("userMail");
+                String email = (String) session.getAttribute("UserMail");
                 //String email = request.getParameter("txtEmail");
                 String pass = request.getParameter("txtPass");
                 String pass2 = request.getParameter("txtPass2");
@@ -113,7 +113,7 @@
                  
    
                     String name = request.getParameter( "txtNombre" );
-                    session.setAttribute( "user", usu );
+                    session.setAttribute( "User", usu );
                     response.sendRedirect("Perfil.jsp");
                   
 

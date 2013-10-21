@@ -1,6 +1,7 @@
 package com.luremesoftware.adme.modelo.gestor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.luremesoftware.adme.bbdd.GrupoBbdd;
 import com.luremesoftware.adme.modelo.Grupo;
@@ -24,7 +25,7 @@ public class GestorGrupo {
 		return this.grupoBbdd.getListaGrupo(usuario);
 	}
 
-	public ArrayList<Publi> getListaPubli(Grupo grupo){
+	public List<Publi> getListaPubli(Grupo grupo){
 		
 		GestorPubli gestorPubli = new GestorPubli();
 		
@@ -34,8 +35,8 @@ public class GestorGrupo {
 		
 	}
 	
-	public ArrayList<Publi> getListaPubli(ArrayList<Grupo> listaGrupo){
-		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
+	public List<Publi> getListaPubli(ArrayList<Grupo> listaGrupo){
+		List<Publi> listaPubli = new ArrayList<Publi>();
 		
 		for(Grupo grupo:listaGrupo){
 			grupo.setListaPubli(this.getListaPubli(grupo));

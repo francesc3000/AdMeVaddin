@@ -30,24 +30,7 @@
 
 			ControladorWeb cw = new ControladorWeb();
 
-			Usuario login = cw.acceder(request, response);
-
-			if (login.getNombre() != null) {
-
-				session.setAttribute("user", login.getNombre());
-				response.sendRedirect("Perfil.jsp");
-			} else {
-				response.sendRedirect("Registro.jsp");
-
-				if (login.getNombre() == null) {
-					session.setAttribute("userMail", login.getCorreo());
-					response.sendRedirect("Registro.jsp");
-				} else {
-					session.setAttribute("user", login);
-					response.sendRedirect("Perfil.jsp");
-				}
-
-			}
+			Usuario login = cw.acceder(request, response, session);
 
 		}
 	%>

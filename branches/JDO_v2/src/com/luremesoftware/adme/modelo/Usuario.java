@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 
 /**
@@ -35,6 +36,9 @@ public class Usuario extends Propietario implements Serializable{
 	@Persistent
 	private String apellido2;
 	@Persistent
+	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
+	//private Propietario propietario; //Puede ser un usuario o un grupo
+	//En futuras versiones de GAE/JDO podria solucionarse
 	private ArrayList<Key> listaGrupoKey = new ArrayList<Key>();
 	@NotPersistent
 	private ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
@@ -53,7 +57,7 @@ public class Usuario extends Propietario implements Serializable{
 	*/	
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
 		super();
-		this.buildKey(correo);
+		this.buildKey(correo, Tabla.USUARIO.getSimpleName());
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.nombre = nombre;

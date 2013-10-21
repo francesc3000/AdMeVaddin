@@ -19,7 +19,7 @@ public class GrupoBbdd{
 	
 	public Grupo getGrupo(String nombreGrupo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    String query = "select from " + Tabla.GRUPO + " where nombre == :nombreGrupo";
+	    String query = "select from " + Tabla.GRUPO.getName() + " where nombre == :nombreGrupo";
 	    
 	    Grupo grupo = null, detached = null;
 	    try{

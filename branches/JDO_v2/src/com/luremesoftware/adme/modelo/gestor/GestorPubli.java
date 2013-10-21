@@ -1,7 +1,9 @@
 package com.luremesoftware.adme.modelo.gestor;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.bbdd.PubliBbdd;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
@@ -21,7 +23,7 @@ public class GestorPubli {
 	 * @param id Identificador que se quiere buscar sus publicaciones
 	 * @return Listado de Publicaciones
 	 */
-	public ArrayList<Publi> getListaPubli(Propietario propietario){
+	public List<Publi> getListaPubli(Propietario propietario){
 		return publiBbdd.getListaPubli(propietario);
 	}
 	
