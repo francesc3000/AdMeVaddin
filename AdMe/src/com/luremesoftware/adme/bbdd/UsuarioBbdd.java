@@ -3,6 +3,7 @@ package com.luremesoftware.adme.bbdd;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.FetchGroup;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -13,6 +14,7 @@ import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Puntuacion;
+import com.luremesoftware.adme.modelo.Puntuaciones;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -27,9 +29,11 @@ public class UsuarioBbdd{
 	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Usuario usuario = null, detached = null;
+		FetchGroup fetchGroup = pm.getFetchGroup(Puntuaciones.class, "Puntuaciones");
+		
+		pm.getFetchPlan().addGroup(fetchGroup.getName());
 		Query query = pm.newQuery(Usuario.class);
 		query.setFilter("correo == :correo");
-	    
 	    
 	    try{
 	    	@SuppressWarnings("unchecked")

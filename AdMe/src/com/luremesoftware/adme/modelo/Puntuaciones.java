@@ -15,7 +15,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(detachable = "true")
-@FetchGroup(name="one_two", members={@Persistent(name="key"), @Persistent(name="listaPuntuacion")})
+@FetchGroup(name="Puntuaciones", members={@Persistent(name="listaPuntuacion")})
 public class Puntuaciones implements Serializable{
 	
 	/**
