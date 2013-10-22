@@ -41,27 +41,33 @@ public class ControladorWeb{
 	 * @param usuario Usuario que se quiere recuperar su puesto de control
 	 * @return Puesto de control
 	 */
-	public PuestoControl puestoControl(Usuario usuario){
+	public PuestoControl puestoControl(Propietario usuario){
 		return new PuestoControl(usuario);
 	}
 	
+	public Propietario getPropietario(String id){
+		return gestorPropietario.getPropietario(id);
+	}
+	/*
 	public Usuario getUsuario(String correo){
 		return gestorUsuario.getUsuario(correo);
 	}
 	
-	public Grupo getGrupo(String titulo){
+	public Propietario getGrupo(String titulo){
 		return gestorGrupo.getGrupo(titulo);
 	}
-
+	*/
 	/**
 	 * Se realiza una consulta de Usuarios en base de datos
 	 * 
 	 * @param listaMetadato Clase tipo usuario
 	 * @return Se retorna un listado de Usuarios
 	 */
+	/*
 	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		return gestorUsuario.getListaUsuario(listaMetadato);
 	}
+	*/
 	
 	/**
 	 * Se realiza una consulta de Publicaciones en base de datos
@@ -69,28 +75,36 @@ public class ControladorWeb{
 	 * @param listaMetadato 
 	 * @return Se retorna un listado de Publicaciones
 	 */
+	/*
 	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
-	
+	*/
 	/**
 	 * Se crea o modifica un usuario en base de datos
 	 * 
 	 * @param usuario Clase tipo usuario
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
+	/*
 	public ListaMensaje putUsuario(Usuario usuario){
 		return gestorUsuario.putUsuario(usuario);
 	}
-
+	*/
 	/**
 	 * Se crea o modifica un grupo
 	 * @param usuario
 	 * @param grupo
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putGrupo(Grupo grupo){
+	/*
+	public ListaMensaje putGrupo(Propietario grupo){
 		return gestorGrupo.putGrupo(grupo);
+	}
+	*/
+	
+	public ListaMensaje putPropietario(Propietario propietario){
+		return gestorPropietario.putPropietario(propietario);
 	}
 
 	/**
@@ -99,14 +113,15 @@ public class ControladorWeb{
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putPubli(Publi publi){
-		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
-		if(!listaMensaje.contieneErrores()){
-			Propietario propietario = publi.getPropietario();
+	public ListaMensaje putPubli(Propietario propietario, Publi publi){
+		ListaMensaje listaMensaje = null;
+		//ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
+		//if(!listaMensaje.contieneErrores()){
+			//Propietario propietario = publi.getPropietario();
 			if(propietario.setPubli(publi)){
-				this.gestorUsuario.putUsuario((Usuario)propietario);
+				listaMensaje = this.gestorPropietario.putPropietario(propietario);
 			}
-		}
+		//}
 		return listaMensaje;
 	}
 	
@@ -115,18 +130,21 @@ public class ControladorWeb{
 	 * @param usuario Usuario a borrar
 	 * @return retorna listado de los errores ocurridos
 	 */
+	/*
 	public ListaMensaje borraUsuario(Usuario usuario){
 		return this.gestorUsuario.borraUsuario(usuario);
 	}
-	
+	*/
 	/**
 	 * Se borra un Grupo de base de datos
 	 * @param grupo Grupo a borrar
 	 * @return retorna listado de los errores ocurridos
 	 */
-	public ListaMensaje borraGrupo(Grupo grupo){
+	/*
+	public ListaMensaje borraGrupo(Propietario grupo){
 		return this.gestorGrupo.borraGrupo(grupo);
 	}
+	*/
 	
 	/**
 	 * Se borra una Publicación de base de datos
@@ -144,19 +162,20 @@ public class ControladorWeb{
 	 * @return Si el usuario no esta registrado se retorna null
 	 * @throws IOException 
 	 */
-	public Usuario acceder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+	public Propietario acceder(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		UtilidadesVista utilidadesVista = new UtilidadesVista(request, response, session);
-		Usuario usuario = null;
+		Propietario usuario = null;
 		
 		String correo = utilidadesVista.acceder();
 		
 		if(correo!=null){
-			usuario = this.getUsuario(correo);
+			usuario = this.getPropietario(correo);
 			if(usuario==null){
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIOMAIL, correo);
 				utilidadesVista.sendRedirect("Registro.jsp");
 			}else{
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
+				utilidadesVista.sendRedirect("Inicio.jsp");
 			}		
 		}
 		

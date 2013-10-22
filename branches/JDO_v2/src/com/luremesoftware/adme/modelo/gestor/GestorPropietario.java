@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.bbdd.PropietaroBbdd;
+import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.Mensaje.TipoError;
+import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 
 public class GestorPropietario {
 	private PropietaroBbdd propietarioBbdd = null;
@@ -15,6 +18,10 @@ public class GestorPropietario {
 	public GestorPropietario(){
 		this.propietarioBbdd = new PropietaroBbdd();
 		this.gestorPubli = new GestorPubli();
+	}
+	
+	public Propietario getPropietario(String id){
+		return this.propietarioBbdd.getPropietario(id);
 	}
 	
 	public Propietario getPropietarioByKey(Key key){
@@ -40,5 +47,9 @@ public class GestorPropietario {
 		}
 
 		return listaPubli;
+	}
+	
+	public ListaMensaje putPropietario(Propietario propietario){
+		return this.propietarioBbdd.putPropietario(propietario);
 	}
 }

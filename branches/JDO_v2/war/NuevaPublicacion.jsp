@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
-<%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
+<%@ page import="com.luremesoftware.adme.modelo.Propietario" %>
 <%@ page import="com.luremesoftware.adme.modelo.Publi" %>	
 	
 
@@ -21,7 +21,7 @@
 	<h1>NUEVA PUBLICACIÓN</h1>
 
 	<%
-		Usuario usuario = (Usuario)session.getAttribute("user");
+		Propietario usuario = (Propietario)session.getAttribute("User");
 	
             int ok = 1;
             if (!(request.getParameter("env") == null)) {
@@ -48,11 +48,11 @@
                 //Usuario usu = new Usuario(usuario);	
                 
    
-				Publi publi = new Publi(usuario,titulo,ciudad,mensaje);
+				Publi publi = new Publi(usuario,titulo,mensaje,ciudad);
                 	
                     ControladorWeb cw = new ControladorWeb();
                          	         
-                    cw.putPubli(publi);
+                    cw.putPubli(usuario, publi);
 
                 }
             }

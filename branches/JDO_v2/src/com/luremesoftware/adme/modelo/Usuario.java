@@ -2,6 +2,7 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -17,8 +18,8 @@ import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
  * @author francesc3000@gmail.com
  *
 */
-@PersistenceCapable
-public class Usuario extends Propietario implements Serializable{
+@PersistenceCapable(detachable = "true")
+public class Usuario implements Serializable{
 	
 	/**
 	 * 
@@ -30,7 +31,7 @@ public class Usuario extends Propietario implements Serializable{
 	@Persistent
 	private String contrasena;
 	@Persistent
-	private String nombre;
+	private String nombreUsuario;
 	@Persistent
 	private String apellido1;
 	@Persistent
@@ -39,9 +40,9 @@ public class Usuario extends Propietario implements Serializable{
 	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
 	//private Propietario propietario; //Puede ser un usuario o un grupo
 	//En futuras versiones de GAE/JDO podria solucionarse
-	private ArrayList<Key> listaGrupoKey = new ArrayList<Key>();
+	private List<Key> listaGrupoKey = new ArrayList<Key>();
 	@NotPersistent
-	private ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
+	private List<Propietario> listaGrupo = new ArrayList<Propietario>();
 	
 	public Usuario(){}
 	
@@ -54,13 +55,11 @@ public class Usuario extends Propietario implements Serializable{
     * @param nombre Nombre del usuario
     * @param apellido1 Primer apellido del usuario
     * @param apellido2 Segundo apellido del usuario
-	*/	
+	*/
 	public Usuario(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		super();
-		this.buildKey(correo, Tabla.USUARIO.getSimpleName());
 		this.correo = correo;
 		this.contrasena = contrasena;
-		this.nombre = nombre;
+		this.nombreUsuario = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
 	}
@@ -77,7 +76,7 @@ public class Usuario extends Propietario implements Serializable{
 	
 	public String getNombre(){
 		//if(this.nombre==null){this.nombre = new String();}
-		return this.nombre;
+		return this.nombreUsuario;
 	}
 	
 	public String getApellido1(){
@@ -90,7 +89,7 @@ public class Usuario extends Propietario implements Serializable{
 		return this.apellido2;
 	}
 	
-	public Grupo getGrupo(int indice){
+	public Propietario getGrupo(int indice){
 		return this.listaGrupo.get(indice);
 	}
 	
@@ -101,18 +100,14 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @return
 	 */
-	public ArrayList<Grupo> getListaGrupo(){
+	public List<Propietario> getListaGrupo(Propietario propietario){
 		if(this.listaGrupo == null){
-			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+			this.listaGrupo = new GestorGrupo().getListaGrupo(propietario);
 		}
 		
 		return this.listaGrupo;
 	}
-	
-	public Puntuaciones getControlPuntuacion(){
-		return this.puntuaciones;
-	}
-	
+
 	public boolean setCorreo(String correo){
 		this.correo = correo;
 		return true;
@@ -124,7 +119,7 @@ public class Usuario extends Propietario implements Serializable{
 	}
 	
 	public boolean setNombre(String nombre){
-		this.nombre = nombre;
+		this.nombreUsuario = nombre;
 		return true;
 	}
 	public boolean setApellido1(String apellido1){
@@ -141,7 +136,7 @@ public class Usuario extends Propietario implements Serializable{
 		return this.listaGrupoKey.add(key);
 	}
 	
-	public boolean setGrupo(Grupo grupo){
+	public boolean setGrupo(Propietario grupo){
 		if(this.listaGrupo.add(grupo)){
 			return this.setGrupoKey(grupo.getKey());
 		}
@@ -153,9 +148,9 @@ public class Usuario extends Propietario implements Serializable{
 		return true;
 	}
 	
-	public boolean setListaGrupo(ArrayList<Grupo> listaGrupo){
+	public boolean setListaGrupo(List<Propietario> listaGrupo){
 		if(this.listaGrupo.addAll(listaGrupo)){
-			for(Grupo grupo:listaGrupo){
+			for(Propietario grupo:listaGrupo){
 				this.setGrupoKey(grupo.getKey());
 			}
 		}

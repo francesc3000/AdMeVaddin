@@ -1,6 +1,7 @@
 package com.luremesoftware.adme.bbdd;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -9,6 +10,7 @@ import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
@@ -17,13 +19,13 @@ public class GrupoBbdd{
 	
 	public GrupoBbdd(){}
 	
-	public Grupo getGrupo(String nombreGrupo){
+	public Propietario getGrupo(String nombreGrupo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	    String query = "select from " + Tabla.GRUPO.getName() + " where nombre == :nombreGrupo";
 	    
-	    Grupo grupo = null, detached = null;
+	    Propietario grupo = null, detached = null;
 	    try{
-	    	grupo = (Grupo) pm.newQuery(query).execute(nombreGrupo);
+	    	grupo = (Propietario) pm.newQuery(query).execute(nombreGrupo);
 		    detached = pm.detachCopy(grupo);
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
@@ -35,11 +37,11 @@ public class GrupoBbdd{
 	    return detached;
 	}
 	
-	public ArrayList<Grupo> getListaGrupo(Usuario usuario){
+	public List<Propietario> getListaGrupo(Propietario usuario){
 		return this.getListaGrupo(null, usuario);
 	}
 	
-	public ArrayList<Grupo> getListaGrupo(ListaMetadato listaMetadato){
+	public List<Propietario> getListaGrupo(ListaMetadato listaMetadato){
 		return this.getListaGrupo(listaMetadato, null);
 	}
 
@@ -49,13 +51,13 @@ public class GrupoBbdd{
 	 * @param usuario
 	 * @return
 	 */
-	public ArrayList<Grupo> getListaGrupo(ListaMetadato listaMetadato, Usuario usuario){
-		ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
+	public List<Propietario> getListaGrupo(ListaMetadato listaMetadato, Propietario usuario){
+		List<Propietario> listaGrupo = new ArrayList<Propietario>();
 		
 		return listaGrupo; 
 	}
 
-	public ListaMensaje putGrupo(Grupo grupo){
+	public ListaMensaje putGrupo(Propietario grupo){
 		ListaMensaje listaMensaje = new ListaMensaje();
 	
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -71,7 +73,7 @@ public class GrupoBbdd{
 		return listaMensaje;
 	}
 
-	public ListaMensaje borraGrupo(Grupo grupo){
+	public ListaMensaje borraGrupo(Propietario grupo){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
