@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
 
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
+import com.luremesoftware.adme.modelo.Puntuacion;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -23,9 +26,9 @@ public class UsuarioBbdd{
 	
 	public Usuario getUsuario(String correo){
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Usuario usuario = null;
-		
-	    String query = "select from " + Tabla.USUARIO + " where correo == :correo";
+		Usuario usuario = null, detached = null;
+		Query query = pm.newQuery(Usuario.class);
+		query.setFilter("correo == :correo");
 	    
 	    
 	    try{
@@ -33,6 +36,8 @@ public class UsuarioBbdd{
 	    	List<Usuario> listaUsuario = (List<Usuario>) pm.newQuery(query).execute(correo);
 	    	if(!listaUsuario.isEmpty()){
 	    		usuario = listaUsuario.get(0);
+	    		detached = pm.detachCopy(usuario);
+	    		//detached.getControlPuntuacion().getListaPuntuaciones().size();
 		    }
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
@@ -41,12 +46,12 @@ public class UsuarioBbdd{
 	        pm.close();
 	    }
 	    
-	    if(usuario != null){
-	    	usuario.setPubli(new Publi(usuario,"1","2","3"));
-	    	this.putUsuario(usuario);
-	    }
+	   /* if(detached!=null){
+	    	detached.setPuntuacion(new Puntuacion(usuario,detached,3));
+	    	this.putUsuario(detached);
+	    }*/
 	    
-	    return usuario;
+	    return detached;
 	}
 	
 	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
@@ -63,19 +68,17 @@ public class UsuarioBbdd{
 		ListaMensaje listaMensaje = new ListaMensaje();
 	
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
-		Usuario usuarioPMF = (Usuario) pm.getObjectById(usuario.getKey());
-		if(usuarioPMF != null){
-			usuarioPMF.setListaPubli(usuario.getListaPubli());
-		}else{
-			usuarioPMF = usuario;
-		}
-		
+		Transaction tx = pm.currentTransaction();
 	    try {
-	        pm.makePersistent(usuarioPMF);
+	    	tx.begin();
+	        pm.makePersistent(usuario);
+	        tx.commit();
 	    }catch (JDOObjectNotFoundException e) {
 	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
 	    }finally {
+	    	if (tx.isActive()) {
+	            tx.rollback();
+	        }
 	        pm.close();
 	    }
 		

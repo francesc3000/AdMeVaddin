@@ -1,5 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -15,15 +17,18 @@ import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
  * Clase Publicación
  *
 */
-@PersistenceCapable
-public class Publi{
+@PersistenceCapable(detachable = "true")
+public class Publi implements Serializable{
+	/**
+	 * 
+	 */
+	@NotPersistent
+	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
 	@Persistent
-	//Por restricciones de GAE/JDO no se pueden tener relaciones polimorficas
-	//private Propietario propietario; //Puede ser un usuario o un grupo
-	private Key propietarioKey; //En futuras versiones de GAE/JDO podria solucionarse
+	private Key propietarioKey;
 	@Persistent
 	private Propietario propietario; //Puede ser un usuario o un grupo
 	@Persistent
@@ -42,7 +47,6 @@ public class Publi{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String descripcion, String ciudad){
-		
 		this.propietarioKey = propietario.getKey();
 		this.propietario = propietario;
 		this.titulo = titulo;
@@ -51,10 +55,6 @@ public class Publi{
 	}
 	
 	public Key getKey(){
-		if(this.key == null){
-			String name = this.getPropietario().getKey() + this.titulo;
-			this.key = KeyFactory.createKey(Tabla.PUBLICACION.toString(), name);
-		}
 		return this.key;
 	}
 	
@@ -72,9 +72,19 @@ public class Publi{
 	
 	public Propietario getPropietario(){
 		if(this.propietario==null){
-			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietarioKey);
+			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietario.getKey());
 		}
 		return this.propietario;
+	}
+	
+	public boolean setPropietario(Propietario propietario){
+		this.propietario = propietario;
+		return true;
+	}
+	
+	public boolean setPropietario(Usuario propietario){
+		this.propietario = propietario;
+		return true;
 	}
 	
 	public String toString(){
