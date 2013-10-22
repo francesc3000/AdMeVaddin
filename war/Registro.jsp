@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
-<%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
+<%@ page import="com.luremesoftware.adme.modelo.Propietario" %>
 <%@ page import="com.luremesoftware.adme.modelo.Publi" %>
    
 <!DOCTYPE html>
@@ -105,11 +105,11 @@
 
                 if (ok == 1) {
                     
-                    Usuario usu = new Usuario(email,pass,nom,apellido1,apellido2);
+                    Propietario usu = new Propietario(email,pass,nom,apellido1,apellido2);
      
                  
                     ControladorWeb cw = new ControladorWeb();
-                    cw.putUsuario(usu);
+                    cw.putPropietario(usu);
                  
    
                     String name = request.getParameter( "txtNombre" );

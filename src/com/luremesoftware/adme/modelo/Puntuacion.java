@@ -3,7 +3,7 @@ package com.luremesoftware.adme.modelo;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Puntuacion {
 	
 	@Persistent

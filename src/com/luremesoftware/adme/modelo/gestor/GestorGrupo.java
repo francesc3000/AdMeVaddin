@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.luremesoftware.adme.bbdd.GrupoBbdd;
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -17,15 +18,15 @@ public class GestorGrupo {
 		this.grupoBbdd = new GrupoBbdd();
 	}
 	
-	public Grupo getGrupo(String nombreGrupo){
+	public Propietario getGrupo(String nombreGrupo){
 		return this.grupoBbdd.getGrupo(nombreGrupo);
 	}
 
-	public ArrayList<Grupo> getListaGrupo(Usuario usuario){
+	public List<Propietario> getListaGrupo(Propietario usuario){
 		return this.grupoBbdd.getListaGrupo(usuario);
 	}
 
-	public List<Publi> getListaPubli(Grupo grupo){
+	public List<Publi> getListaPubli(Propietario grupo){
 		
 		GestorPubli gestorPubli = new GestorPubli();
 		
@@ -35,10 +36,10 @@ public class GestorGrupo {
 		
 	}
 	
-	public List<Publi> getListaPubli(ArrayList<Grupo> listaGrupo){
+	public List<Publi> getListaPubli(List<Propietario> listaGrupo){
 		List<Publi> listaPubli = new ArrayList<Publi>();
 		
-		for(Grupo grupo:listaGrupo){
+		for(Propietario grupo:listaGrupo){
 			grupo.setListaPubli(this.getListaPubli(grupo));
 			listaPubli.addAll(grupo.getListaPubli());
 		}
@@ -51,11 +52,11 @@ public class GestorGrupo {
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
-	public ListaMensaje putGrupo(Grupo grupo){	
+	public ListaMensaje putGrupo(Propietario grupo){	
 		return this.grupoBbdd.putGrupo(grupo);
 	}
 
-	public ListaMensaje borraGrupo(Grupo grupo){
+	public ListaMensaje borraGrupo(Propietario grupo){
 		return this.grupoBbdd.borraGrupo(grupo);
 	}
 }

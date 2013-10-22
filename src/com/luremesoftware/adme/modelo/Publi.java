@@ -1,5 +1,7 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -15,8 +17,13 @@ import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
  * Clase Publicación
  *
 */
-@PersistenceCapable
-public class Publi{
+@PersistenceCapable(detachable = "true")
+public class Publi implements Serializable{
+	/**
+	 * 
+	 */
+	@NotPersistent
+	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
@@ -26,10 +33,8 @@ public class Publi{
 	@Persistent(mappedBy = "listaPubli")
 	private Propietario propietario; //Puede ser un usuario o un grupo
 	*/
-	@Persistent(mappedBy = "listaPubli")
-	private Usuario usuario;
-	@Persistent(mappedBy = "listaPubli")
-	private Grupo grupo;
+	@Persistent
+	private Propietario propietario;
 	@Persistent
 	private String titulo;	 		//Titulo de la publicacion
 	@Persistent
@@ -92,25 +97,11 @@ public class Publi{
 		return this.propietario.getKey() + " es propietario de: " + this.getTitulo();
 	}*/
 	public Propietario getPropietario(){
-		Propietario propietario = null;
-		if(this.usuario!=null){
-			propietario = this.usuario;
-		}
-		if(this.grupo!=null){
-			propietario = this.grupo;
-		}
-		return propietario;
+		return this.propietario;
 	}
 	
 	public boolean setPropietario(Propietario propietario){
-		String clase = Propietario.class.getSimpleName();
-		switch(clase){
-		case "Usuario":
-			this.usuario = (Usuario) propietario;
-			break;
-		case "Grupo":
-			this.grupo = (Grupo) propietario;
-		}
+		this.propietario = propietario;
 		return true;
 	}
 	
