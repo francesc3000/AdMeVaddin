@@ -1,25 +1,36 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.jdo.annotations.Element;
+import javax.jdo.annotations.FetchGroup;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
-@PersistenceCapable
-public class Puntuaciones {
+import com.google.appengine.api.datastore.Key;
+
+@PersistenceCapable(detachable = "true")
+@FetchGroup(name="one_two", members={@Persistent(name="key"), @Persistent(name="listaPuntuacion")})
+public class Puntuaciones implements Serializable{
 	
+	/**
+	 * 
+	 */
+	@NotPersistent
+	private static final long serialVersionUID = 1L;
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;
 	@Persistent
-	private Propietario propietario = null;
-	@Persistent
-	private ArrayList<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
+	@Element(dependent = "true")
+	private List<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
 	
-	public Puntuaciones(Propietario propietario){
-		this.setPropietario(propietario);
-	}
-	
-	public Propietario getPropietario(){
-		return this.propietario;
-	}
+	public Puntuaciones(){}
 	
 	public Puntuacion getAltaPuntuacion(){
 		Puntuacion puntuacion = null;
@@ -53,6 +64,10 @@ public class Puntuaciones {
 		}
 	}
 	
+	public List<Puntuacion> getListaPuntuaciones(){
+		return this.listaPuntuacion;
+	}
+	
 	public int getPuntuacionPromedio(){
 		int puntuacionPromedio = 0;
 		
@@ -67,11 +82,6 @@ public class Puntuaciones {
 		}
 		
 		return puntuacionPromedio;
-	}
-
-	public boolean setPropietario(Propietario propietario){
-		this.propietario = propietario;
-		return true;
 	}
 	
 	public boolean setPuntuacion(Puntuacion puntuacion){

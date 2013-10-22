@@ -99,14 +99,15 @@ public class ControladorWeb{
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putPubli(Publi publi){
-		ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
-		if(!listaMensaje.contieneErrores()){
-			Propietario propietario = publi.getPropietario();
-			if(propietario.setPubli(publi)){
-				this.gestorUsuario.putUsuario((Usuario)propietario);
+	public ListaMensaje putPubli(Usuario usuario, Publi publi){
+		ListaMensaje listaMensaje = null;
+		//ListaMensaje listaMensaje = gestorPubli.putPubli(publi);
+		//if(!listaMensaje.contieneErrores()){
+			//Propietario propietario = publi.getPropietario();
+			if(usuario.setPubli(publi)){
+				listaMensaje = this.gestorUsuario.putUsuario(usuario);
 			}
-		}
+		//}
 		return listaMensaje;
 	}
 	
@@ -157,6 +158,7 @@ public class ControladorWeb{
 				utilidadesVista.sendRedirect("Registro.jsp");
 			}else{
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
+				utilidadesVista.sendRedirect("Inicio.jsp?env=3");
 			}		}
 		
 		return usuario;

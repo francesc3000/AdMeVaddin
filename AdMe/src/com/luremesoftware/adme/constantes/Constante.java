@@ -5,6 +5,7 @@
 package com.luremesoftware.adme.constantes;
 
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 
@@ -15,18 +16,25 @@ import com.luremesoftware.adme.modelo.Usuario;
 public interface Constante {
 	
 	public enum Tabla implements Constante{
-		USUARIO(Usuario.class.getName()),
-		GRUPO(Grupo.class.getName()),
-		PUBLICACION(Publi.class.getName());
+		PROPIETARIO(Propietario.class),
+		USUARIO(Usuario.class),
+		GRUPO(Grupo.class),
+		PUBLICACION(Publi.class);
 		
-		private final String constante;
+		@SuppressWarnings("rawtypes")
+		private final Class constante;
 		
-		private Tabla(String constante){
+		@SuppressWarnings("rawtypes")
+		private Tabla(Class constante){
 			this.constante = constante;
 		}
 		
-		public String toString(){
-			return this.constante;
+		public String getName(){
+			return this.constante.getName();
+		}
+		
+		public String getSimpleName(){
+			return this.constante.getSimpleName();
 		}
 	}
 	/**

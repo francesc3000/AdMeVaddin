@@ -16,7 +16,7 @@ import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
  * @author francesc3000@gmail.com
  *
 */
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Usuario extends Propietario implements Serializable{
 	
 	/**
