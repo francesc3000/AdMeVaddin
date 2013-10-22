@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    
+<%@ page import="com.luremesoftware.adme.constantes.Constante"%>   
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,8 +24,7 @@
 <%
 
 response.getWriter().println("Bienvenido: ");
-Usuario usuario = (Usuario)session.getAttribute("user");
-response.getWriter().println(usuario.getNombre());
+
 		%>
 </body>
 </html>
