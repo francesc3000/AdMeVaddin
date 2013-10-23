@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.luremesoftware.adme.constantes.Constante"%>   
+<%@ page import="com.luremesoftware.adme.constantes.Constante.ConstanteSession"%>   
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>PERFIL DE USUARIO</h1>
+<% Usuario usuario = (Usuario)session.getAttribute(ConstanteSession.USUARIO.toString()); %>
 
 <a href="NuevoGrupo.jsp">Crear nuevo grupo</a> 
 <br></br>
@@ -23,7 +24,7 @@
 <br></br>
 <%
 
-response.getWriter().println("Bienvenido: ");
+response.getWriter().println("Bienvenido: " + usuario.getNombre());
 
 		%>
 </body>

@@ -12,17 +12,13 @@ import javax.jdo.Transaction;
 import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
-import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
-import com.luremesoftware.adme.modelo.Puntuacion;
-import com.luremesoftware.adme.modelo.ControlPuntuacion;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 import com.luremesoftware.adme.bbdd.PMF;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
 
 public class UsuarioBbdd{
 	
@@ -48,29 +44,15 @@ public class UsuarioBbdd{
 	    		if(detached.getControlPuntuacion()!=null){
 	    			detached.getControlPuntuacion().getListaPuntuaciones().size();
 	    		}
+	    		if(detached.getListaPubli()!=null){
+	    			detached.getListaPubli().size();
+	    		}
 		    }
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
 	    } 
 	    finally {
 	        pm.close();
-	    }
-	    
-	   /*if(detached!=null){
-	    	detached.setPuntuacion(usuario,3);
-	    	this.putUsuario(detached);
-	    }*/
-	    
-	    /*if(detached!=null){
-	    	Grupo grupo = new Grupo(detached,"titulo","","");
-	    	detached.crearGrupo(grupo);
-	    	this.putUsuario(detached);
-	    }*/
-	    
-	    if(detached!=null){
-	    	List<Grupo> listaGrupo = usuario.getListaGrupo();
-	    	Grupo grupo = listaGrupo.get(0);
-	    	if(grupo!=null){}
 	    }
 	    
 	    return detached;

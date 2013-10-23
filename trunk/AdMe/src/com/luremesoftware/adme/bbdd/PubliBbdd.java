@@ -9,7 +9,6 @@ import javax.jdo.PersistenceManager;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Metadato;
-import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -17,33 +16,10 @@ import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
 public class PubliBbdd{
 	
-	public PubliBbdd(){
-	}
+	public PubliBbdd(){}
 	
-	public ArrayList<Publi> getListaPubli(Propietario propietario){
-		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
-		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    String query = "select from " + Tabla.PUBLICACION + " where propietarioKey == :propietarioKey";
-	    
-	    try{
-	    	@SuppressWarnings("unchecked")
-			List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute(propietario.getKey());
-	    	for(Publi publi:listaPubliList){
-				listaPubli.add(publi);
-			}
-	    }catch (JDOObjectNotFoundException e) {
-	        //Do nothing
-	    } 
-	    finally {
-	        pm.close();
-	    }
-	    
-		return listaPubli;
-	}
-	
-	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
-		ArrayList<Publi> listaPubli = new ArrayList<Publi>();
+	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
+		List<Publi> listaPubli = new ArrayList<Publi>();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		//Se construye la sentencia de selección
@@ -60,7 +36,7 @@ public class PubliBbdd{
 		}
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Publi> listaPubliList = (ArrayList<Publi>) pm.newQuery(query).execute();
+		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute();
 		for(Publi publi:listaPubliList){
 			listaPubli.add(publi);
 		}

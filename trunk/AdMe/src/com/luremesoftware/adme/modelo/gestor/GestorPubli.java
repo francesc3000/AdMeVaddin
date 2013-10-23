@@ -1,9 +1,8 @@
 package com.luremesoftware.adme.modelo.gestor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.luremesoftware.adme.bbdd.PubliBbdd;
-import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
@@ -17,15 +16,11 @@ public class GestorPubli {
 	}
 	
 	/**
-	 * Se retorna el listado de Publicaciones a partir de un Id
-	 * @param id Identificador que se quiere buscar sus publicaciones
+	 * Se retorna el listado de Publicaciones a partir de una tabla de Metadatos
+	 * @param listaMetadato Filtros que se quiere buscar publicaciones
 	 * @return Listado de Publicaciones
-	 */
-	public ArrayList<Publi> getListaPubli(Propietario propietario){
-		return publiBbdd.getListaPubli(propietario);
-	}
-	
-	public ArrayList<Publi> getListaPubli(ListaMetadato listaMetadato){
+	 */	
+	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
 		return this.publiBbdd.getListaPubli(listaMetadato);
 	}
 

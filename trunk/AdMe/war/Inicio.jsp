@@ -3,7 +3,7 @@
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb"%>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 <%@ page import="com.luremesoftware.adme.modelo.Publi"%>
-<%@ page import="com.luremesoftware.adme.constantes.Constante"%>
+<%@ page import="com.luremesoftware.adme.constantes.Constante.ConstanteSession" %>
 
 
 <html>
@@ -30,13 +30,13 @@
 			if (log == 1) {
 				log = 0;
 			} else {
-
-				log = 1;
-
 				//out.print(request.getParameter("env").toString());
-				//ControladorWeb cw = new ControladorWeb();
+				ControladorWeb cw = new ControladorWeb();
 
-				//Usuario login = cw.acceder(request, response, session);
+				Usuario login = cw.acceder(request, response, session);
+				if(login!=null){
+					log = 1;
+				}
 			}
 		}
 
@@ -51,9 +51,9 @@
 	<form name="acceder" method="post" action="Inicio.jsp?env=1">
 		<%
 			if (log == 1) {
-				//out.print(Constante.ConstanteUsuario.NOMBRE.toString());
+				Usuario usuario = (Usuario)session.getAttribute(ConstanteSession.USUARIO.toString());
 				out.print("HOLA ");
-				out.print("USUARIO");
+				out.print(usuario.getNombre());
 				out.print("<button type='submit' class='login-button'>Salir</button>");
 			} else
 

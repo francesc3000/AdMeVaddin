@@ -9,9 +9,8 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
-import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
+import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 
 /**
  * Clase Publicación
@@ -72,7 +71,10 @@ public class Publi implements Serializable{
 	
 	public Propietario getPropietario(){
 		if(this.propietario==null){
-			this.propietario = new GestorPropietario().getPropietarioByKey(this.propietario.getKey());
+			this.propietario = new GestorUsuario().getUsuarioByKey(this.propietarioKey);
+			if(this.propietario==null){
+				this.propietario = new GestorGrupo().getGrupoByKey(this.propietarioKey);
+			}
 		}
 		return this.propietario;
 	}
