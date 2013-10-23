@@ -1,6 +1,5 @@
 package com.luremesoftware.adme.bbdd;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -8,12 +7,9 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 
 import com.google.appengine.api.datastore.Key;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Mensaje;
-import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
-import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
@@ -23,6 +19,22 @@ public class GrupoBbdd{
 	
 	public List<Grupo> getListaGrupo(ListaMetadato listaMetadato){
 		return null;
+	}
+	
+	public Grupo getGrupoByKey(Key key){
+		Grupo grupo;
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			grupo = pm.getObjectById(Grupo.class,key);
+	    }catch (JDOObjectNotFoundException e) {
+	        return null;
+	    } 
+	    finally {
+	        pm.close();
+	    }
+		
+		return grupo;
 	}
 	
 	@SuppressWarnings("unchecked")

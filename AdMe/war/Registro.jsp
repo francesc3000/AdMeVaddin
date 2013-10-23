@@ -3,6 +3,8 @@
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb" %>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario" %>
 <%@ page import="com.luremesoftware.adme.modelo.Publi" %>
+<%@ page import="com.luremesoftware.adme.modelo.lista.ListaMensaje" %>
+<%@ page import="com.luremesoftware.adme.constantes.Constante.ConstanteSession" %>
    
 <!DOCTYPE html>
 <html>
@@ -62,8 +64,7 @@
                 String nom = request.getParameter("txtNombre");
                 String apellido1 = request.getParameter("txtApellido1");
                 String apellido2 = request.getParameter("txtApellido2");
-                String email = (String) session.getAttribute("userMail");
-                //String email = request.getParameter("txtEmail");
+                String email = (String) session.getAttribute(ConstanteSession.USUARIOMAIL.toString());
                 String pass = request.getParameter("txtPass");
                 String pass2 = request.getParameter("txtPass2");
 
@@ -109,11 +110,10 @@
      
                  
                     ControladorWeb cw = new ControladorWeb();
-                    cw.putUsuario(usu);
-                 
-   
-                    String name = request.getParameter( "txtNombre" );
-                    session.setAttribute( "user", usu );
+                    ListaMensaje listaMensaje = cw.putUsuario(usu);
+                    if(!listaMensaje.contieneErrores()){
+                    	session.setAttribute(ConstanteSession.USUARIO.toString(),usu);
+                    }
                     response.sendRedirect("Perfil.jsp");
                   
 

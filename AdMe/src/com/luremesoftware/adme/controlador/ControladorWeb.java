@@ -1,7 +1,6 @@
 package com.luremesoftware.adme.controlador;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteSession;
 import com.luremesoftware.adme.modelo.Grupo;
-import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -24,13 +21,11 @@ import com.luremesoftware.adme.vista.UtilidadesVista;
 
 public class ControladorWeb{
 	
-	private GestorPropietario gestorPropietario = null;
 	private GestorUsuario gestorUsuario = null;
 	private GestorGrupo gestorGrupo = null;
 	private GestorPubli gestorPubli = null;
 	
 	public ControladorWeb(){
-		this.gestorPropietario = new GestorPropietario();
 		this.gestorUsuario = new GestorUsuario();
 		this.gestorGrupo = new GestorGrupo();
 		this.gestorPubli = new GestorPubli();
@@ -56,8 +51,9 @@ public class ControladorWeb{
 				utilidadesVista.sendRedirect("Registro.jsp");
 			}else{
 				utilidadesVista.setSessionAttribute(ConstanteSession.USUARIO,usuario);
-				utilidadesVista.sendRedirect("Inicio.jsp");
-			}		}
+				//utilidadesVista.sendRedirect("Inicio.jsp");
+			}		
+		}
 		
 		return usuario;
 	}

@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%@ page import="com.luremesoftware.adme.controlador.ControladorWeb"%>
+<%@ page import="com.luremesoftware.adme.constantes.Constante.ConstanteSession"%>
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 <%@ page import="com.luremesoftware.adme.modelo.Grupo"%>
 <html>
@@ -17,9 +18,9 @@
 </head>
 <body>
 	<h1>CREAR NUEVO GRUPO</h1>
+	<% Usuario usuario = (Usuario)session.getAttribute(ConstanteSession.USUARIO.toString()); %>
+	
 	<%
-
-	Usuario usuario = (Usuario)session.getAttribute("user");
 
         int ok = 1;
         if (!(request.getParameter("env") == null)) {
@@ -44,11 +45,12 @@
                
             
 
-			Grupo grupo = new Grupo(usuario,nGrupo,descripcion,ciudad);
+				Grupo grupo = new Grupo(usuario,nGrupo,descripcion,ciudad);
+				usuario.crearGrupo(grupo);
             	
                 ControladorWeb cw = new ControladorWeb();
                      	         
-                cw.putGrupo(grupo);
+                cw.putUsuario(usuario);
             }
         }
     %>

@@ -5,18 +5,12 @@ import java.util.List;
 
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.images.Image;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
-import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 
 @PersistenceCapable(detachable = "true")
 //@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -40,9 +34,6 @@ public abstract class Propietario{
 	}
 	
 	public List<Publi> getListaPubli(){
-		if(this.listaPubli==null){
-			this.listaPubli = new GestorPubli().getListaPubli(this);	
-		}
 		return this.listaPubli;
 	}
 
