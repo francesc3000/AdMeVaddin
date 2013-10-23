@@ -2,12 +2,15 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 
 @PersistenceCapable(detachable="true")
@@ -24,30 +27,48 @@ public class Grupo extends Propietario implements Serializable{
 	@Persistent
 	private String ciudad = null;
 	@Persistent
-	private ArrayList<Key> listaUsuarioKey = null;
+	private List<Key> listaUsuarioKey = new ArrayList<Key>();
 	@NotPersistent
-	private ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
+	private List<Usuario> listaUsuario = new ArrayList<Usuario>();
 	
 	public Grupo(){};
 	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
-		this.buildKey(usuario.getKey()+nombre);
+		this.buildKey(usuario.getKey().getName()+nombre);
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);
-		this.addUsuario(usuario);
+		this.listaUsuario.add(usuario);
+	}
+	
+	private boolean buildKey(String id){
+		return this.setKey(KeyFactory.createKey(Tabla.GRUPO.getSimpleName(), id));
+	}
+	
+	public boolean addUsuarioKey(Key key){
+		return this.listaUsuarioKey.add(key);
 	}
 	
 	public boolean addUsuario(Usuario usuario){
-		return this.listaUsuario.add(usuario);
+		//Se introduce el usuario en el grupo
+		this.addUsuarioKey(usuario.getKey());
+		this.listaUsuario.add(usuario);
+		
+		//Se informa del grupo al usuario
+		usuario.setGrupoKey(this.getKey());
+		
+		return true;
 	}
 	
 	public boolean addListaUsuario(ArrayList<Usuario> listaUsuario){
+		for(Usuario usuario:listaUsuario){
+			this.addUsuarioKey(usuario.getKey());
+		}
 		return this.listaUsuario.addAll(listaUsuario);
 	}
 	
-	public boolean borrarUsario(Usuario usuario){
+	public boolean borrarUsuario(Usuario usuario){
 		return this.listaUsuario.remove(usuario);
 	}
 	
@@ -63,9 +84,9 @@ public class Grupo extends Propietario implements Serializable{
 		return this.ciudad;
 	}
 	
-	public ArrayList<Usuario> getListaUsuario(){
+	public List<Usuario> getListaUsuario(){
 		if(this.listaUsuario==null){
-			this.listaUsuario = new GestorUsuario().getListaUsuarioXGrupo(this.getNombre());
+			this.listaUsuario = new GestorUsuario().getListaUsuarioByKey(this.listaUsuarioKey);
 		}
 		return this.listaUsuario;
 	}

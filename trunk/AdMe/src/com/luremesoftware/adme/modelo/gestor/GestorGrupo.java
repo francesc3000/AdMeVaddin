@@ -3,6 +3,7 @@ package com.luremesoftware.adme.modelo.gestor;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.bbdd.GrupoBbdd;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Publi;
@@ -16,13 +17,9 @@ public class GestorGrupo {
 	public GestorGrupo(){
 		this.grupoBbdd = new GrupoBbdd();
 	}
-	
-	public Grupo getGrupo(String nombreGrupo){
-		return this.grupoBbdd.getGrupo(nombreGrupo);
-	}
 
-	public ArrayList<Grupo> getListaGrupo(Usuario usuario){
-		return this.grupoBbdd.getListaGrupo(usuario);
+	public List<Grupo> getListaGrupoByKey(List<Key> listaKey){
+		return this.grupoBbdd.getListaGrupoByKey(listaKey);
 	}
 
 	public List<Publi> getListaPubli(Grupo grupo){

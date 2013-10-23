@@ -7,7 +7,7 @@ public class PuestoControl {
 	private Usuario usuario = null;
 	private List<Publi> listaPubli = null;
 	private List<Grupo> listaGrupo = null;
-	private Puntuaciones puntuaciones = null;
+	private ControlPuntuacion controlPuntuacion = null;
 	
 	public PuestoControl(Usuario usuario){
 		this.usuario = usuario;
@@ -20,7 +20,7 @@ public class PuestoControl {
 			this.listaPubli.addAll(grupo.getListaPubli());
 		}
 		
-		this.puntuaciones = usuario.getControlPuntuacion();
+		this.controlPuntuacion = usuario.getControlPuntuacion();
 	}
 	
 	public Usuario getUsuario(){
@@ -36,7 +36,7 @@ public class PuestoControl {
 	}
 	
 	public int getPuntuacionPromedio(){
-		return this.puntuaciones.getPuntuacionPromedio();
+		return this.controlPuntuacion.getPuntuacionPromedio();
 	}
 
 }
