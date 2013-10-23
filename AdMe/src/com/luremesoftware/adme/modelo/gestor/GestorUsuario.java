@@ -1,7 +1,9 @@
 package com.luremesoftware.adme.modelo.gestor;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.google.appengine.api.datastore.Key;
 import com.luremesoftware.adme.bbdd.UsuarioBbdd;
 import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Mensaje.TipoError;
@@ -41,11 +43,12 @@ public class GestorUsuario {
 		return this.usuarioBbdd.getUsuario(correo);
 	}
 	
-	public ArrayList<Usuario> getListaUsuarioXGrupo(String nombreGrupo){
-		ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
-		
-		
-		return listaUsuario;
+	public Usuario getUsuarioByKey(Key key){
+		return this.usuarioBbdd.getUsuarioByKey(key);
+	}
+	
+	public List<Usuario> getListaUsuarioByKey(List<Key> listaKey){
+		return this.usuarioBbdd.getListaUsuarioByKey(listaKey);
 	}
 	
 	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){

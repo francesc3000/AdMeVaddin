@@ -2,12 +2,15 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
 
 /**
@@ -35,9 +38,9 @@ public class Usuario extends Propietario implements Serializable{
 	@Persistent
 	private String apellido2;
 	@Persistent
-	private ArrayList<Key> listaGrupoKey = new ArrayList<Key>();
+	private List<Key> listaGrupoKey = new ArrayList<Key>();
 	@NotPersistent
-	private ArrayList<Grupo> listaGrupo = new ArrayList<Grupo>();
+	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
 	
 	public Usuario(){}
 	
@@ -59,6 +62,10 @@ public class Usuario extends Propietario implements Serializable{
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
+	}
+	
+	private boolean buildKey(String id){
+		return this.setKey(KeyFactory.createKey(Tabla.USUARIO.getSimpleName(), id));
 	}
 
 	public String getCorreo(){
@@ -97,16 +104,16 @@ public class Usuario extends Propietario implements Serializable{
 	 * 
 	 * @return
 	 */
-	public ArrayList<Grupo> getListaGrupo(){
-		if(this.listaGrupo == null){
-			this.listaGrupo = new GestorGrupo().getListaGrupo(this);
+	public List<Grupo> getListaGrupo(){
+		if(this.listaGrupo.isEmpty()){
+			this.listaGrupo = new GestorGrupo().getListaGrupoByKey(listaGrupoKey);
 		}
 		
 		return this.listaGrupo;
 	}
 	
-	public Puntuaciones getControlPuntuacion(){
-		return this.puntuaciones;
+	public ControlPuntuacion getControlPuntuacion(){
+		return this.controlPuntuacion;
 	}
 	
 	public boolean setCorreo(String correo){
@@ -137,15 +144,13 @@ public class Usuario extends Propietario implements Serializable{
 		return this.listaGrupoKey.add(key);
 	}
 	
-	public boolean setGrupo(Grupo grupo){
-		if(this.listaGrupo.add(grupo)){
-			return this.setGrupoKey(grupo.getKey());
-		}
-		return false;
-	}
-	
-	public boolean setListaGrupoKey(ArrayList<Key> listaGrupoKey){
-		this.listaGrupoKey.addAll(listaGrupoKey);
+	public boolean crearGrupo(Grupo grupo){
+		//Se introduce el grupo en el usuario
+		this.listaGrupo.add(grupo);
+		this.setGrupoKey(grupo.getKey());
+		
+		//Se informa del usuario en el grupo
+		grupo.addUsuarioKey(this.getKey());
 		return true;
 	}
 	
@@ -156,6 +161,13 @@ public class Usuario extends Propietario implements Serializable{
 			}
 		}
 		return true;
+	}
+	
+	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
+		if(this.controlPuntuacion==null){
+			this.controlPuntuacion = new ControlPuntuacion();
+		}
+		return this.controlPuntuacion.setPuntuacion(puntuador, puntuacion);
 	}
 
 	public String toString(){

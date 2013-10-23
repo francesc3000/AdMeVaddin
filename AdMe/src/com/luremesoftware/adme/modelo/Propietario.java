@@ -30,14 +30,10 @@ public abstract class Propietario{
 	@Persistent(mappedBy = "propietario", defaultFetchGroup = "true")
 	@Element(dependent = "true")
 	protected List<Publi> listaPubli = new ArrayList<Publi>();
-	@Persistent(defaultFetchGroup = "true", dependent = "true")
-	protected Puntuaciones puntuaciones = new Puntuaciones();
+	@Persistent(dependent = "true", defaultFetchGroup = "true")
+	protected ControlPuntuacion controlPuntuacion;
 	
 	public Propietario(){}
-	
-	protected boolean buildKey(String id){
-		return this.setKey(KeyFactory.createKey(Tabla.USUARIO.getSimpleName(), id));
-	}
 	
 	public Key getKey(){
 		return this.key;
@@ -51,15 +47,15 @@ public abstract class Propietario{
 	}
 
 	public Puntuacion getAltaPuntuacion(){
-		return this.puntuaciones.getAltaPuntuacion();
+		return this.controlPuntuacion.getAltaPuntuacion();
 	}
 	
 	public Puntuacion getBajaPuntuacion(){
-		return this.puntuaciones.getBajaPuntuacion();
+		return this.controlPuntuacion.getBajaPuntuacion();
 	}
 	
 	public int getPuntuacionPromedio(){
-		return this.puntuaciones.getPuntuacionPromedio();
+		return this.controlPuntuacion.getPuntuacionPromedio();
 	}
 
 	public boolean setKey(Key key){
@@ -73,9 +69,5 @@ public abstract class Propietario{
 	
 	public boolean setListaPubli(List<Publi> listaPubli){
 		return this.listaPubli.addAll(listaPubli);
-	}
-	
-	public boolean setPuntuacion(Puntuacion puntuacion){
-		return this.puntuaciones.setPuntuacion(puntuacion);
 	}
 }

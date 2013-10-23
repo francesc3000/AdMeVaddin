@@ -1,7 +1,10 @@
 package com.luremesoftware.adme.modelo;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -9,32 +12,35 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(detachable = "true")
-public class Puntuacion {
+public class Puntuacion implements Serializable{
 	
+	/**
+	 * 
+	 */
+	@NotPersistent
+	private static final long serialVersionUID = 1L;
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
-	@Persistent
-	private Propietario puntuador;
-	@Persistent
-	private Propietario puntuado;
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
+	private Key puntuadorKey;
+	@NotPersistent
+	private Usuario puntuador;
+	//@Persistent(defaultFetchGroup = "true")
+	//private Propietario puntuado;
+	@Persistent(defaultFetchGroup = "true")
 	private int puntuacion;
 	
 	public Puntuacion(){}
 	
-	public Puntuacion(Propietario puntuador, Propietario puntuado, int puntuacion){
+	public Puntuacion(Usuario puntuador, int puntuacion){
+		this.puntuadorKey = puntuador.getKey();
 		this.puntuador = puntuador;
-		this.puntuado = puntuado;
 		this.puntuacion = puntuacion;
 	}
 	
-	public Propietario getPuntuador(){
+	public Usuario getPuntuador(){
 		return this.puntuador;
-	}
-	
-	public Propietario getPuntuado(){
-		return this.puntuado;
 	}
 	
 	public int getPuntuacion(){

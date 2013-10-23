@@ -15,8 +15,8 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(detachable = "true")
-@FetchGroup(name="Puntuaciones", members={@Persistent(name="listaPuntuacion")})
-public class Puntuaciones implements Serializable{
+//@FetchGroup(name="ControlPuntuacion", members={@Persistent(name="listaPuntuacion")})
+public class ControlPuntuacion implements Serializable{
 	
 	/**
 	 * 
@@ -26,11 +26,11 @@ public class Puntuaciones implements Serializable{
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	@Element(dependent = "true")
 	private List<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
 	
-	public Puntuaciones(){}
+	public ControlPuntuacion(){}
 	
 	public Puntuacion getAltaPuntuacion(){
 		Puntuacion puntuacion = null;
@@ -71,7 +71,7 @@ public class Puntuaciones implements Serializable{
 	public int getPuntuacionPromedio(){
 		int puntuacionPromedio = 0;
 		
-		//Se contabilizan todas las puntuaciones
+		//Se contabilizan todas las controlPuntuacion
 		for(Puntuacion puntuacion:this.listaPuntuacion){
 			puntuacionPromedio = puntuacionPromedio + puntuacion.getPuntuacion();
 		}
@@ -84,7 +84,8 @@ public class Puntuaciones implements Serializable{
 		return puntuacionPromedio;
 	}
 	
-	public boolean setPuntuacion(Puntuacion puntuacion){
-		return this.listaPuntuacion.add(puntuacion);
+	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
+		this.listaPuntuacion.add(new Puntuacion(puntuador, puntuacion));
+		return true;
 	}
 }
