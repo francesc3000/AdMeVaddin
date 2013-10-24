@@ -46,7 +46,7 @@
             
 
 				Grupo grupo = new Grupo(usuario,nGrupo,descripcion,ciudad);
-				usuario.crearGrupo(grupo);
+				usuario.addGrupo(grupo);
             	
                 ControladorWeb cw = new ControladorWeb();
                      	         

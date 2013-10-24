@@ -55,6 +55,11 @@ public class UsuarioBbdd{
 	        pm.close();
 	    }
 	    
+	   /*if(detached!=null){
+	    	List<Grupo> listaGrupo = detached.getListaGrupo();
+	    	listaGrupo.isEmpty();
+	    }*/
+	    
 	    return detached;
 	}
 	
@@ -108,9 +113,6 @@ public class UsuarioBbdd{
 		Transaction tx = pm.currentTransaction();
 	    try {
 	    	tx.begin();
-	    	for(Grupo grupo:usuario.getListaGrupo()){
-	    		this.gestorGrupo.putGrupo(grupo);
-	    	}
 	        pm.makePersistent(usuario);
 	        tx.commit();
 	    }catch (JDOObjectNotFoundException e) {
@@ -118,8 +120,13 @@ public class UsuarioBbdd{
 	    }finally {
 	    	if (tx.isActive()) {
 	            tx.rollback();
+	            pm.close();
+	        }else{
+	        	pm.close();
+	        	for(Grupo grupo:usuario.getListaGrupo()){
+		    		this.gestorGrupo.putGrupo(grupo);
+		    	}
 	        }
-	        pm.close();
 	    }
 		
 		return listaMensaje;
