@@ -17,7 +17,7 @@ import com.google.appengine.api.datastore.Key;
 @Inheritance(customStrategy = "complete-table")
 public abstract class Propietario{
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	@Persistent
 	protected Key key;
 	//private String video;
 	//private Image avatar;
