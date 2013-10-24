@@ -47,7 +47,7 @@
 
                 if (ok == 1) {
                    
-                	Publi publi = new Publi(usuario,titulo,ciudad,mensaje);
+                	Publi publi = new Publi(usuario,titulo,mensaje,ciudad);
                 	
                     ControladorWeb cw = new ControladorWeb();
                          	         
