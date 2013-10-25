@@ -44,10 +44,8 @@ public class GrupoBbdd{
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
-			//listaGrupo = (List<Grupo>) pm.getObjectsById(listaKey);
 			for(Key key:listaKey){
-				Grupo grupo = (Grupo) pm.getObjectById(key);
-				listaGrupo.add(grupo);
+				listaGrupo.add(this.getGrupoByKey(key));
 			}
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
