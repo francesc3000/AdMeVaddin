@@ -38,7 +38,7 @@
 
 
 	<%
-		ArrayList<Publi> a = new ArrayList<Publi>();
+		List<Publi> a = new ArrayList<Publi>();
 		int ok = 1;
 		if (!(request.getParameter("env") == null)) {
 

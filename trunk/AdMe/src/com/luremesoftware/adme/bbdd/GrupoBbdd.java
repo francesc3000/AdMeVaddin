@@ -1,5 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -37,13 +38,14 @@ public class GrupoBbdd{
 		return grupo;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Grupo> getListaGrupoByKey(List<Key> listaKey){
-		List<Grupo> listaGrupo = null;
+		List<Grupo> listaGrupo = new ArrayList<Grupo>();
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
-			listaGrupo = (List<Grupo>) pm.getObjectsById(listaKey);
+			for(Key key:listaKey){
+				listaGrupo.add(this.getGrupoByKey(key));
+			}
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
 	    } 

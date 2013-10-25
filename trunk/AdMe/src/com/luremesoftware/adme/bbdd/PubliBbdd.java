@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 
 import com.luremesoftware.adme.constantes.Constante.Tabla;
 import com.luremesoftware.adme.modelo.Mensaje;
@@ -23,15 +24,10 @@ public class PubliBbdd{
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		//Se construye la sentencia de selección
-		String query = "select from " + Tabla.PUBLICACION;
-		boolean first=false;
+		Query query = pm.newQuery(Publi.class);
 		for(Metadato metadato:listaMetadato){
-			if(first==false){
-				query = query + " where ";
-				first = true;
-			}
 			if(metadato.getNombreTabla().compareTo(Tabla.PUBLICACION)==0){
-				query = query + metadato.getNombreMetadato() + metadato.getOperador().toString() + metadato.getValor().toString();
+				//query.setFilter(metadato.getNombreMetadato() + " " + metadato.getOperatorFilter() + " '" + metadato.getValor().toString() + "'" );
 			}
 		}
 		

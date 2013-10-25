@@ -144,13 +144,11 @@ public class Usuario extends Propietario implements Serializable{
 		return this.listaGrupoKey.add(key);
 	}
 	
-	public boolean crearGrupo(Grupo grupo){
+	public boolean addGrupo(Grupo grupo){
 		//Se introduce el grupo en el usuario
-		this.addGrupo(grupo);
+		this.GrupoIsEmpty(grupo);
 		this.setGrupoKey(grupo.getKey());
 		
-		//Se informa del usuario en el grupo
-		grupo.addUsuarioKey(this.getKey());
 		return true;
 	}
 	
@@ -170,8 +168,8 @@ public class Usuario extends Propietario implements Serializable{
 		return this.controlPuntuacion.setPuntuacion(puntuador, puntuacion);
 	}
 	
-	private boolean addGrupo(Grupo grupo){
-		if(this.getListaGrupo().isEmpty()){
+	private boolean GrupoIsEmpty(Grupo grupo){
+		if(this.getListaGrupo()==null || this.getListaGrupo().isEmpty()){
 			this.listaGrupo = new ArrayList<Grupo>();
 		}
 		

@@ -108,10 +108,10 @@ public class UsuarioBbdd{
 		Transaction tx = pm.currentTransaction();
 	    try {
 	    	tx.begin();
-	    	for(Grupo grupo:usuario.getListaGrupo()){
+	        pm.makePersistent(usuario);
+	        for(Grupo grupo:usuario.getListaGrupo()){
 	    		this.gestorGrupo.putGrupo(grupo);
 	    	}
-	        pm.makePersistent(usuario);
 	        tx.commit();
 	    }catch (JDOObjectNotFoundException e) {
 	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
