@@ -38,7 +38,6 @@ public class GrupoBbdd{
 		return grupo;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Grupo> getListaGrupoByKey(List<Key> listaKey){
 		List<Grupo> listaGrupo = new ArrayList<Grupo>();
 		
@@ -66,7 +65,6 @@ public class GrupoBbdd{
 	    try {
 	    	tx.begin();
 	        pm.makePersistent(grupo);
-	        Object oid = pm.getObjectId(grupo);
 	        tx.commit();
 	    }catch (JDOObjectNotFoundException e) {
 	        listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));

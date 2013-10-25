@@ -109,19 +109,17 @@ public class UsuarioBbdd{
 	    try {
 	    	tx.begin();
 	        pm.makePersistent(usuario);
+	        for(Grupo grupo:usuario.getListaGrupo()){
+	    		this.gestorGrupo.putGrupo(grupo);
+	    	}
 	        tx.commit();
 	    }catch (JDOObjectNotFoundException e) {
 	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
 	    }finally {
 	    	if (tx.isActive()) {
 	            tx.rollback();
-	            pm.close();
-	        }else{
-	        	pm.close();
-	        	for(Grupo grupo:usuario.getListaGrupo()){
-		    		this.gestorGrupo.putGrupo(grupo);
-		    	}
 	        }
+	        pm.close();
 	    }
 		
 		return listaMensaje;
