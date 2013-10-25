@@ -35,7 +35,7 @@ public class Grupo extends Propietario implements Serializable{
 	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
-		this.buildKey(usuario.getKey().getName());
+		this.buildKey(usuario.getKey().getName()+ "_" + nombre);
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);
