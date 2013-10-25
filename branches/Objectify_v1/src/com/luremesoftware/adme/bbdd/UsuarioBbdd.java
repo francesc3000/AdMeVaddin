@@ -55,11 +55,6 @@ public class UsuarioBbdd{
 	        pm.close();
 	    }
 	    
-	   /*if(detached!=null){
-	    	List<Grupo> listaGrupo = detached.getListaGrupo();
-	    	listaGrupo.isEmpty();
-	    }*/
-	    
 	    return detached;
 	}
 	
