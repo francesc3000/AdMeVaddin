@@ -26,6 +26,17 @@ public class Metadato {
 		return this.nombreMetadato;
 	}
 	
+	public String getOperatorFilter(){
+		String retorno = null;
+		if(this.operador.equals(FilterOperator.EQUAL)){
+			retorno = this.operador.toString() + this.operador.toString();
+		}else{
+			retorno = this.operador.toString();
+		}
+		
+		return retorno;
+	}
+	
 	public FilterOperator getOperador(){
 		return this.operador;
 	}

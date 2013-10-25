@@ -35,10 +35,11 @@ public class Grupo extends Propietario implements Serializable{
 	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
-		this.buildKey(usuario.getKey().getName()+"_"+nombre);
+		this.buildKey(usuario.getKey().getName());
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);
+		this.addUsuarioKey(usuario.getKey());
 		this.listaUsuario.add(usuario);
 	}
 	
@@ -46,7 +47,7 @@ public class Grupo extends Propietario implements Serializable{
 		return this.setKey(KeyFactory.createKey(Tabla.GRUPO.getSimpleName(), id));
 	}
 	
-	public boolean addUsuarioKey(Key key){
+	private boolean addUsuarioKey(Key key){
 		return this.listaUsuarioKey.add(key);
 	}
 	
