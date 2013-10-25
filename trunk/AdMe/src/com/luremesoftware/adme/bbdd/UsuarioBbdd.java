@@ -30,7 +30,7 @@ public class UsuarioBbdd{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Usuario usuario = null, detached = null;
 		//FetchGroup fetchGroup = pm.getFetchGroup(ControlPuntuacion.class, "ControlPuntuacion");
-		pm.getFetchPlan().addGroup(FetchGroup.ALL);
+		//pm.getFetchPlan().addGroup(FetchGroup.ALL);
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Query query = pm.newQuery(Usuario.class);
 		query.setFilter("correo == :correo");
@@ -41,12 +41,7 @@ public class UsuarioBbdd{
 	    	if(!listaUsuario.isEmpty()){
 	    		usuario = listaUsuario.get(0);
 	    		detached = pm.detachCopy(usuario);
-	    		if(detached.getControlPuntuacion()!=null){
-	    			detached.getControlPuntuacion().getListaPuntuaciones().size();
-	    		}
-	    		if(detached.getListaPubli()!=null){
-	    			detached.getListaPubli().size();
-	    		}
+	    		this.getUpInheritance(detached);
 		    }
 	    }catch (JDOObjectNotFoundException e) {
 	        return null;
@@ -56,6 +51,16 @@ public class UsuarioBbdd{
 	    }
 	    
 	    return detached;
+	}
+	
+	private boolean getUpInheritance(Usuario usuario){
+		if(usuario.getControlPuntuacion()!=null){
+			usuario.getControlPuntuacion().getListaPuntuaciones().size();
+		}
+		if(usuario.getListaPubli()!=null){
+			usuario.getListaPubli().size();
+		}
+		return true;
 	}
 	
 	public Usuario getUsuarioByKey(Key key){
