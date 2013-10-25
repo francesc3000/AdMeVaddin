@@ -144,20 +144,20 @@ public class Usuario extends Propietario implements Serializable{
 		return this.listaGrupoKey.add(key);
 	}
 	
-	public boolean addGrupo(Grupo grupo){
-		//Se introduce el grupo en el usuario
-		this.GrupoIsEmpty(grupo);
-		this.setGrupoKey(grupo.getKey());
-		
-		return true;
-	}
-	
 	public boolean setListaGrupo(ArrayList<Grupo> listaGrupo){
 		if(this.listaGrupo.addAll(listaGrupo)){
 			for(Grupo grupo:listaGrupo){
 				this.setGrupoKey(grupo.getKey());
 			}
 		}
+		return true;
+	}
+
+	public boolean addGrupo(Grupo grupo){
+		//Se introduce el grupo en el usuario
+		this.GrupoIsEmpty(grupo);
+		this.setGrupoKey(grupo.getKey());
+		
 		return true;
 	}
 	
