@@ -22,7 +22,7 @@ public class PubliBbdd{
 	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
 		List<Publi> listaPubli = new ArrayList<Publi>();
 		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		/*PersistenceManager pm = PMF.get().getPersistenceManager();
 		//Se construye la sentencia de selección
 		Query query = pm.newQuery(Publi.class);
 		for(Metadato metadato:listaMetadato){
@@ -35,21 +35,21 @@ public class PubliBbdd{
 		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute();
 		for(Publi publi:listaPubliList){
 			listaPubli.add(publi);
-		}
+		}*/
 		return listaPubli;
 	}
 
 	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 	
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		/*PersistenceManager pm = PMF.get().getPersistenceManager();
 	    try {
 	        pm.makePersistent(publi);
 	    }catch (JDOObjectNotFoundException e) {
 	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
 	    } finally {
 	        pm.close();
-	    }
+	    }*/
 		
 		return listaMensaje;
 	}
@@ -57,7 +57,7 @@ public class PubliBbdd{
 	public ListaMensaje borraPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		/*PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try{
 			pm.deletePersistent(publi);
@@ -66,7 +66,7 @@ public class PubliBbdd{
 	    } 
 	    finally {
 	        pm.close();
-	    }
+	    }*/
 		
 		return listaMensaje;
 	}

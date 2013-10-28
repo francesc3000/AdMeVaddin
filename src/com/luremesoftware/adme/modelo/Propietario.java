@@ -3,34 +3,24 @@ package com.luremesoftware.adme.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.annotations.Element;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Parent;
 
-import com.google.appengine.api.datastore.Key;
-
-@PersistenceCapable(detachable = "true")
-//@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
-@Inheritance(customStrategy = "complete-table")
+@Entity
 public abstract class Propietario{
-	@PrimaryKey
-	@Persistent
-	protected Key key;
+	@Id
+	protected String id;
 	//private String video;
 	//private Image avatar;
-	@Persistent(mappedBy = "propietario", defaultFetchGroup = "true")
-	@Element(dependent = "true")
 	protected List<Publi> listaPubli = new ArrayList<Publi>();
-	@Persistent(dependent = "true", defaultFetchGroup = "true")
+	@Parent
 	protected ControlPuntuacion controlPuntuacion;
 	
-	public Propietario(){}
+	protected Propietario(){}
 	
-	public Key getKey(){
-		return this.key;
+	public String getId(){
+		return this.id;
 	}
 	
 	public List<Publi> getListaPubli(){
@@ -49,8 +39,8 @@ public abstract class Propietario{
 		return this.controlPuntuacion.getPuntuacionPromedio();
 	}
 
-	public boolean setKey(Key key){
-		this.key = key;
+	public boolean setId(String id){
+		this.id = id;
 		return true;
 	}
 	
