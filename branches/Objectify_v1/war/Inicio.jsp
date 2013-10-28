@@ -12,7 +12,7 @@
 
 <%
 	int log = 0;
-	ObjectifyRegister oReg;
+	ObjectifyRegister().run();
 %>
 
 <meta charset="ISO-8859-1">

@@ -9,7 +9,10 @@ import com.luremesoftware.adme.modelo.Puntuacion;
 import com.luremesoftware.adme.modelo.Usuario;
 
 public final class ObjectifyRegister {
-	static {
+	
+	private ObjectifyRegister(){}
+	
+	public static void run(){
         ObjectifyService.register(Propietario.class);
         ObjectifyService.register(Usuario.class);
         ObjectifyService.register(Grupo.class);
