@@ -4,69 +4,51 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.EntitySubclass;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.luremesoftware.adme.constantes.Constante.Tabla;
-import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
-
-@PersistenceCapable(detachable="true")
+@EntitySubclass(index=true)
 public class Grupo extends Propietario implements Serializable{
 
 	/**
 	 * 
 	 */
+	@Ignore
 	private static final long serialVersionUID = 1L;
-	@Persistent
 	private String nombre = null;
-	@Persistent
 	private String descripcion = null;
-	@Persistent
 	private String ciudad = null;
-	@Persistent
-	private List<Key> listaUsuarioKey = new ArrayList<Key>();
-	@NotPersistent
-	private List<Usuario> listaUsuario = new ArrayList<Usuario>();
-	
-	public Grupo(){};
+	@Load
+	private List<Ref<Usuario>> listaUsuario = new ArrayList<Ref<Usuario>>();
+
+	@SuppressWarnings("unused")
+	private Grupo(){};
 	
 	public Grupo(Usuario usuario, String nombre, String descripcion, String ciudad){
 		super();
-		this.buildKey(usuario.getKey().getName());
+		this.setId(usuario.getId() + "_" + nombre);
 		this.setNombre(nombre);
 		this.setDescripcion(descripcion);
 		this.setCiudad(ciudad);
-		this.addUsuarioKey(usuario.getKey());
-		this.listaUsuario.add(usuario);
+		this.addUsuarioRef(usuario);
 	}
 	
-	private boolean buildKey(String id){
-		return this.setKey(KeyFactory.createKey(Tabla.GRUPO.getSimpleName(), id));
-	}
-	
-	private boolean addUsuarioKey(Key key){
-		return this.listaUsuarioKey.add(key);
+	private boolean addUsuarioRef(Usuario usuario){
+		return this.listaUsuario.add(Ref.create(usuario));
 	}
 	
 	public boolean addUsuario(Usuario usuario){
 		//Se introduce el usuario en el grupo
-		this.addUsuarioKey(usuario.getKey());
-		this.listaUsuario.add(usuario);
-		
-		//Se informa del grupo al usuario
-		usuario.setGrupoKey(this.getKey());
-		
-		return true;
+		return this.addUsuarioRef(usuario);
 	}
 	
-	public boolean addListaUsuario(ArrayList<Usuario> listaUsuario){
+	public boolean addListaUsuario(List<Usuario> listaUsuario){
 		for(Usuario usuario:listaUsuario){
-			this.addUsuarioKey(usuario.getKey());
+			this.addUsuarioRef(usuario);
 		}
-		return this.listaUsuario.addAll(listaUsuario);
+		return true;
 	}
 	
 	public boolean borrarUsuario(Usuario usuario){
@@ -86,10 +68,12 @@ public class Grupo extends Propietario implements Serializable{
 	}
 	
 	public List<Usuario> getListaUsuario(){
-		if(this.listaUsuario==null){
-			this.listaUsuario = new GestorUsuario().getListaUsuarioByKey(this.listaUsuarioKey);
+		List<Usuario> listaUsuarioNoRef = new ArrayList<Usuario>();
+		
+		for(Ref<Usuario> usuario:this.listaUsuario){
+			listaUsuarioNoRef.add(usuario.get());
 		}
-		return this.listaUsuario;
+		return listaUsuarioNoRef;
 	}
 	
 	public boolean setNombre(String nombre){

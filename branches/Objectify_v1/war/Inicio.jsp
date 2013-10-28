@@ -4,6 +4,7 @@
 <%@ page import="com.luremesoftware.adme.modelo.Usuario"%>
 <%@ page import="com.luremesoftware.adme.modelo.Publi"%>
 <%@ page import="com.luremesoftware.adme.constantes.Constante.ConstanteSession" %>
+<%@ page import="com.luremesoftware.adme.bbdd.ObjectifyRegister" %>
 
 
 <html>
@@ -11,6 +12,7 @@
 
 <%
 	int log = 0;
+	ObjectifyRegister oReg;
 %>
 
 <meta charset="ISO-8859-1">

@@ -4,31 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.annotations.Element;
-import javax.jdo.annotations.FetchGroup;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
 
-import com.google.appengine.api.datastore.Key;
-
-@PersistenceCapable(detachable = "true")
-//@FetchGroup(name="ControlPuntuacion", members={@Persistent(name="listaPuntuacion")})
+@Entity
 public class ControlPuntuacion implements Serializable{
 	
 	/**
 	 * 
 	 */
-	@NotPersistent
+	@Ignore
 	private static final long serialVersionUID = 1L;
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
-	@Persistent(defaultFetchGroup = "true")
-	@Element(dependent = "true")
-	private List<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
+	@Id
+	private Long id;
+	@Load
+	private List<Ref<Puntuacion>> listaPuntuacion = new ArrayList<Ref<Puntuacion>>();
 	
 	public ControlPuntuacion(){}
 	
@@ -39,9 +32,9 @@ public class ControlPuntuacion implements Serializable{
 			return new Puntuacion();
 		}else{
 			int intpuntuacion = 0;
-			for(Puntuacion puntuacionAux:this.listaPuntuacion){
-				if(puntuacionAux.getPuntuacion()>=intpuntuacion){
-					puntuacion = puntuacionAux;
+			for(Ref<Puntuacion> puntuacionAux:this.listaPuntuacion){
+				if(puntuacionAux.get().getPuntuacion()>=intpuntuacion){
+					puntuacion = puntuacionAux.get();
 				}
 			}
 			return puntuacion;
@@ -55,9 +48,9 @@ public class ControlPuntuacion implements Serializable{
 			return new Puntuacion();
 		}else{
 			int intpuntuacion = 0;
-			for(Puntuacion puntuacionAux:this.listaPuntuacion){
-				if(puntuacionAux.getPuntuacion()<=intpuntuacion){
-					puntuacion = puntuacionAux;
+			for(Ref<Puntuacion> puntuacionAux:this.listaPuntuacion){
+				if(puntuacionAux.get().getPuntuacion()<=intpuntuacion){
+					puntuacion = puntuacionAux.get();
 				}
 			}
 			return puntuacion;
@@ -65,15 +58,20 @@ public class ControlPuntuacion implements Serializable{
 	}
 	
 	public List<Puntuacion> getListaPuntuaciones(){
-		return this.listaPuntuacion;
+		List<Puntuacion> listaPuntuacionNoRef = new ArrayList<Puntuacion>();
+		
+		for(Ref<Puntuacion> puntuacion:this.listaPuntuacion){
+			listaPuntuacionNoRef.add(puntuacion.get());
+		}
+		return listaPuntuacionNoRef;
 	}
 	
 	public int getPuntuacionPromedio(){
 		int puntuacionPromedio = 0;
 		
 		//Se contabilizan todas las controlPuntuacion
-		for(Puntuacion puntuacion:this.listaPuntuacion){
-			puntuacionPromedio = puntuacionPromedio + puntuacion.getPuntuacion();
+		for(Ref<Puntuacion> puntuacion:this.listaPuntuacion){
+			puntuacionPromedio = puntuacionPromedio + puntuacion.get().getPuntuacion();
 		}
 		
 		//Se calcula la puntuacion Promedio
@@ -85,7 +83,7 @@ public class ControlPuntuacion implements Serializable{
 	}
 	
 	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
-		this.listaPuntuacion.add(new Puntuacion(puntuador, puntuacion));
+		this.listaPuntuacion.add(Ref.create(new Puntuacion(puntuador, puntuacion)));
 		return true;
 	}
 }

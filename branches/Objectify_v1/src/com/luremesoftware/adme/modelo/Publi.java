@@ -2,39 +2,28 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
-import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * Clase Publicación
  *
 */
-@PersistenceCapable(detachable = "true")
+@Entity
 public class Publi implements Serializable{
 	/**
 	 * 
 	 */
-	@NotPersistent
+	@Ignore
 	private static final long serialVersionUID = 1L;
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
-	@Persistent
-	private Key propietarioKey;
-	@Persistent
-	private Propietario propietario; //Puede ser un usuario o un grupo
-	@Persistent
+	@Id
+	private Long id;
+	@Load private Ref<Propietario> propietario; //Puede ser un usuario o un grupo
 	private String titulo;	 		//Titulo de la publicacion
-	@Persistent
 	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
-	@Persistent
 	private String descripcion; 	//Descripción de la publicación
 	
 	/**
@@ -46,15 +35,10 @@ public class Publi implements Serializable{
     * @param titulo El nuevo título de la publicacion.
 	*/	
 	public Publi(Propietario propietario, String titulo, String descripcion, String ciudad){
-		this.propietarioKey = propietario.getKey();
-		this.propietario = propietario;
+		this.setPropietario(propietario);
 		this.titulo = titulo;
 		this.ciudad = ciudad;
 		this.descripcion = descripcion;
-	}
-	
-	public Key getKey(){
-		return this.key;
 	}
 	
 	public String getTitulo(){
@@ -70,22 +54,11 @@ public class Publi implements Serializable{
 	}
 	
 	public Propietario getPropietario(){
-		if(this.propietario==null){
-			this.propietario = new GestorUsuario().getUsuarioByKey(this.propietarioKey);
-			if(this.propietario==null){
-				this.propietario = new GestorGrupo().getGrupoByKey(this.propietarioKey);
-			}
-		}
-		return this.propietario;
+		return this.propietario.get();
 	}
 	
 	public boolean setPropietario(Propietario propietario){
-		this.propietario = propietario;
-		return true;
-	}
-	
-	public boolean setPropietario(Usuario propietario){
-		this.propietario = propietario;
+		this.propietario = Ref.create(propietario);
 		return true;
 	}
 	
