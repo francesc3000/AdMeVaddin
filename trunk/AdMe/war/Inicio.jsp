@@ -44,17 +44,26 @@
 %>
 
 
-<link rel="stylesheet" type="text/css" href="Inicio.css">
+<link rel="stylesheet" type="text/css" href="../styles/Inicio.css">
 
-<div align="right">
+<div  align="right">
 
 	<form name="acceder" method="post" action="Inicio.jsp?env=1">
 		<%
 			if (log == 1) {
 				Usuario usuario = (Usuario)session.getAttribute(ConstanteSession.USUARIO.toString());
+			//	out.print("<ul><li class='nivel1'><a href='#' class='nivel1'></a><ul><li><a class='primera' href='#'>Opción 1</a></li><li><a href='#'>Opción 2</a></li><li><a href='#'>Opción 3</a></li><li><a href='#'>Opción 4</a></li><li><a href='#'>Opción 5</a></li></ul></li></ul>");
+				
+			
+			//out.print("<section><menu>Link1</menu></section>");
 				out.print("HOLA ");
 				out.print(usuario.getNombre());
+				
 				out.print("<button type='submit' class='login-button'>Salir</button>");
+				
+	
+
+				
 			} else
 
 				out.print("<button type='submit' class='login-button'>Acceder</button>");
@@ -70,7 +79,7 @@
 	<br>
 	<br>
 
-	<div id="menu">
+	<div id="menus">
 		<img src="../img/adme.png"></img>
 	</div>
 

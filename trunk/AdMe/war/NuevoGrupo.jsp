@@ -8,10 +8,25 @@
 <html>
 <head>
 
-<link rel="stylesheet" type="text/css" href="estils.css">
-<div style="color: green" align="left">
-	<font size="7">AdMe!</font>
+<link rel="stylesheet" type="text/css" href="../styles/estils.css">
+
+<div  align="right">
+
+	<form name="acceder" method="post" action="Inicio.jsp?env=1">
+	
+	<button type='submit' class='login-button'>Salir</button>
+	
+	</form>
 </div>
+<nav id="botonera">
+ 
+        <menu><a href="NuevaPublicacion.jsp">Nueva Publicación</a></menu>
+        <menu><a href="PuestoControl.jsp">Puesto de Control</a></menu>
+        <menu><a href="Perfil.jsp">Mi Perfil</a></menu>
+        <menu><a href="Busca.jsp">Realizar busqueda</a></menu>
+       <!-- <input placeholder="Buscar... "type="search" name="buscar" id="buscar"/>
+        <input type="submit" value="Buscar" id="submit" />   -->
+    </nav>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Nuevo Grupo here</title>
