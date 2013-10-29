@@ -104,4 +104,15 @@ menu:hover{
  color:#666;
  
  }
-</style>
+ 
+ #contenedor1 {
+		float:left;
+		width: 40%;
+		margin-left: 100px; 
+	}
+ #contenedor2 {
+		float:right;
+		width: 50%;
+	
+	} 
+ 
