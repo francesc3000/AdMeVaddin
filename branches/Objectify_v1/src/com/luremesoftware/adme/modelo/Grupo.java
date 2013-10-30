@@ -21,7 +21,7 @@ public class Grupo extends Propietario implements Serializable{
 	private String descripcion = null;
 	private String ciudad = null;
 	@Load
-	private List<Ref<Usuario>> listaUsuario = new ArrayList<Ref<Usuario>>();
+	private List<Ref<Usuario>> listaUsuarioRef = new ArrayList<Ref<Usuario>>();
 
 	@SuppressWarnings("unused")
 	private Grupo(){};
@@ -36,7 +36,7 @@ public class Grupo extends Propietario implements Serializable{
 	}
 	
 	private boolean addUsuarioRef(Usuario usuario){
-		return this.listaUsuario.add(Ref.create(usuario));
+		return this.listaUsuarioRef.add(Ref.create(usuario));
 	}
 	
 	public boolean addUsuario(Usuario usuario){
@@ -52,7 +52,7 @@ public class Grupo extends Propietario implements Serializable{
 	}
 	
 	public boolean borrarUsuario(Usuario usuario){
-		return this.listaUsuario.remove(usuario);
+		return this.listaUsuarioRef.remove(usuario);
 	}
 	
 	public String getNombre(){
@@ -70,7 +70,7 @@ public class Grupo extends Propietario implements Serializable{
 	public List<Usuario> getListaUsuario(){
 		List<Usuario> listaUsuarioNoRef = new ArrayList<Usuario>();
 		
-		for(Ref<Usuario> usuario:this.listaUsuario){
+		for(Ref<Usuario> usuario:this.listaUsuarioRef){
 			listaUsuarioNoRef.add(usuario.get());
 		}
 		return listaUsuarioNoRef;
