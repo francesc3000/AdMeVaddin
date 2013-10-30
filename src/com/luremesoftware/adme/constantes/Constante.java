@@ -106,11 +106,10 @@ public interface Constante {
 	 * la clase Publi
 	 */
 	public static enum ConstantePubli implements Constante{
-		PROPIETARIO("Propietario"),
-		CLASE("Clase"),
-		TITULO("Titulo"),
-		CIUDAD("Ciudad"),
-		DESCRIPCION("Descripcion");
+		PROPIETARIO("propietario"),
+		TITULO("titulo"),
+		CIUDAD("ciudad"),
+		DESCRIPCION("descripcion");
 		
 		private final String constante;
 		
