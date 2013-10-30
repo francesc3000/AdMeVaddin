@@ -9,11 +9,9 @@ import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 
 public class GestorGrupo {
 
-	private GrupoBbdd grupoBbdd = null;
+	private GrupoBbdd grupoBbdd =  new GrupoBbdd();
 	
-	public GestorGrupo(){
-		this.grupoBbdd = new GrupoBbdd();
-	}
+	public GestorGrupo(){}
 	
 	public Grupo getGrupoByKey(Key<Grupo> key){
 		return this.grupoBbdd.getGrupoByKey(key);
@@ -28,7 +26,7 @@ public class GestorGrupo {
 	 * 
 	 * @return Se retorna un listado de mensajes del sistema
 	 */	
-	public ListaMensaje putGrupo(Grupo grupo){	
+	public ListaMensaje putGrupo(Grupo grupo){
 		return this.grupoBbdd.putGrupo(grupo);
 	}
 

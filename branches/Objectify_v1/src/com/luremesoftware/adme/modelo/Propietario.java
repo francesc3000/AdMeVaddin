@@ -6,7 +6,7 @@ import java.util.List;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
 
 @Entity
 public abstract class Propietario{
@@ -14,10 +14,10 @@ public abstract class Propietario{
 	protected String id;
 	//private String video;
 	//private Image avatar;
-	@Ignore
-	protected List<Publi> listaPubli = new ArrayList<Publi>();
+	@Load
 	protected List<Ref<Publi>> listaPubliRef = new ArrayList<Ref<Publi>>();
-	protected ControlPuntuacion controlPuntuacion = new ControlPuntuacion();
+	@Load
+	protected Ref<ControlPuntuacion> controlPuntuacionRef = null;
 	
 	protected Propietario(){}
 	
@@ -35,24 +35,19 @@ public abstract class Propietario{
 	}
 
 	public Puntuacion getAltaPuntuacion(){
-		return this.controlPuntuacion.getAltaPuntuacion();
+		return this.controlPuntuacionRef.get().getAltaPuntuacion();
 	}
 	
 	public Puntuacion getBajaPuntuacion(){
-		return this.controlPuntuacion.getBajaPuntuacion();
+		return this.controlPuntuacionRef.get().getBajaPuntuacion();
 	}
 	
 	public int getPuntuacionPromedio(){
-		return this.controlPuntuacion.getPuntuacionPromedio();
+		return this.controlPuntuacionRef.get().getPuntuacionPromedio();
 	}
 	
-	/**
-	 * Este metodo solo se debe utilizar dentro del controlador para bases
-	 * de datos. ¡¡NO UTILIZAR PARA OTROS PROPOSITOS!!
-	 * @return
-	 */
-	public List<Publi> getPublisParaBBDD(){
-		return this.listaPubli;
+	public ControlPuntuacion getControlPuntuacion(){
+		return this.controlPuntuacionRef.get();
 	}
 
 	public boolean setId(String id){
@@ -61,7 +56,6 @@ public abstract class Propietario{
 	}
 	
 	public boolean setPubli(Publi publi){
-		this.listaPubli.add(publi);
 		return this.listaPubliRef.add(Ref.create(publi));
 	}
 	
@@ -71,6 +65,6 @@ public abstract class Propietario{
 			this.setPubli(publi);
 		}
 		
-		return this.listaPubli.addAll(listaPubli);
+		return true;
 	}
 }

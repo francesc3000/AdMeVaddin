@@ -2,11 +2,13 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 public class Puntuacion implements Serializable{
@@ -18,19 +20,23 @@ public class Puntuacion implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
-	@Load private Ref<Usuario> puntuador;
-	//@Load private Ref<Usuario> puntuado;
+	@Parent @Load
+	private Ref<ControlPuntuacion> controlPuntuacionRef = null;
+	@Load 
+	private Ref<Usuario> puntuadorRef;
 	private int puntuacion;
 	
-	public Puntuacion(){}
+	@SuppressWarnings("unused")
+	private Puntuacion(){}
 	
-	public Puntuacion(Usuario puntuador, int puntuacion){
+	public Puntuacion(ControlPuntuacion controlPuntuacion, Usuario puntuador, int puntuacion){
+		this.controlPuntuacionRef = Ref.create(Key.create(controlPuntuacion));
 		this.setPuntuador(puntuador);
 		this.puntuacion = puntuacion;
 	}
 	
 	public Usuario getPuntuador(){
-		return this.puntuador.get();
+		return this.puntuadorRef.get();
 	}
 	
 	public int getPuntuacion(){
@@ -38,7 +44,7 @@ public class Puntuacion implements Serializable{
 	}
 	
 	private boolean setPuntuador(Usuario puntuador){
-		this.puntuador = Ref.create(puntuador);
+		this.puntuadorRef = Ref.create(puntuador);
 		return true;
 	}
 }
