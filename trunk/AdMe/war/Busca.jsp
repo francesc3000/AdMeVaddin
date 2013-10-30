@@ -20,15 +20,26 @@
 
 
 <head>
-<link rel="stylesheet" type="text/css" href="estils.css">
-<div style="color:green" align="left">
-<font size="7">AdMe!</font>
-</div>
+<link rel="stylesheet" type="text/css"  href="../styles/estils.css">
+
+<nav id="botonera">
+
+	<menu>
+		<a href="NuevaPublicacion.jsp">Nueva Publicación</a>
+	</menu>
+	<menu>
+		<a href="NuevoGrupo.jsp">Nuevo Grupo</a>
+	</menu>
+	<menu>
+		<a href="Puesto de Control.jsp">Puesto de Control</a>
+	</menu>
+	<menu>
+		<a href="Perfil.jsp">Mi Perfil</a>
+	</menu>
+	</nav>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Búsqueda de publicaciones</title>
-
-
 
 
 </head>
@@ -73,9 +84,6 @@
 
 
 
-
-
-
 	<form name="formulario" method="post" action="Busca.jsp?env=1">
 		<h4>Busca:</h4>
 		<input type="text" name="txtNom"
@@ -103,9 +111,21 @@
 
 	</form>
 
+<br>
 
-	<br>
+<div id="filtro">
 
+<h3 align="left">FILTROS</h3>
+<ul>
+  <li><input type="checkbox"></input>aaa</li>
+  <li><a href="..." title="...">Archivos</a></li>
+  <li><a href="..." title="...">Enlaces</a></li>
+  <li><a href="..." title="...">Acerca de</a></li>
+ </ul>
+<br>
+  <input align="left" type="submit" value="Filtrar Busqueda"> 
+
+</div>
 
 </body>
 </html>

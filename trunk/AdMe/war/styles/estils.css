@@ -133,3 +133,38 @@ menu:hover{
  color:#666;
  
  }
+ 
+ 
+  #filtro {
+		float:left;
+		width: 20%;
+		margin-left: 60px; 
+		align:center;
+	}
+ #filtro ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 200px;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+}
+
+#filtro ul li {
+    background-color: #666;
+}
+
+
+#filtro ul li a {
+    color: #ccc;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+
+#filtro ul li a:hover {
+    background: #000;
+    border-left: 10px solid #333;
+    color: #fff;
+}
