@@ -46,12 +46,10 @@
             
 
 				Grupo grupo = new Grupo(usuario,nGrupo,descripcion,ciudad);
-				usuario.addGrupo(grupo);
             	
                 ControladorWeb cw = new ControladorWeb();
                 
-                cw.putGrupo(grupo);
-                cw.putUsuario(usuario);
+                cw.putGrupo(usuario, grupo);
             }
         }
     %>

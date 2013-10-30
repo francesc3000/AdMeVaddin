@@ -8,6 +8,7 @@ import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.EntitySubclass;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Load;
+import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 
 /**
  * Clase Usuario
@@ -28,8 +29,6 @@ public class Usuario extends Propietario implements Serializable{
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
-	@Ignore
-	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
 	@Load 
 	private List<Ref<Grupo>> listaGrupoRef = new ArrayList<Ref<Grupo>>();
 	
@@ -97,19 +96,6 @@ public class Usuario extends Propietario implements Serializable{
 		return listaGrupoNoRef;
 	}
 	
-	public ControlPuntuacion getControlPuntuacion(){
-		return this.controlPuntuacion;
-	}
-	
-	/**
-	 * Este metodo solo se debe utilizar dentro del controlador para bases
-	 * de datos. ¡¡NO UTILIZAR PARA OTROS PROPOSITOS!!
-	 * @return
-	 */
-	public List<Grupo> getGruposParaBBDD(){
-		return this.listaGrupo;
-	}
-	
 	public boolean setCorreo(String correo){
 		this.correo = correo;
 		return true;
@@ -135,8 +121,6 @@ public class Usuario extends Propietario implements Serializable{
 	}
 	
 	public boolean addGrupo(Grupo grupo){
-		//Se introduce el grupo en el usuario
-		this.listaGrupo.add(grupo);
 		return this.listaGrupoRef.add(Ref.create(grupo));
 	}
 	
@@ -144,11 +128,14 @@ public class Usuario extends Propietario implements Serializable{
 		for(Grupo grupo:listaGrupo){
 			this.addGrupo(grupo);
 		}
-		return this.listaGrupo.addAll(listaGrupo);
+		return true;
 	}
 	
 	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
-		return this.controlPuntuacion.setPuntuacion(puntuador, puntuacion);
+		if(this.controlPuntuacionRef==null){
+			this.controlPuntuacionRef = Ref.create(new GestorPropietario().creaControlPuntuacion(this));
+		}
+		return this.controlPuntuacionRef.get().setPuntuacion(puntuador, puntuacion);
 	}
 
 	public String toString(){

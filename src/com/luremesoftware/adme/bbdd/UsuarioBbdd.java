@@ -10,15 +10,10 @@ import static com.luremesoftware.adme.bbdd.OfyService.ofy;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
-import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
-import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
 public class UsuarioBbdd{
-	
-	private GestorGrupo gestorGrupo = new GestorGrupo();
-	private GestorPubli gestorPubli = new GestorPubli();
 	
 	public UsuarioBbdd(){}
 	
@@ -58,16 +53,8 @@ public class UsuarioBbdd{
 
 	public ListaMensaje putUsuario(Usuario usuario){
 		ListaMensaje listaMensaje = new ListaMensaje();
-	
+		
 		ofy().save().entity(usuario).now();
-		//Se guardan los grupos
-		for(Grupo grupo:usuario.getGruposParaBBDD()){
-			this.gestorGrupo.putGrupo(grupo);
-		}
-		//Se guardan las publicaciones
-		for(Publi publi:usuario.getPublisParaBBDD()){
-			this.gestorPubli.putPubli(publi);
-		}
 		
 		return listaMensaje;
 	}

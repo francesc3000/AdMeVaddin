@@ -14,6 +14,7 @@ import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -22,11 +23,13 @@ import com.luremesoftware.adme.vista.UtilidadesVista;
 
 public class ControladorWeb{
 	
+	private GestorPropietario gestorPropietario = null;
 	private GestorUsuario gestorUsuario = null;
 	private GestorGrupo gestorGrupo = null;
 	private GestorPubli gestorPubli = null;
 	
 	public ControladorWeb(){
+		this.gestorPropietario = new GestorPropietario();
 		this.gestorUsuario = new GestorUsuario();
 		this.gestorGrupo = new GestorGrupo();
 		this.gestorPubli = new GestorPubli();
@@ -98,8 +101,19 @@ public class ControladorWeb{
 		return gestorUsuario.putUsuario(usuario);
 	}
 	
-	public ListaMensaje putGrupo(Grupo grupo){
-		return gestorGrupo.putGrupo(grupo);
+	/**
+	 * Se crea el grupo y las relaciones entre grupo/usuario
+	 * @param usuario
+	 * @param grupo
+	 * @return Se retorna una lista de Mensajes
+	 */
+	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		listaMensaje.addAll(this.gestorGrupo.putGrupo(grupo));
+		usuario.addGrupo(grupo);
+		listaMensaje.addAll(this.gestorUsuario.putUsuario(usuario));
+		
+		return listaMensaje;
 	}
 
 	/**
@@ -110,10 +124,12 @@ public class ControladorWeb{
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
 	public ListaMensaje putPubli(Propietario propietario, Publi publi){
-		ListaMensaje listaMensaje = null;
-		if(propietario.setPubli(publi)){
-			listaMensaje = this.gestorUsuario.putUsuario((Usuario)propietario);
-		}
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		listaMensaje.addAll(this.gestorPubli.putPubli(publi));
+		propietario.setPubli(publi);
+		listaMensaje.addAll(this.gestorPropietario.putPropietario(propietario));
+		
 		return listaMensaje;
 	}
 	
