@@ -1,6 +1,5 @@
 package com.luremesoftware.adme.modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PuestoControl {
