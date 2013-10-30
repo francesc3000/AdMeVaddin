@@ -117,10 +117,10 @@
 
 <h3 align="left">FILTROS</h3>
 <ul>
-  <li><input type="checkbox"></input>aaa</li>
-  <li><a href="..." title="...">Archivos</a></li>
-  <li><a href="..." title="...">Enlaces</a></li>
-  <li><a href="..." title="...">Acerca de</a></li>
+  <li><input type="checkbox" value="Barcelona"></input></li>
+  <li><input type="checkbox" value="Sevilla"></input></li>
+  <li><input type="checkbox" value="Tarragona"></input></li>
+  <li><input type="checkbox" value="Madrid"></input></li>
  </ul>
 <br>
   <input align="left" type="submit" value="Filtrar Busqueda"> 
