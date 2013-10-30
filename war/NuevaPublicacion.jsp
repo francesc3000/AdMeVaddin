@@ -50,8 +50,8 @@
                 	Publi publi = new Publi(usuario,titulo,mensaje,ciudad);
                 	
                     ControladorWeb cw = new ControladorWeb();
-                         	         
-                    cw.putPubli(usuario, publi);
+
+					cw.putPubli(usuario, publi);
 
                 }
             }

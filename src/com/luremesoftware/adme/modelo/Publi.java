@@ -26,6 +26,9 @@ public class Publi implements Serializable{
 	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
 	private String descripcion; 	//Descripción de la publicación
 	
+	@SuppressWarnings("unused")
+	private Publi(){}
+	
 	/**
 	* Crea la clase Publicación rellenando todos sus parámetros
 	* Al ser el título obligatorio, si es nulo o vacío se lanzará

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
-import static com.googlecode.objectify.ObjectifyService.ofy;
+import static com.luremesoftware.adme.bbdd.OfyService.ofy;
 import com.luremesoftware.adme.modelo.Grupo;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;

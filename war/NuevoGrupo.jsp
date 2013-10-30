@@ -49,7 +49,8 @@
 				usuario.addGrupo(grupo);
             	
                 ControladorWeb cw = new ControladorWeb();
-                     	         
+                
+                cw.putGrupo(grupo);
                 cw.putUsuario(usuario);
             }
         }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteSession;
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
@@ -96,6 +97,10 @@ public class ControladorWeb{
 	public ListaMensaje putUsuario(Usuario usuario){
 		return gestorUsuario.putUsuario(usuario);
 	}
+	
+	public ListaMensaje putGrupo(Grupo grupo){
+		return gestorGrupo.putGrupo(grupo);
+	}
 
 	/**
 	 * Se crea o modifica una Publicación
@@ -104,25 +109,10 @@ public class ControladorWeb{
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putPubli(Usuario usuario, Publi publi){
+	public ListaMensaje putPubli(Propietario propietario, Publi publi){
 		ListaMensaje listaMensaje = null;
-		if(usuario.setPubli(publi)){
-			listaMensaje = this.gestorUsuario.putUsuario(usuario);
-		}
-		return listaMensaje;
-	}
-	
-	/**
-	 * Se crea o modifica una Publicación
-	 * 
-	 * @param grupo Propietario de la publicacion
-	 * @param publi Clase Publicación
-	 * @return Se retorna un listado de mensajes del sistema
-	 */
-	public ListaMensaje putPubli(Grupo grupo, Publi publi){
-		ListaMensaje listaMensaje = null;
-		if(grupo.setPubli(publi)){
-			listaMensaje = this.gestorGrupo.putGrupo(grupo);
+		if(propietario.setPubli(publi)){
+			listaMensaje = this.gestorUsuario.putUsuario((Usuario)propietario);
 		}
 		return listaMensaje;
 	}

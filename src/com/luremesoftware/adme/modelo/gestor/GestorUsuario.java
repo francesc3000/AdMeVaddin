@@ -1,6 +1,5 @@
 package com.luremesoftware.adme.modelo.gestor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -51,7 +50,7 @@ public class GestorUsuario {
 		return this.usuarioBbdd.getListaUsuarioByKey(listaKey);
 	}
 	
-	public ArrayList<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
 		
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}
