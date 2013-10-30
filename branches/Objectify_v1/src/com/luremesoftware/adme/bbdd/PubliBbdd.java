@@ -1,5 +1,6 @@
 package com.luremesoftware.adme.bbdd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.luremesoftware.adme.bbdd.OfyService.ofy;
@@ -16,18 +17,24 @@ public class PubliBbdd{
 	public PubliBbdd(){}
 	
 	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
-		Query<Publi> listaPubli = null;
+		List<Publi> listaPubli = new ArrayList<Publi>();
+		Query<Publi> queryPubli = ofy().load().type(Publi.class);
 		
 		for(Metadato metadato:listaMetadato){
 			if(metadato.getNombreTabla().compareTo(Tabla.PUBLICACION)==0){
-				listaPubli = ofy().load().
-							type(Publi.class).
-							filter(metadato.getNombreMetadato() + " " + metadato.getOperador().toString()
-							, metadato.getValor().toString());
+				String nombreMetadato = metadato.getNombreMetadato().toString();
+				String operador =  metadato.getOperador().toString();
+				String valor = metadato.getValor().toString();
+				queryPubli.filter(nombreMetadato + " " + operador, valor);
 			}
 		}
 
-		return listaPubli.list();
+
+		for(Publi publi: queryPubli){
+			listaPubli.add(publi);
+		}
+
+		return listaPubli;
 	}
 
 	public ListaMensaje putPublicacion(Publi publi){
