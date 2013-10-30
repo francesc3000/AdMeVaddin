@@ -28,8 +28,10 @@ public class Usuario extends Propietario implements Serializable{
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
+	@Ignore
+	private List<Grupo> listaGrupo = new ArrayList<Grupo>();
 	@Load 
-	private List<Ref<Grupo>> listaGrupo = new ArrayList<Ref<Grupo>>();
+	private List<Ref<Grupo>> listaGrupoRef = new ArrayList<Ref<Grupo>>();
 	
 	@SuppressWarnings("unused")
 	private Usuario(){}
@@ -75,7 +77,7 @@ public class Usuario extends Propietario implements Serializable{
 	}
 	
 	public Grupo getGrupo(int indice){
-		return this.listaGrupo.get(indice).get();
+		return this.listaGrupoRef.get(indice).get();
 	}
 	
 	/**
@@ -88,7 +90,7 @@ public class Usuario extends Propietario implements Serializable{
 	public List<Grupo> getListaGrupo(){
 		List<Grupo> listaGrupoNoRef = new ArrayList<Grupo>();
 		
-		for(Ref<Grupo> grupo:this.listaGrupo){
+		for(Ref<Grupo> grupo:this.listaGrupoRef){
 			listaGrupoNoRef.add(grupo.get());
 		}
 		
@@ -97,6 +99,15 @@ public class Usuario extends Propietario implements Serializable{
 	
 	public ControlPuntuacion getControlPuntuacion(){
 		return this.controlPuntuacion;
+	}
+	
+	/**
+	 * Este metodo solo se debe utilizar dentro del controlador para bases
+	 * de datos. ¡¡NO UTILIZAR PARA OTROS PROPOSITOS!!
+	 * @return
+	 */
+	public List<Grupo> getGruposParaBBDD(){
+		return this.listaGrupo;
 	}
 	
 	public boolean setCorreo(String correo){
@@ -125,20 +136,18 @@ public class Usuario extends Propietario implements Serializable{
 	
 	public boolean addGrupo(Grupo grupo){
 		//Se introduce el grupo en el usuario
-		return this.listaGrupo.add(Ref.create(grupo));
+		this.listaGrupo.add(grupo);
+		return this.listaGrupoRef.add(Ref.create(grupo));
 	}
 	
 	public boolean addListaGrupo(List<Grupo> listaGrupo){
 		for(Grupo grupo:listaGrupo){
 			this.addGrupo(grupo);
 		}
-		return true;
+		return this.listaGrupo.addAll(listaGrupo);
 	}
 	
 	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
-		if(this.controlPuntuacion==null){
-			this.controlPuntuacion = new ControlPuntuacion();
-		}
 		return this.controlPuntuacion.setPuntuacion(puntuador, puntuacion);
 	}
 
