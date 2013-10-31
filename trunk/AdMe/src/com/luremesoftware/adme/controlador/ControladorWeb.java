@@ -9,10 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import com.luremesoftware.adme.constantes.Constante.ConstanteSession;
 import com.luremesoftware.adme.modelo.Grupo;
+import com.luremesoftware.adme.modelo.Propietario;
 import com.luremesoftware.adme.modelo.PuestoControl;
 import com.luremesoftware.adme.modelo.Publi;
 import com.luremesoftware.adme.modelo.Usuario;
 import com.luremesoftware.adme.modelo.gestor.GestorGrupo;
+import com.luremesoftware.adme.modelo.gestor.GestorPropietario;
 import com.luremesoftware.adme.modelo.gestor.GestorPubli;
 import com.luremesoftware.adme.modelo.gestor.GestorUsuario;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
@@ -21,11 +23,13 @@ import com.luremesoftware.adme.vista.UtilidadesVista;
 
 public class ControladorWeb{
 	
+	private GestorPropietario gestorPropietario = null;
 	private GestorUsuario gestorUsuario = null;
 	private GestorGrupo gestorGrupo = null;
 	private GestorPubli gestorPubli = null;
 	
 	public ControladorWeb(){
+		this.gestorPropietario = new GestorPropietario();
 		this.gestorUsuario = new GestorUsuario();
 		this.gestorGrupo = new GestorGrupo();
 		this.gestorPubli = new GestorPubli();
@@ -96,6 +100,21 @@ public class ControladorWeb{
 	public ListaMensaje putUsuario(Usuario usuario){
 		return gestorUsuario.putUsuario(usuario);
 	}
+	
+	/**
+	 * Se crea el grupo y las relaciones entre grupo/usuario
+	 * @param usuario
+	 * @param grupo
+	 * @return Se retorna una lista de Mensajes
+	 */
+	public ListaMensaje putGrupo(Usuario usuario, Grupo grupo){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		listaMensaje.addAll(this.gestorGrupo.putGrupo(grupo));
+		usuario.addGrupo(grupo);
+		listaMensaje.addAll(this.gestorUsuario.putUsuario(usuario));
+		
+		return listaMensaje;
+	}
 
 	/**
 	 * Se crea o modifica una Publicación
@@ -104,26 +123,13 @@ public class ControladorWeb{
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public ListaMensaje putPubli(Usuario usuario, Publi publi){
-		ListaMensaje listaMensaje = null;
-		if(usuario.setPubli(publi)){
-			listaMensaje = this.gestorUsuario.putUsuario(usuario);
-		}
-		return listaMensaje;
-	}
-	
-	/**
-	 * Se crea o modifica una Publicación
-	 * 
-	 * @param grupo Propietario de la publicacion
-	 * @param publi Clase Publicación
-	 * @return Se retorna un listado de mensajes del sistema
-	 */
-	public ListaMensaje putPubli(Grupo grupo, Publi publi){
-		ListaMensaje listaMensaje = null;
-		if(grupo.setPubli(publi)){
-			listaMensaje = this.gestorGrupo.putGrupo(grupo);
-		}
+	public ListaMensaje putPubli(Propietario propietario, Publi publi){
+		ListaMensaje listaMensaje = new ListaMensaje();
+		
+		listaMensaje.addAll(this.gestorPubli.putPubli(publi));
+		propietario.setPubli(publi);
+		listaMensaje.addAll(this.gestorPropietario.putPropietario(propietario));
+		
 		return listaMensaje;
 	}
 	

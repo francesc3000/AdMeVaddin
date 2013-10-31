@@ -2,48 +2,49 @@ package com.luremesoftware.adme.modelo;
 
 import java.io.Serializable;
 
-import javax.jdo.annotations.Element;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Parent;
 
-import com.google.appengine.api.datastore.Key;
-
-@PersistenceCapable(detachable = "true")
+@Entity
 public class Puntuacion implements Serializable{
 	
 	/**
 	 * 
 	 */
-	@NotPersistent
+	@Ignore
 	private static final long serialVersionUID = 1L;
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
-	@Persistent(defaultFetchGroup = "true")
-	private Key puntuadorKey;
-	@NotPersistent
-	private Usuario puntuador;
-	//@Persistent(defaultFetchGroup = "true")
-	//private Propietario puntuado;
-	@Persistent(defaultFetchGroup = "true")
+	@Id
+	private Long id;
+	@Parent @Load
+	private Ref<ControlPuntuacion> controlPuntuacionRef = null;
+	@Load 
+	private Ref<Usuario> puntuadorRef;
 	private int puntuacion;
 	
-	public Puntuacion(){}
+	@SuppressWarnings("unused")
+	private Puntuacion(){}
 	
-	public Puntuacion(Usuario puntuador, int puntuacion){
-		this.puntuadorKey = puntuador.getKey();
-		this.puntuador = puntuador;
+	public Puntuacion(ControlPuntuacion controlPuntuacion, Usuario puntuador, int puntuacion){
+		this.controlPuntuacionRef = Ref.create(Key.create(controlPuntuacion));
+		this.setPuntuador(puntuador);
 		this.puntuacion = puntuacion;
 	}
 	
 	public Usuario getPuntuador(){
-		return this.puntuador;
+		return this.puntuadorRef.get();
 	}
 	
 	public int getPuntuacion(){
 		return this.puntuacion;
+	}
+	
+	private boolean setPuntuador(Usuario puntuador){
+		this.puntuadorRef = Ref.create(puntuador);
+		return true;
 	}
 }
