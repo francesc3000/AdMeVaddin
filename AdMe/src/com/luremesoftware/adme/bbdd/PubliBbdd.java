@@ -3,15 +3,12 @@ package com.luremesoftware.adme.bbdd;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.JDOObjectNotFoundException;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
+import static com.luremesoftware.adme.bbdd.OfyService.ofy;
 
+import com.googlecode.objectify.cmd.Query;
 import com.luremesoftware.adme.constantes.Constante.Tabla;
-import com.luremesoftware.adme.modelo.Mensaje;
 import com.luremesoftware.adme.modelo.Metadato;
 import com.luremesoftware.adme.modelo.Publi;
-import com.luremesoftware.adme.modelo.Mensaje.TipoError;
 import com.luremesoftware.adme.modelo.lista.ListaMensaje;
 import com.luremesoftware.adme.modelo.lista.ListaMetadato;
 
@@ -21,35 +18,29 @@ public class PubliBbdd{
 	
 	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
 		List<Publi> listaPubli = new ArrayList<Publi>();
+		Query<Publi> queryPubli = ofy().load().type(Publi.class);
 		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		//Se construye la sentencia de selección
-		Query query = pm.newQuery(Publi.class);
 		for(Metadato metadato:listaMetadato){
 			if(metadato.getNombreTabla().compareTo(Tabla.PUBLICACION)==0){
-				//query.setFilter(metadato.getNombreMetadato() + " " + metadato.getOperatorFilter() + " '" + metadato.getValor().toString() + "'" );
+				String nombreMetadato = metadato.getNombreMetadato().toString();
+				String operador =  metadato.getOperador().toString();
+				String valor = metadato.getValor().toString();
+				queryPubli.filter(nombreMetadato + " " + operador, valor);
 			}
 		}
-		
-		@SuppressWarnings("unchecked")
-		List<Publi> listaPubliList = (List<Publi>) pm.newQuery(query).execute();
-		for(Publi publi:listaPubliList){
+
+
+		for(Publi publi: queryPubli){
 			listaPubli.add(publi);
 		}
+
 		return listaPubli;
 	}
 
 	public ListaMensaje putPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 	
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-	    try {
-	        pm.makePersistent(publi);
-	    }catch (JDOObjectNotFoundException e) {
-	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
-	    } finally {
-	        pm.close();
-	    }
+		ofy().save().entity(publi).now();
 		
 		return listaMensaje;
 	}
@@ -57,16 +48,7 @@ public class PubliBbdd{
 	public ListaMensaje borraPublicacion(Publi publi){
 		ListaMensaje listaMensaje = new ListaMensaje();
 		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
-		try{
-			pm.deletePersistent(publi);
-	    }catch (JDOObjectNotFoundException e) {
-	    	listaMensaje.add(new Mensaje(TipoError.ERROR, e.getMessage()));
-	    } 
-	    finally {
-	        pm.close();
-	    }
+		ofy().delete().entity(publi);
 		
 		return listaMensaje;
 	}

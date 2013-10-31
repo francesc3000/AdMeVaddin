@@ -4,44 +4,51 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.annotations.Element;
-import javax.jdo.annotations.FetchGroup;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Parent;
+import com.luremesoftware.adme.bbdd.PropietarioBbdd;
 
-import com.google.appengine.api.datastore.Key;
-
-@PersistenceCapable(detachable = "true")
-//@FetchGroup(name="ControlPuntuacion", members={@Persistent(name="listaPuntuacion")})
+@Entity
 public class ControlPuntuacion implements Serializable{
 	
 	/**
 	 * 
 	 */
-	@NotPersistent
+	@Ignore
 	private static final long serialVersionUID = 1L;
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key key;
-	@Persistent(defaultFetchGroup = "true")
-	@Element(dependent = "true")
-	private List<Puntuacion> listaPuntuacion = new ArrayList<Puntuacion>();
+	@Id
+	private Long id;
+	@Parent @Load
+	private Ref<Propietario> propietarioRef = null;
+	@Load
+	private List<Ref<Puntuacion>> listaPuntuacionRef = new ArrayList<Ref<Puntuacion>>();
 	
-	public ControlPuntuacion(){}
+	@SuppressWarnings("unused")
+	private ControlPuntuacion(){}
+	
+	public ControlPuntuacion(Key<Propietario> key){
+		this.propietarioRef = Ref.create(key);
+	}
+	
+	public Propietario getPropietario(){
+		return this.propietarioRef.get();
+	}
 	
 	public Puntuacion getAltaPuntuacion(){
 		Puntuacion puntuacion = null;
 		
-		if(this.listaPuntuacion.size()==0){
-			return new Puntuacion();
+		if(this.listaPuntuacionRef.size()==0){
+			return null;
 		}else{
 			int intpuntuacion = 0;
-			for(Puntuacion puntuacionAux:this.listaPuntuacion){
-				if(puntuacionAux.getPuntuacion()>=intpuntuacion){
-					puntuacion = puntuacionAux;
+			for(Ref<Puntuacion> puntuacionAux:this.listaPuntuacionRef){
+				if(puntuacionAux.get().getPuntuacion()>=intpuntuacion){
+					puntuacion = puntuacionAux.get();
 				}
 			}
 			return puntuacion;
@@ -51,13 +58,13 @@ public class ControlPuntuacion implements Serializable{
 	public Puntuacion getBajaPuntuacion(){
 		Puntuacion puntuacion = null;
 		
-		if(this.listaPuntuacion.size()==0){
-			return new Puntuacion();
+		if(this.listaPuntuacionRef.size()==0){
+			return null;
 		}else{
 			int intpuntuacion = 0;
-			for(Puntuacion puntuacionAux:this.listaPuntuacion){
-				if(puntuacionAux.getPuntuacion()<=intpuntuacion){
-					puntuacion = puntuacionAux;
+			for(Ref<Puntuacion> puntuacionAux:this.listaPuntuacionRef){
+				if(puntuacionAux.get().getPuntuacion()<=intpuntuacion){
+					puntuacion = puntuacionAux.get();
 				}
 			}
 			return puntuacion;
@@ -65,27 +72,33 @@ public class ControlPuntuacion implements Serializable{
 	}
 	
 	public List<Puntuacion> getListaPuntuaciones(){
-		return this.listaPuntuacion;
+		List<Puntuacion> listaPuntuacionNoRef = new ArrayList<Puntuacion>();
+		
+		for(Ref<Puntuacion> puntuacion:this.listaPuntuacionRef){
+			listaPuntuacionNoRef.add(puntuacion.get());
+		}
+		return listaPuntuacionNoRef;
 	}
 	
 	public int getPuntuacionPromedio(){
 		int puntuacionPromedio = 0;
 		
 		//Se contabilizan todas las controlPuntuacion
-		for(Puntuacion puntuacion:this.listaPuntuacion){
-			puntuacionPromedio = puntuacionPromedio + puntuacion.getPuntuacion();
+		for(Ref<Puntuacion> puntuacion:this.listaPuntuacionRef){
+			puntuacionPromedio = puntuacionPromedio + puntuacion.get().getPuntuacion();
 		}
 		
 		//Se calcula la puntuacion Promedio
 		if(puntuacionPromedio!=0){
-			puntuacionPromedio = puntuacionPromedio / this.listaPuntuacion.size();
+			puntuacionPromedio = puntuacionPromedio / this.listaPuntuacionRef.size();
 		}
 		
 		return puntuacionPromedio;
 	}
 	
-	public boolean setPuntuacion(Usuario puntuador, int puntuacion){
-		this.listaPuntuacion.add(new Puntuacion(puntuador, puntuacion));
+	public boolean setPuntuacion(Usuario puntuador, int puntuacionInt){
+		Puntuacion puntuacion = new Puntuacion(this, puntuador, puntuacionInt);
+		this.listaPuntuacionRef.add(Ref.create(new PropietarioBbdd().creaPuntuacion(puntuacion)));
 		return true;
 	}
 }
