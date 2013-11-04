@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-15.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0rc2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/AdMeCore.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
