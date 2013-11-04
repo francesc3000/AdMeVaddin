@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/fmunozr/Dropbox/workspace/AdMeCore/lib/guava-15.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/fmunozr/Dropbox/workspace/AdMeCore/lib/objectify-4.0rc2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
