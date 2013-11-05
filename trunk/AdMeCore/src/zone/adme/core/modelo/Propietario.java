@@ -1,15 +1,22 @@
 package zone.adme.core.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Load;
 
 @Entity
-public abstract class Propietario{
+public abstract class Propietario implements Serializable{
+	/**
+	 * 
+	 */
+	@Ignore
+	private static final long serialVersionUID = 1L;
 	@Id
 	protected String id;
 	//private String video;
