@@ -11,11 +11,15 @@ import com.google.api.gwt.services.plus.shared.model.Person;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
+import zone.adme.gwt.server.ControladorCore;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 public class SignIn {
+	//Initialize the service proxy.
+	private UsuarioServiceAsync usuarioService = GWT.create(UsuarioService.class);
 	
 	private static final Plus plus = GWT.create(Plus.class);
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
@@ -27,15 +31,36 @@ public class SignIn {
 	}
 	
 	public UsuarioGWT login(){
-		UsuarioGWT usuarioGWT = new UsuarioGWT("");
+		final UsuarioGWT usuarioGWT = null;
 
 	    OAuth2Login.get().authorize(CLIENT_ID, PlusAuthScope.USERINFO_EMAIL, new Callback<Void, Exception>() {
 	      @Override
 	      public void onSuccess(Void v) {
-	        getMe();
+	    	  getUsuarioServer();
+	    	  
+	        //getMe();
 	      }
 
-	      @Override
+	      private void getUsuarioServer() {
+	    	  	    	  
+	          // Set up the callback object.
+	          AsyncCallback<UsuarioGWT> callback = new AsyncCallback<UsuarioGWT>() {
+	            public void onFailure(Throwable caught) {
+	            	//println("Falla comunicación");
+	            }
+
+	            public void onSuccess(UsuarioGWT usuarioGWT) {
+	            	
+	              //println(usuarioGWT.getNombre());
+	            }
+	          };
+
+	          // Make the call to the stock price service.
+	          usuarioService.getUsuarioServer("francesc3000@gmail.com", callback);
+
+		}
+
+		@Override
 	      public void onFailure(Exception e) {
 	        //println(e.getMessage());
 	      }
