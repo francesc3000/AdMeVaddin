@@ -18,9 +18,14 @@ public class AdMeGWT implements EntryPoint {
   
   //Declaración de variables globales
   private UsuarioGWT usuarioGWT = null;
+  ShowPubli sp = new ShowPubli();
 
   @Override
   public void onModuleLoad() {   
+	  
+		
+	RootPanel.get().add(sp);
+
 
     final Button b = new Button("Registrate con tu cuenta Google+");
     b.addClickHandler(new ClickHandler() {
