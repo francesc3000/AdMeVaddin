@@ -5,6 +5,7 @@ import java.util.List;
 import zone.adme.core.controlador.ControladorModelo;
 import zone.adme.core.modelo.Publi;
 import zone.adme.core.modelo.Usuario;
+import zone.adme.core.modelo.lista.ListaMensaje;
 import zone.adme.core.modelo.lista.ListaMetadato;
 import zone.adme.gwt.shared.MetadatoGWT;
 import zone.adme.gwt.shared.PubliGWT;
@@ -33,7 +34,7 @@ public class ControladorCore {
 	 */
 	public UsuarioGWT getUsuario(String correo){
 		Usuario usuario = this.controladorModelo.getUsuario(correo);
-		return this.dto.usuarioGWT(usuario);
+		return this.dto.toUsuarioGWT(usuario);
 	}
 	
 	/**
@@ -43,9 +44,9 @@ public class ControladorCore {
 	 * @return Se retorna un listado de Publicaciones
 	 */
 	public List<PubliGWT> getListaPubli(List<MetadatoGWT> listaMetadatoGWT){
-		ListaMetadato listaMetadato = this.dto.listaMetadato(listaMetadatoGWT);
+		ListaMetadato listaMetadato = this.dto.toListaMetadato(listaMetadatoGWT);
 		List<Publi> listaPubli = this.controladorModelo.getListaPubli(listaMetadato);
-		return this.dto.listaPubliGWT(listaPubli);
+		return this.dto.toListaPubliGWT(listaPubli);
 	}
 	
 	/**
@@ -54,9 +55,12 @@ public class ControladorCore {
 	 * @param usuario Clase tipo usuario
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	/*public ListaMensaje putUsuario(Usuario usuario){
-		return gestorUsuario.putUsuario(usuario);
-	}*/
+	public boolean putUsuario(UsuarioGWT usuarioGWT){
+		Usuario usuario = this.dto.toUsuario(usuarioGWT);
+		ListaMensaje listaMensaje = this.controladorModelo.putUsuario(usuario);
+		
+		return !listaMensaje.contieneErrores();
+	}
 	
 	/**
 	 * Se crea el grupo y las relaciones entre grupo/usuario

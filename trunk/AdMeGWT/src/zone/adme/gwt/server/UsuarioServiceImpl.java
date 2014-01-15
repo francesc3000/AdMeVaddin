@@ -1,5 +1,6 @@
 package zone.adme.gwt.server;
 
+import zone.adme.core.modelo.Usuario;
 import zone.adme.gwt.client.UsuarioService;
 import zone.adme.gwt.shared.UsuarioGWT;
 
@@ -20,6 +21,12 @@ public class UsuarioServiceImpl extends RemoteServiceServlet implements
 		UsuarioGWT usuarioGWT = null;
 		usuarioGWT = controladorCore.getUsuario("francesc3000@gmail.com");
 		return usuarioGWT;
+	}
+
+	@Override
+	public boolean putUsuarioServer(UsuarioGWT usuario) {
+		
+		return false;
 	}
 
 }

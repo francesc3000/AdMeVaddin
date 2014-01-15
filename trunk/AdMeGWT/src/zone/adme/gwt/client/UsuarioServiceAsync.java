@@ -8,4 +8,6 @@ public interface UsuarioServiceAsync {
 
 	void getUsuarioServer(String correo, AsyncCallback<UsuarioGWT> callback);
 
+	void putUsuarioServer(UsuarioGWT usuario, AsyncCallback<Boolean> callback);
+
 }

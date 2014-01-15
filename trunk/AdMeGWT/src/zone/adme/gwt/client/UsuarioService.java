@@ -8,4 +8,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("usuarioService")
 public interface UsuarioService extends RemoteService {
 	UsuarioGWT getUsuarioServer(String correo);
+	boolean putUsuarioServer(UsuarioGWT usuario);
 }

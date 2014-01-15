@@ -14,7 +14,7 @@ public class Dto {
 
 	public Dto(){}
 	
-	public UsuarioGWT usuarioGWT(Usuario usuario){
+	public UsuarioGWT toUsuarioGWT(Usuario usuario){
 		UsuarioGWT usuarioGWT = new UsuarioGWT(usuario.getCorreo());
 		
 		//Proceso de igualación
@@ -22,7 +22,15 @@ public class Dto {
 		return usuarioGWT;
 	}
 	
-	public ListaMetadato listaMetadato(List<MetadatoGWT> ListaMetadatoGWT){
+	public Usuario toUsuario(UsuarioGWT usuarioGWT){
+		Usuario usuario = new Usuario(usuarioGWT.getCorreo(),"","","","");
+		
+		//Proceso de igualación
+		
+		return usuario;
+	}
+	
+	public ListaMetadato toListaMetadato(List<MetadatoGWT> ListaMetadatoGWT){
 		
 		ListaMetadato listaMetadato = new ListaMetadato();
 		
@@ -31,7 +39,7 @@ public class Dto {
 		return listaMetadato;
 	}
 	
-	public List<PubliGWT> listaPubliGWT(List<Publi> listaPubli){
+	public List<PubliGWT> toListaPubliGWT(List<Publi> listaPubli){
 		
 		List<PubliGWT> listaPubliGWT = new ArrayList<PubliGWT>();
 		

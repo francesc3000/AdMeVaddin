@@ -12,6 +12,8 @@ import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
 import zone.adme.gwt.server.ControladorCore;
@@ -20,6 +22,7 @@ import zone.adme.gwt.shared.UsuarioGWT;
 public class SignIn {
 	//Initialize the service proxy.
 	private UsuarioServiceAsync usuarioService = GWT.create(UsuarioService.class);
+	private UsuarioGWT usuarioGWT = null;
 	
 	private static final Plus plus = GWT.create(Plus.class);
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
@@ -30,28 +33,24 @@ public class SignIn {
 		plus.initialize(new SimpleEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
 	}
 	
-	public UsuarioGWT login(){
-		final UsuarioGWT usuarioGWT = null;
-
+	public boolean login(){
 	    OAuth2Login.get().authorize(CLIENT_ID, PlusAuthScope.USERINFO_EMAIL, new Callback<Void, Exception>() {
 	      @Override
 	      public void onSuccess(Void v) {
 	    	  getUsuarioServer();
-	    	  
 	        //getMe();
 	      }
 
-	      private void getUsuarioServer() {
-	    	  	    	  
+	      private void getUsuarioServer() {  	    	  
 	          // Set up the callback object.
 	          AsyncCallback<UsuarioGWT> callback = new AsyncCallback<UsuarioGWT>() {
 	            public void onFailure(Throwable caught) {
-	            	//println("Falla comunicación");
+	            	println("Falla comunicación");
 	            }
 
 	            public void onSuccess(UsuarioGWT usuarioGWT) {
-	            	
-	              //println(usuarioGWT.getNombre());
+	              println(usuarioGWT.getNombre());
+	              setUsuarioGWT(usuarioGWT);
 	            }
 	          };
 
@@ -62,12 +61,17 @@ public class SignIn {
 
 		@Override
 	      public void onFailure(Exception e) {
-	        //println(e.getMessage());
+	        println(e.getMessage());
 	      }
 	    });
 	    
-	    return usuarioGWT;
+	    return true;
     }
+	
+	private boolean setUsuarioGWT(UsuarioGWT usuarioGWT){
+		this.usuarioGWT = usuarioGWT;
+		return true;
+	}
 		
 	private void getMe() {	  
 	    plus.people().get("me").to(new Receiver<Person>() {
@@ -101,4 +105,7 @@ public class SignIn {
 	    }).fire();
 	
 	}
+	private void println(String msg) {
+		RootPanel.get().add(new Label(msg));
 	}
+}
