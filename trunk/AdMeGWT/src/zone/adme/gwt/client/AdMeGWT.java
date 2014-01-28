@@ -24,7 +24,7 @@ public class AdMeGWT implements EntryPoint {
 
   @Override
   public void onModuleLoad() {
-	  
+	/*  
 	  final Button b = new Button("Pulsa para crear usuario Francesc");
 	    b.addClickHandler(new ClickHandler() {
 	      @Override
@@ -32,11 +32,11 @@ public class AdMeGWT implements EntryPoint {
 	    	  controladorServicio.putUsuario(new UsuarioGWT("francesc3000@gmail.com"));
 	      }
 	    });
-	  
+	  */
 		
 	RootPanel.get().add(sp);
 
-
+/*
 	  final Button c = new Button("Registrate con tu cuenta Google+");
 		c.addClickHandler(new ClickHandler() {
 		  @Override
@@ -45,6 +45,6 @@ public class AdMeGWT implements EntryPoint {
 		    b.setVisible(false);
 		  }
 		});
-    RootPanel.get().add(b);
+    RootPanel.get().add(b);*/
   }
 }

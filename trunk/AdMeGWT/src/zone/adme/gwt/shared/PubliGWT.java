@@ -1,7 +1,13 @@
 package zone.adme.gwt.shared;
 
-public class PubliGWT {
+import java.io.Serializable;
+
+public class PubliGWT implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String usuario;
 	private String titulo;
 	private String texto;

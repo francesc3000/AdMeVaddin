@@ -47,4 +47,12 @@ public class Dto {
 		
 		return listaPubliGWT;
 	}
+	
+public Publi toPubli(PubliGWT publiGWT) {
+		
+		//Proceso de igualación
+		
+		Publi publi = new Publi(new Usuario("a@a.com", "", "", "", ""), publiGWT.getTitulo(), publiGWT.getTexto(), "");
+		return publi;
+	}
 }
