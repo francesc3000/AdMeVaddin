@@ -43,11 +43,11 @@ public class ControladorCore {
 	 * @param listaMetadato 
 	 * @return Se retorna un listado de Publicaciones
 	 */
-	public List<PubliGWT> getListaPubli(List<MetadatoGWT> listaMetadatoGWT){
+	/*public List<PubliGWT> getListaPubli(List<MetadatoGWT> listaMetadatoGWT){
 		ListaMetadato listaMetadato = this.dto.toListaMetadato(listaMetadatoGWT);
 		List<Publi> listaPubli = this.controladorModelo.getListaPubli(listaMetadato);
 		return this.dto.toListaPubliGWT(listaPubli);
-	}
+	}*/
 	
 	/**
 	 * Se crea o modifica un usuario en base de datos
@@ -84,15 +84,13 @@ public class ControladorCore {
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	/*public ListaMensaje putPubli(Propietario propietario, Publi publi){
-		ListaMensaje listaMensaje = new ListaMensaje();
+	public void putPubli(UsuarioGWT usuarioGWT, PubliGWT publiGWT){
 		
-		listaMensaje.addAll(this.gestorPubli.putPubli(publi));
-		propietario.setPubli(publi);
-		listaMensaje.addAll(this.gestorPropietario.putPropietario(propietario));
+		Publi publi = dto.toPubli(publiGWT);
 		
-		return listaMensaje;
-	}*/
+		@SuppressWarnings("unused")
+		ListaMensaje listaMensaje = this.controladorModelo.putPubli(publi.getPropietario(), publi);
+	}
 	
 	/**
 	 * Se borra un Usuario de base de datos
