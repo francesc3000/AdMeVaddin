@@ -5,6 +5,7 @@
 	<g:HTMLPanel>
 	    
 	    <g:Button ui:field="btn">Ver Publis</g:Button>
+	    <g:Button ui:field="formPubli">Crear Publicacion</g:Button>
 	   
 	</g:HTMLPanel>
 </ui:UiBinder> 
