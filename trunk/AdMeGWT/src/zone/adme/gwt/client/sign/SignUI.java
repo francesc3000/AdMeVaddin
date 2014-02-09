@@ -1,5 +1,7 @@
 package zone.adme.gwt.client.sign;
 
+import zone.adme.gwt.shared.UsuarioGWT;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -41,6 +43,10 @@ public class SignUI extends Composite implements HasText {
 
 	public String getText() {
 		return button.getText();
+	}
+	
+	public UsuarioGWT getUsuarioSession(){
+		return signIn.getUsuarioSession();
 	}
 
 }

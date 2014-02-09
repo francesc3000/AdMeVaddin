@@ -28,7 +28,7 @@ SignService{
 		HttpServletRequest request = this.getThreadLocalRequest();
 		//true will create a new session if it not yet exists
 		HttpSession session = request.getSession(true);
-		session.setAttribute("UserID", usuarioGWT);
+		session.setAttribute("Usuario", usuarioGWT);
 		return usuarioGWT;
 	}
 
@@ -36,6 +36,14 @@ SignService{
 	public boolean signOut(String correo) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public UsuarioGWT getUsuarioSession() {
+		// create session and store userid
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession(true);
+		return (UsuarioGWT) session.getAttribute("Usuario");
 	}
 
 }

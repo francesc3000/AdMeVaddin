@@ -128,4 +128,23 @@ public class SignIn {
 	private void println(String msg) {
 		RootPanel.get().add(new Label(msg));
 	}
+
+	public UsuarioGWT getUsuarioSession() {
+		signService.getUsuarioSession(new AsyncCallback<UsuarioGWT>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fallo conexion");
+				
+			}
+
+			@Override
+			public void onSuccess(UsuarioGWT usuarioGWT) {
+				
+			}
+			
+			
+		});
+		return null;
+	}
 }

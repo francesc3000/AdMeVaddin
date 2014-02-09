@@ -10,4 +10,6 @@ public interface SignServiceAsync {
 
 	void signOut(String correo, AsyncCallback<Boolean> callback);
 
+	void getUsuarioSession(AsyncCallback<UsuarioGWT> callback);
+
 }

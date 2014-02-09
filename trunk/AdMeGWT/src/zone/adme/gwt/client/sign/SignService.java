@@ -8,5 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("signInService")
 public interface SignService extends RemoteService {
 	UsuarioGWT signIn(String correo);
+	UsuarioGWT getUsuarioSession();
 	boolean signOut(String correo);
 }
