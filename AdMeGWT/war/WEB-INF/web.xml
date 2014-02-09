@@ -7,13 +7,13 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>UsuarioService</servlet-name>
-    <servlet-class>zone.adme.gwt.server.UsuarioServiceImpl</servlet-class>
+    <servlet-name>signInService</servlet-name>
+    <servlet-class>zone.adme.gwt.server.SignServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>UsuarioService</servlet-name>
-    <url-pattern>/admegwt/usuarioService</url-pattern>
+    <servlet-name>signInService</servlet-name>
+    <url-pattern>/admegwt/signInService</url-pattern>
   </servlet-mapping>
   
   <!-- Filters -->
