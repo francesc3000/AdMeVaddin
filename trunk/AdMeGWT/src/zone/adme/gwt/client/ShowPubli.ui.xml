@@ -22,7 +22,7 @@
     </ui:style>
      <g:DockLayoutPanel unit='EM'>
        <g:north size='5'>
-         <g:FlowPanel styleName="{style.northPanel}">
+         <g:FlowPanel styleName="{style.northPanel}" ui:field="norte">
            <g:Label>This is the NORTH panel</g:Label>
          </g:FlowPanel>
        </g:north>

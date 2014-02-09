@@ -1,4 +1,6 @@
-package zone.adme.gwt.client;
+package zone.adme.gwt.client.sign;
+
+import java.util.List;
 
 import com.google.api.gwt.client.GoogleApiRequestTransport;
 import com.google.api.gwt.client.OAuth2Login;
@@ -11,29 +13,47 @@ import com.google.api.gwt.services.plus.shared.model.Person;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
 import zone.adme.gwt.server.ControladorCore;
+import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 public class SignIn {
-	//Initialize the service proxy.
-	private UsuarioServiceAsync usuarioService = GWT.create(UsuarioService.class);
-	private UsuarioGWT usuarioGWT = null;
+	//private UsuarioGWT usuarioGWT = null;
 	
 	private static final Plus plus = GWT.create(Plus.class);
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
 	private static final String API_KEY = "AIzaSyDXT4x-PbIHeqORMaJxWT2eZht7oySMZXw";
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
+	final SignServiceAsync signService = GWT.create(SignService.class);
 	
 	public SignIn(){
 		plus.initialize(new SimpleEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
 	}
 	
-	public boolean login(){
+	public boolean login(String correo){
+		signService.signIn(correo, new AsyncCallback<UsuarioGWT>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Fallo conexion");
+				
+			}
+
+			@Override
+			public void onSuccess(UsuarioGWT usuarioGWT) {
+				Window.alert("Bienvenido:" + usuarioGWT.getCorreo());
+				
+			}
+			
+			
+		});
+		/*
 	    OAuth2Login.get().authorize(CLIENT_ID, PlusAuthScope.USERINFO_EMAIL, new Callback<Void, Exception>() {
 	      @Override
 	      public void onSuccess(Void v) {
@@ -63,13 +83,13 @@ public class SignIn {
 	      public void onFailure(Exception e) {
 	        println(e.getMessage());
 	      }
-	    });
+	    });*/
 	    
 	    return true;
     }
 	
 	private boolean setUsuarioGWT(UsuarioGWT usuarioGWT){
-		this.usuarioGWT = usuarioGWT;
+		//this.usuarioGWT = usuarioGWT;
 		return true;
 	}
 		

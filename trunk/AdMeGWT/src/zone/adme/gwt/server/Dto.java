@@ -15,19 +15,29 @@ public class Dto {
 	public Dto(){}
 	
 	public UsuarioGWT toUsuarioGWT(Usuario usuario){
-		UsuarioGWT usuarioGWT = new UsuarioGWT(usuario.getCorreo());
-		
-		//Proceso de igualación
-		
-		return usuarioGWT;
+		if(usuario!=null){
+			UsuarioGWT usuarioGWT = new UsuarioGWT(usuario.getCorreo());
+			//Proceso de igualación
+			
+			return usuarioGWT;
+		}
+		else{
+			return null;
+		}
 	}
 	
 	public Usuario toUsuario(UsuarioGWT usuarioGWT){
-		Usuario usuario = new Usuario(usuarioGWT.getCorreo(),"","","","");
+		if(usuarioGWT!=null){
+			Usuario usuario = new Usuario(usuarioGWT.getCorreo(),"","","","");
+			
+			//Proceso de igualación
+			
+			return usuario;
+		}
+		else{
+			return null;
+		}
 		
-		//Proceso de igualación
-		
-		return usuario;
 	}
 	
 	public ListaMetadato toListaMetadato(List<MetadatoGWT> ListaMetadatoGWT){

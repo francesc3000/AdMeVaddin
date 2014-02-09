@@ -15,6 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -32,6 +33,8 @@ public class ShowPubli extends Composite {
 	
 	@UiField
 	Button btn;
+	@UiField
+	FlowPanel norte;
 
 
 	@UiHandler("btn")
