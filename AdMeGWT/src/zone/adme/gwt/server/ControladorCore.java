@@ -1,13 +1,9 @@
 package zone.adme.gwt.server;
 
-import java.util.List;
-
 import zone.adme.core.controlador.ControladorModelo;
 import zone.adme.core.modelo.Publi;
 import zone.adme.core.modelo.Usuario;
 import zone.adme.core.modelo.lista.ListaMensaje;
-import zone.adme.core.modelo.lista.ListaMetadato;
-import zone.adme.gwt.shared.MetadatoGWT;
 import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 

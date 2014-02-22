@@ -16,8 +16,13 @@ public class Dto {
 	
 	public UsuarioGWT toUsuarioGWT(Usuario usuario){
 		if(usuario!=null){
-			UsuarioGWT usuarioGWT = new UsuarioGWT(usuario.getCorreo());
 			//Proceso de igualación
+			UsuarioGWT usuarioGWT = new UsuarioGWT(usuario.getCorreo());
+			usuarioGWT.setContrasena(usuario.getContrasena());
+			usuarioGWT.setNombre(usuario.getNombre());
+			usuarioGWT.setApellido1(usuario.getApellido1());
+			usuarioGWT.setApellido2(usuario.getApellido2());
+			
 			
 			return usuarioGWT;
 		}
@@ -28,9 +33,12 @@ public class Dto {
 	
 	public Usuario toUsuario(UsuarioGWT usuarioGWT){
 		if(usuarioGWT!=null){
-			Usuario usuario = new Usuario(usuarioGWT.getCorreo(),"","","","");
-			
 			//Proceso de igualación
+			Usuario usuario = new Usuario(usuarioGWT.getCorreo(),usuarioGWT.getContrasena(),
+										  usuarioGWT.getNombre(),usuarioGWT.getApellido1(),
+										  usuarioGWT.getApellido2());
+			
+			
 			
 			return usuario;
 		}

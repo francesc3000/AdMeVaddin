@@ -1,7 +1,5 @@
 package zone.adme.gwt.client.sign;
 
-import java.util.List;
-
 import com.google.api.gwt.client.GoogleApiRequestTransport;
 import com.google.api.gwt.client.OAuth2Login;
 import com.google.api.gwt.services.plus.shared.Plus;
@@ -19,25 +17,28 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
-import zone.adme.gwt.server.ControladorCore;
-import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 public class SignIn {
-	//private UsuarioGWT usuarioGWT = null;
+	
+	private SignUI padre = null;
+	
+	private UsuarioGWT usuarioGWT = null;
 	
 	private static final Plus plus = GWT.create(Plus.class);
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
 	private static final String API_KEY = "AIzaSyDXT4x-PbIHeqORMaJxWT2eZht7oySMZXw";
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
-	final SignServiceAsync signService = GWT.create(SignService.class);
+	private final SignServiceAsync signService = GWT.create(SignService.class);
 	
-	public SignIn(){
+	
+	public SignIn(SignUI padre){
 		plus.initialize(new SimpleEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
+		this.padre = padre;
 	}
 	
-	public boolean login(String correo){
-		signService.signIn(correo, new AsyncCallback<UsuarioGWT>() {
+	public boolean login(String usuario, String contrasena){
+		signService.signIn(usuario, contrasena, new AsyncCallback<UsuarioGWT>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -47,61 +48,31 @@ public class SignIn {
 
 			@Override
 			public void onSuccess(UsuarioGWT usuarioGWT) {
-				Window.alert("Bienvenido:" + usuarioGWT.getCorreo());
-				
+				setUsuarioGWT(usuarioGWT);
 			}
 			
 			
 		});
-		/*
-	    OAuth2Login.get().authorize(CLIENT_ID, PlusAuthScope.USERINFO_EMAIL, new Callback<Void, Exception>() {
-	      @Override
-	      public void onSuccess(Void v) {
-	    	  getUsuarioServer();
-	        //getMe();
-	      }
-
-	      private void getUsuarioServer() {  	    	  
-	          // Set up the callback object.
-	          AsyncCallback<UsuarioGWT> callback = new AsyncCallback<UsuarioGWT>() {
-	            public void onFailure(Throwable caught) {
-	            	println("Falla comunicación");
-	            }
-
-	            public void onSuccess(UsuarioGWT usuarioGWT) {
-	              println(usuarioGWT.getNombre());
-	              setUsuarioGWT(usuarioGWT);
-	            }
-	          };
-
-	          // Make the call to the stock price service.
-	          usuarioService.getUsuarioServer("francesc3000@gmail.com", callback);
-
-		}
-
-		@Override
-	      public void onFailure(Exception e) {
-	        println(e.getMessage());
-	      }
-	    });*/
 	    
 	    return true;
     }
 	
 	private boolean setUsuarioGWT(UsuarioGWT usuarioGWT){
-		//this.usuarioGWT = usuarioGWT;
+		this.padre.setUsuarioGWT(usuarioGWT);
+		
 		return true;
 	}
 		
-	private void getMe() {	  
+	private void getMe() {	 
 	    plus.people().get("me").to(new Receiver<Person>() {
-	      @Override
-	      public void onSuccess(Person person) {
-	        //println("Hola " + person.getDisplayName());
-	        //println("Tu foto " + person.getImage());
-	
-	        getMyActivities();
-	      }
+		  @Override
+		  public void onSuccess(Person person) {
+		    println("Hola " + person.getDisplayName());
+		    println("Tu foto " + person.getImage());
+		
+		    getMyActivities();
+		    login(person.getEmails().get(0).getValue().toString(),"");
+		  }
 	    }).fire();
 	}
 
@@ -110,17 +81,14 @@ public class SignIn {
 	  plus.activities().list("me", Collection.PUBLIC).to(new Receiver<ActivityFeed>() {
 	  @Override
 	  public void onSuccess(ActivityFeed feed) {
-	    //println("===== PUBLIC ACTIVITIES =====");
+	    println("===== PUBLIC ACTIVITIES =====");
 	    if (feed.getItems() == null || feed.getItems().isEmpty()) {
-	    	//println("You have no public activities");
+	    	println("You have no public activities");
 	        } else {
 	          for (Activity a : feed.getItems()) {
-	            //println(a.getTitle());
+	            println(a.getTitle());
 	          }
 	        }
-	      }
-	      public void onFailure(Exception e){
-	    	  
 	      }
 	    }).fire();
 	
@@ -130,21 +98,21 @@ public class SignIn {
 	}
 
 	public UsuarioGWT getUsuarioSession() {
-		signService.getUsuarioSession(new AsyncCallback<UsuarioGWT>() {
+		return usuarioGWT;
+	}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Fallo conexion");
-				
-			}
+	public void googleIn() {
+	    OAuth2Login.get().authorize(CLIENT_ID, PlusAuthScope.USERINFO_EMAIL, new Callback<Void, Exception>() {
+	      @Override
+	      public void onSuccess(Void v) {
+	        getMe();
+	      }
 
-			@Override
-			public void onSuccess(UsuarioGWT usuarioGWT) {
-				
-			}
-			
-			
-		});
-		return null;
+		@Override
+	      public void onFailure(Exception e) {
+	        println(e.getMessage());
+	      }
+	    });
+		
 	}
 }

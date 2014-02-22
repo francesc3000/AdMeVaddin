@@ -7,9 +7,12 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
+		<g:Label>
 	    MODO DE PRUEBA
-		Introduce el ID del usuario, si no existe se creará el usuario.
-		<g:TextBox ui:field="textBox" />
-		<g:Button styleName="{style.important}" ui:field="button" />
+		Introduce el ID del usuario, si no existe se creará el usuario.</g:Label>
+		<g:TextBox ui:field="user" />
+		<g:PasswordTextBox ui:field="pass" />
+		<g:Button styleName="{style.important}" ui:field="signInButton" />
+		<g:Button ui:field="google" />
 	</g:HTMLPanel>
 </ui:UiBinder> 
