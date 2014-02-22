@@ -10,7 +10,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -35,6 +34,18 @@ public class ShowPubli extends Composite {
 	Button btn;
 	@UiField
 	FlowPanel norte;
+	@UiField
+	FlowPanel centro;
+
+
+	public FlowPanel getCentro() {
+		return centro;
+	}
+
+
+	public void setCentro(FlowPanel centro) {
+		this.centro = centro;
+	}
 
 
 	@UiHandler("btn")
@@ -80,6 +91,16 @@ public class ShowPubli extends Composite {
 			}
 		});
 		
+	}
+
+
+	public FlowPanel getNorte() {
+		return norte;
+	}
+
+
+	public void setNorte(FlowPanel norte) {
+		this.norte = norte;
 	}
 	
 	

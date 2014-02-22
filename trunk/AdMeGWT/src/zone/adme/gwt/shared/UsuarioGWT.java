@@ -16,8 +16,46 @@ public class UsuarioGWT implements Serializable{
 	 */
 	private static final long serialVersionUID = -6786037227487428148L;
 	private String correo;
+	private String contrasena;
 	private String nombre;
+	private String apellido1;
+	private String apellido2;
 	
+	public String getApellido1() {
+		return apellido1;
+	}
+
+	public void setApellido1(String apellido1) {
+		this.apellido1 = apellido1;
+	}
+
+	public String getApellido2() {
+		return apellido2;
+	}
+
+	public void setApellido2(String apellido2) {
+		this.apellido2 = apellido2;
+	}
+
+	private String tipoMensaje;
+	private String mensaje;
+	
+	public String getTipoMensaje() {
+		return tipoMensaje;
+	}
+
+	public void setTipoMensaje(String tipoMensaje) {
+		this.tipoMensaje = tipoMensaje;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
 	@SuppressWarnings("unused")
 	private UsuarioGWT(){}
 	
@@ -28,11 +66,11 @@ public class UsuarioGWT implements Serializable{
 	public String getCorreo(){
 		return this.correo;
 	}
-	/*
+	
 	public String getContrasena(){
-		return this.usuario.getContrasena();
+		return this.contrasena;
 	}
-	*/
+	
 	public String getNombre(){
 		return this.nombre;
 	}
@@ -71,10 +109,11 @@ public class UsuarioGWT implements Serializable{
 		this.correo = correo;
 		return true;
 	}
-	/*
+	
 	public boolean setContrasena(String contrasena){
-		return this.usuario.setContrasena(contrasena);
-	}*/
+		this.contrasena = contrasena;
+		return true;
+	}
 	
 	public boolean setNombre(String nombre){
 		this.nombre = nombre;

@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:VerticalPanel>
+            <g:Label text="Publicaciones" />
+            <g:HorizontalPanel verticalAlignment="top" ui:field="topHPanel">
+			 	<g:Button ui:field ="button">CellList</g:Button>
+            </g:HorizontalPanel>
+            <g:HorizontalPanel verticalAlignment="bottom" ui:field="bottomHPanel">
+
+            </g:HorizontalPanel>
+         </g:VerticalPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
