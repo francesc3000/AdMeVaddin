@@ -1,9 +1,12 @@
 package zone.adme.gwt.server;
 
+import java.util.List;
+
 import zone.adme.core.controlador.ControladorModelo;
 import zone.adme.core.modelo.Publi;
 import zone.adme.core.modelo.Usuario;
 import zone.adme.core.modelo.lista.ListaMensaje;
+import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 
@@ -80,12 +83,13 @@ public class ControladorCore {
 	 * @param publi Clase Publicación
 	 * @return Se retorna un listado de mensajes del sistema
 	 */
-	public void putPubli(UsuarioGWT usuarioGWT, PubliGWT publiGWT){
+	public List<MensajeGWT> putPubli(PubliGWT publiGWT){
 		
 		Publi publi = dto.toPubli(publiGWT);
 		
-		@SuppressWarnings("unused")
 		ListaMensaje listaMensaje = this.controladorModelo.putPubli(publi.getPropietario(), publi);
+		
+		return dto.toListaMensajeGWT(listaMensaje);
 	}
 	
 	/**

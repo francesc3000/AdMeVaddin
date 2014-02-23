@@ -61,7 +61,7 @@ public class ShowPubli extends Composite {
 		t.getRowFormatter().addStyleName(0, "watchListHeader");
 		RootPanel.get().add(t);
 		
-		final GetPubliServiceAsync getPubliService = GWT.create(GetPubliService.class);
+		final PubliServiceAsync getPubliService = GWT.create(PubliService.class);
 		getPubliService.getPubli(new AsyncCallback<List<PubliGWT>>() {
 
 
