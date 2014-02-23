@@ -3,17 +3,19 @@ package zone.adme.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.gwt.client.GetPubliService;
+import zone.adme.gwt.client.PubliService;
+import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 
 public class PubliServiceImpl extends RemoteServiceServlet implements
-GetPubliService {
+PubliService {
 
 
 	private static final long serialVersionUID = -6238344776565658480L;
+	private ControladorCore controladorCore = new ControladorCore();
 
 	@Override
 	public List<PubliGWT> getPubli() throws IllegalArgumentException {
@@ -47,6 +49,11 @@ GetPubliService {
 		lista.add(p3);
 		
 		return lista;
+	}
+
+	@Override
+	public List<MensajeGWT> putPubli(PubliGWT publiGWT) throws IllegalArgumentException {
+		return this.controladorCore.putPubli(publiGWT);
 	}
 }
 

@@ -3,9 +3,12 @@ package zone.adme.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import zone.adme.core.modelo.Mensaje;
 import zone.adme.core.modelo.Publi;
 import zone.adme.core.modelo.Usuario;
+import zone.adme.core.modelo.lista.ListaMensaje;
 import zone.adme.core.modelo.lista.ListaMetadato;
+import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.MetadatoGWT;
 import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
@@ -66,11 +69,21 @@ public class Dto {
 		return listaPubliGWT;
 	}
 	
-public Publi toPubli(PubliGWT publiGWT) {
+	public Publi toPubli(PubliGWT publiGWT) {
 		
 		//Proceso de igualación
 		
 		Publi publi = new Publi(new Usuario("a@a.com", "", "", "", ""), publiGWT.getTitulo(), publiGWT.getTexto(), "");
 		return publi;
+	}
+	
+	public List<MensajeGWT> toListaMensajeGWT(ListaMensaje listaMensaje){
+		List<MensajeGWT> listaMensajeGWT = new ArrayList<MensajeGWT>();
+		for(Mensaje mensaje:listaMensaje){
+			MensajeGWT mensajeGWT = new MensajeGWT(mensaje.getTipo().toString(),mensaje.getMensaje());
+			listaMensajeGWT.add(mensajeGWT);
+		}
+		
+		return listaMensajeGWT;
 	}
 }
