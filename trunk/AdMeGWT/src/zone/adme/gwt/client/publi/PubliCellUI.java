@@ -1,4 +1,4 @@
-package zone.adme.gwt.client.pcontrol;
+package zone.adme.gwt.client.publi;
 
 import zone.adme.gwt.shared.PubliGWT;
 
@@ -7,7 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiRenderer;
 
-public class PubliCell extends AbstractCell<PubliGWT> {
+public class PubliCellUI extends AbstractCell<PubliGWT> {
 
 	interface MyUiRenderer extends UiRenderer {
 		void render(SafeHtmlBuilder sb, PubliGWT publiGWT);

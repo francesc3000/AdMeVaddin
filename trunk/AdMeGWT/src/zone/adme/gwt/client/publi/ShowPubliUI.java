@@ -1,8 +1,10 @@
-package zone.adme.gwt.client;
+package zone.adme.gwt.client.publi;
 
 import java.util.Iterator;
 import java.util.List;
 
+import zone.adme.gwt.client.services.PubliService;
+import zone.adme.gwt.client.services.PubliServiceAsync;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -18,15 +20,15 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ShowPubli extends Composite {
+public class ShowPubliUI extends Composite {
 
 	private static ShowPubliUiBinder uiBinder = GWT
 			.create(ShowPubliUiBinder.class);
 
-	interface ShowPubliUiBinder extends UiBinder<Widget, ShowPubli> {
+	interface ShowPubliUiBinder extends UiBinder<Widget, ShowPubliUI> {
 	}
 
-	public ShowPubli() {
+	public ShowPubliUI() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	

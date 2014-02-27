@@ -1,5 +1,10 @@
-package zone.adme.gwt.client;
+package zone.adme.gwt.client.publi;
 
+import java.util.List;
+
+import zone.adme.gwt.client.services.PubliService;
+import zone.adme.gwt.client.services.PubliServiceAsync;
+import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -14,15 +19,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FormPubli extends Composite {
+public class FormPubliUI extends Composite {
 
 	private static FormPubliUiBinder uiBinder = GWT
 			.create(FormPubliUiBinder.class);
 
-	interface FormPubliUiBinder extends UiBinder<Widget, FormPubli> {
+	interface FormPubliUiBinder extends UiBinder<Widget, FormPubliUI> {
 	}
 
-	public FormPubli() {
+	public FormPubliUI() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
@@ -45,9 +50,9 @@ public class FormPubli extends Composite {
 	
 
 		
-		final IntroPubliServiceAsync IntroPubli = GWT.create(IntroPubliService.class);
+		final PubliServiceAsync PubliService = GWT.create(PubliService.class);
 		
-		IntroPubli.introducePubli(publi,new AsyncCallback<Void>() {
+		PubliService.putPubli(publi,new AsyncCallback<List<MensajeGWT>>() {
 
 
 			@Override
@@ -57,7 +62,7 @@ public class FormPubli extends Composite {
 			}
 
 			@Override
-			public void onSuccess(Void result) {
+			public void onSuccess(List<MensajeGWT> listaMensajeGWT) {
 				Window.alert("Siiiii...Ole!");
 				
 			}	

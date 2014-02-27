@@ -1,6 +1,7 @@
 package zone.adme.gwt.client.sign;
 
-import zone.adme.gwt.client.ShowPubli;
+import zone.adme.gwt.client.pcontrol.PControlUI;
+import zone.adme.gwt.client.publi.ShowPubliUI;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -12,7 +13,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -20,22 +24,26 @@ public class SignUI extends Composite implements HasText {
 
 	private static SignUIUiBinder uiBinder = GWT.create(SignUIUiBinder.class);
 	private SignIn signIn = null;
-	private ShowPubli main = null;
+	private ShowPubliUI main = null;
 
 	private RegisterUI registerUI = null;
+	private PControlUI pControlUI = null;
 
 	interface SignUIUiBinder extends UiBinder<Widget, SignUI> {
 	}
 	
-	public SignUI(ShowPubli main) {
+	public SignUI(ShowPubliUI main) {
 		initWidget(uiBinder.createAndBindUi(this));
 		signInButton.setText("Iniciar Sesión");
 		google.setText("Google+");
 		signIn = new SignIn(this);
 		this.main = main;
 		this.main.getNorte().add(this);
+		this.signedPanel.setVisible(false);
 	}
-
+	
+	@UiField
+	HorizontalPanel signInPanel;
 	@UiField
 	Button signInButton;
 	@UiField
@@ -44,7 +52,14 @@ public class SignUI extends Composite implements HasText {
 	PasswordTextBox pass;
 	@UiField
 	Button google;
-
+	
+	@UiField
+	HorizontalPanel signedPanel;
+	@UiField
+	Label nameUserLabel;
+	@UiField
+	Button pControlButton;
+	
 	@UiHandler("signInButton")
 	void onClick(ClickEvent e) {
 		signIn.login(user.getText(), pass.getText());
@@ -53,6 +68,12 @@ public class SignUI extends Composite implements HasText {
 	@UiHandler("google")
 	void onClickGoogle(ClickEvent e){
 		signIn.googleIn();
+	}
+	
+	@UiHandler("pControlButton")
+	void onClickPControl(ClickEvent e) {
+		this.pControlUI = new PControlUI();
+		this.main.getCentro().add(pControlUI);
 	}
 
 	public void setText(String text) {
@@ -72,11 +93,18 @@ public class SignUI extends Composite implements HasText {
 			if(usuarioGWT.getMensaje()!=null){
 				Window.alert(usuarioGWT.getMensaje());
 			}else{
-				Window.alert("Bienvenido"+ usuarioGWT.getCorreo());
+				this.nameUserLabel.setText("Hola " + usuarioGWT.getNombre());
+				this.signInPanel.setVisible(false);
+				this.signedPanel.setVisible(true);
 			}
 		}else{
 			if(this.registerUI==null){
-				this.registerUI = new RegisterUI();
+				this.registerUI = new RegisterUI(this);
+				this.registerUI.setCorreo(this.user.getText());
+				this.user.setEnabled(false);
+				this.pass.setEnabled(false);
+				this.signInButton.setEnabled(false);
+				this.google.setEnabled(false);
 				this.main.getCentro().clear();
 				this.main.getCentro().add(this.registerUI);
 			}

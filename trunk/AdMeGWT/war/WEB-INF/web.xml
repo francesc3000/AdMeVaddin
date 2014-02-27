@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>signInService</servlet-name>
-    <servlet-class>zone.adme.gwt.server.SignServiceImpl</servlet-class>
+    <servlet-class>zone.adme.gwt.server.UserServiceImpl</servlet-class>
   </servlet>
 
   <servlet-mapping>
