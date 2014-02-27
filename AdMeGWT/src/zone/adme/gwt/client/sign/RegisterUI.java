@@ -1,5 +1,7 @@
 package zone.adme.gwt.client.sign;
 
+import zone.adme.gwt.client.services.UserService;
+import zone.adme.gwt.client.services.UserServiceAsync;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -12,12 +14,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RegisterUI extends Composite implements HasText {
 	
-	private final SignServiceAsync signService = GWT.create(SignService.class);
+	private final UserServiceAsync signService = GWT.create(UserService.class);
 	private SignUI padre = null;
 	
 	private static RegisterUiBinder uiBinder = GWT
@@ -39,9 +42,13 @@ public class RegisterUI extends Composite implements HasText {
 	
 	@UiField
 	TextBox correo;
-	TextBox contrasena;
+	@UiField
+	PasswordTextBox contrasena;
+	@UiField
 	TextBox nombre;
+	@UiField
 	TextBox apellido1;
+	@UiField
 	TextBox apellido2;
 	
 	@UiField
@@ -83,6 +90,12 @@ public class RegisterUI extends Composite implements HasText {
 
 	public String getText() {
 		return register.getText();
+	}
+	
+	public boolean setCorreo(String correo){
+		this.correo.setText(correo);
+		
+		return true;
 	}
 
 }

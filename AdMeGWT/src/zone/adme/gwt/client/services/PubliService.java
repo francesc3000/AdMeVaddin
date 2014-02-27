@@ -1,4 +1,4 @@
-package zone.adme.gwt.client;
+package zone.adme.gwt.client.services;
 
 import java.util.List;
 

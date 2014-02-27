@@ -3,13 +3,13 @@ package zone.adme.gwt.server;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import zone.adme.gwt.client.sign.SignService;
+import zone.adme.gwt.client.services.UserService;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-public class SignServiceImpl extends RemoteServiceServlet implements
-SignService{
+public class UserServiceImpl extends RemoteServiceServlet implements
+UserService{
 
 	/**
 	 * SECCIÓN PRIVADA
@@ -26,7 +26,7 @@ SignService{
 	public UsuarioGWT signIn(String correo, String contrasena) {
 		UsuarioGWT usuarioGWT = controladorCore.getUsuario(correo);
 		if(usuarioGWT!=null){
-			if(usuarioGWT.getContrasena()!=contrasena){
+			if(usuarioGWT.getContrasena().compareTo(contrasena)==1){
 				usuarioGWT.setTipoMensaje("E");
 				usuarioGWT.setMensaje("Contraseña Incorrecta!");
 			}else{
@@ -69,6 +69,6 @@ SignService{
 		//true will create a new session if it not yet exists
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Usuario", usuarioGWT);
-		return null;
+		return usuarioGWT;
 	}
 }

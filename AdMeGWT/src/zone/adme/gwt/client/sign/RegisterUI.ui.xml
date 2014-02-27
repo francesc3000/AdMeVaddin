@@ -10,7 +10,7 @@
 		<g:Label>Desde aquí puede registrarse en AdMe!</g:Label>
 		<g:TextBox ui:field="correo">Correo</g:TextBox>
 		<g:PasswordTextBox ui:field="contrasena">Contraseña</g:PasswordTextBox>
-		<g:TextBox ui:field="name">Nombre</g:TextBox>
+		<g:TextBox ui:field="nombre">Nombre</g:TextBox>
 		<g:TextBox ui:field="apellido1">Primer Apellido</g:TextBox>
 		<g:TextBox ui:field="apellido2">Segundo Apellido</g:TextBox>
 		<g:Button styleName="{style.important}" ui:field="register">RegistraMe!</g:Button>

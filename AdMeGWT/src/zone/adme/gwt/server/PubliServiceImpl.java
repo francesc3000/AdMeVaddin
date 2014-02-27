@@ -3,7 +3,7 @@ package zone.adme.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.gwt.client.PubliService;
+import zone.adme.gwt.client.services.PubliService;
 import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.PubliGWT;
 
@@ -20,7 +20,7 @@ PubliService {
 	@Override
 	public List<PubliGWT> getPubli() throws IllegalArgumentException {
 
-		ArrayList<PubliGWT> lista = new ArrayList<PubliGWT>();
+		List<PubliGWT> lista = new ArrayList<PubliGWT>();
 		
 		PubliGWT p1 = new PubliGWT();
 		

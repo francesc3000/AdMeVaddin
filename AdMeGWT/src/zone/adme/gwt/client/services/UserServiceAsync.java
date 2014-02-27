@@ -1,10 +1,10 @@
-package zone.adme.gwt.client.sign;
+package zone.adme.gwt.client.services;
 
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface SignServiceAsync {
+public interface UserServiceAsync {
 
 	void signIn(String correo, String contrasena, AsyncCallback<UsuarioGWT> callback);
 

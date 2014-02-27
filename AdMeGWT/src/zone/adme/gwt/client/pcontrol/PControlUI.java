@@ -3,6 +3,7 @@ package zone.adme.gwt.client.pcontrol;
 import java.util.ArrayList;
 import java.util.List;
 
+import zone.adme.gwt.client.publi.PubliCellUI;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -11,11 +12,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PControlUI extends Composite implements HasText {
@@ -41,8 +41,8 @@ public class PControlUI extends Composite implements HasText {
 
 	@UiHandler("button")
 	void onClick(ClickEvent e) {
-		PubliCell publiCell = new PubliCell();
-		CellList<PubliGWT> cellList = new CellList<PubliGWT>(publiCell);
+		PubliCellUI publiCellUI = new PubliCellUI();
+		CellList<PubliGWT> cellList = new CellList<PubliGWT>(publiCellUI);
 		List<PubliGWT> lista = new ArrayList<PubliGWT>();
 		
 		PubliGWT p1 = new PubliGWT();
@@ -62,9 +62,7 @@ public class PControlUI extends Composite implements HasText {
 		
 		cellList.setRowCount(lista.size(),true);
 		cellList.setRowData(lista);
-		RootPanel.get().add(cellList);
-		
-		Window.alert("Hello!");
+		RootLayoutPanel.get().add(cellList);
 	}
 
 	public void setText(String text) {

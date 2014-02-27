@@ -17,6 +17,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
+import zone.adme.gwt.client.services.UserService;
+import zone.adme.gwt.client.services.UserServiceAsync;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 public class SignIn {
@@ -29,7 +31,7 @@ public class SignIn {
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
 	private static final String API_KEY = "AIzaSyDXT4x-PbIHeqORMaJxWT2eZht7oySMZXw";
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
-	private final SignServiceAsync signService = GWT.create(SignService.class);
+	private final UserServiceAsync signService = GWT.create(UserService.class);
 	
 	
 	public SignIn(SignUI padre){

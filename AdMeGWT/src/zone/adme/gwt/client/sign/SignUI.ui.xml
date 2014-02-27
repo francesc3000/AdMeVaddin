@@ -7,12 +7,18 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Label>
-	    MODO DE PRUEBA
-		Introduce el ID del usuario, si no existe se creará el usuario.</g:Label>
-		<g:TextBox ui:field="user" />
-		<g:PasswordTextBox ui:field="pass" />
-		<g:Button styleName="{style.important}" ui:field="signInButton" />
-		<g:Button ui:field="google" />
+	    <g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" ui:field="signInPanel">
+			<g:Label>
+		    MODO DE PRUEBA
+			Introduce el ID del usuario, si no existe se creará el usuario.</g:Label>
+			<g:TextBox ui:field="user" />
+			<g:PasswordTextBox ui:field="pass" />
+			<g:Button styleName="{style.important}" ui:field="signInButton" />
+			<g:Button ui:field="google" />
+		</g:HorizontalPanel>
+		<g:HorizontalPanel horizontalAlignment="ALIGN_RIGHT" ui:field="signedPanel">
+		    <g:Label ui:field="nameUserLabel"/>
+		    <g:Button ui:field="pControlButton">Panel de Control</g:Button>
+		</g:HorizontalPanel>    
 	</g:HTMLPanel>
 </ui:UiBinder> 
