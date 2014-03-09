@@ -1,9 +1,8 @@
-package zone.adme.gwt.client.pcontrol;
+package zone.adme.gwt.client.views;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.gwt.client.views.PubliCellUI;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
