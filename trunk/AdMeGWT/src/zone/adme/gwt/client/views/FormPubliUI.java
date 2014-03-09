@@ -1,4 +1,4 @@
-package zone.adme.gwt.client.publi;
+package zone.adme.gwt.client.views;
 
 import java.util.List;
 
