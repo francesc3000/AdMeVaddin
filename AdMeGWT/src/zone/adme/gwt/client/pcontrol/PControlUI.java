@@ -3,7 +3,7 @@ package zone.adme.gwt.client.pcontrol;
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.gwt.client.publi.PubliCellUI;
+import zone.adme.gwt.client.views.PubliCellUI;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;

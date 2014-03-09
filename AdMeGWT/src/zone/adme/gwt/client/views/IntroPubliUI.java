@@ -1,4 +1,4 @@
-package zone.adme.gwt.client.publi;
+package zone.adme.gwt.client.views;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

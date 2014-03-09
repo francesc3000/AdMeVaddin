@@ -1,7 +1,7 @@
 package zone.adme.gwt.client.sign;
 
 import zone.adme.gwt.client.pcontrol.PControlUI;
-import zone.adme.gwt.client.publi.ShowPubliUI;
+import zone.adme.gwt.client.views.ShowPubliUI;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.core.client.GWT;
