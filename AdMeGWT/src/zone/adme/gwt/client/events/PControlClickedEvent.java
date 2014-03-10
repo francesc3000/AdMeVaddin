@@ -1,0 +1,17 @@
+package zone.adme.gwt.client.events;
+
+import zone.adme.gwt.shared.UsuarioGWT;
+
+import com.google.web.bindery.event.shared.binder.GenericEvent;
+
+public class PControlClickedEvent extends GenericEvent {
+	private UsuarioGWT usuarioGWT = null;
+	
+	public PControlClickedEvent(UsuarioGWT usuarioGWT){
+		this.usuarioGWT = usuarioGWT;
+	}
+
+	public UsuarioGWT getUsuarioGWT() {
+		return usuarioGWT;
+	}	
+}
