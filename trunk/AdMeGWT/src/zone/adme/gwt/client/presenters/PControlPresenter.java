@@ -1,5 +1,6 @@
 package zone.adme.gwt.client.presenters;
 
+import zone.adme.gwt.client.events.OpenCellListEvent;
 import zone.adme.gwt.client.events.PControlClickedEvent;
 
 import com.google.gwt.core.client.GWT;
@@ -27,6 +28,8 @@ public class PControlPresenter implements Presenter{
 	public PControlPresenter(Display view, EventBus eventBus){
 		this.eventBus = eventBus;
 		this.view = view;
+		
+		bind();
 	}
 
 	@Override
@@ -54,6 +57,13 @@ public class PControlPresenter implements Presenter{
 	@EventHandler
 	void onShowPControl(PControlClickedEvent event){
 
+	}
+
+	public boolean OpenCellListClick() {
+		this.eventBus.fireEvent(new OpenCellListEvent());
+		
+		return true;
+		
 	}
 	
 }

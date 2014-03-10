@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
 public class SignPresenter implements Presenter{
@@ -176,4 +177,9 @@ public class SignPresenter implements Presenter{
 		}
 		return true;
 	}
+	
+	@EventHandler
+	 void onUserRegistered(UserRegisteredEvent event) {
+	    this.view.userRegistered(event.getUsuarioGWT().getNombre());
+	 }
 }

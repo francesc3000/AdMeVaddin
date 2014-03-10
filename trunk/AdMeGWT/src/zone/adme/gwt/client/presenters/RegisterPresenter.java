@@ -35,6 +35,8 @@ public class RegisterPresenter implements Presenter{
 	public RegisterPresenter(Display view, EventBus eventBus){
 		this.eventBus = eventBus;
 		this.view = view;
+		
+		bind();
 	}
 	
 	public boolean registrar(String correo, String contrasena, String nombre, String apellido1, String apellido2){

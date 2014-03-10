@@ -1,29 +1,25 @@
 package zone.adme.gwt.client.views;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import zone.adme.gwt.shared.PubliGWT;
+import zone.adme.gwt.client.presenters.PControlPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PControlUI extends Composite implements HasText {
+public class PControlUI extends Composite implements PControlPresenter.Display {
 
 	private static PControlUIUiBinder uiBinder = GWT
 			.create(PControlUIUiBinder.class);
 
 	interface PControlUIUiBinder extends UiBinder<Widget, PControlUI> {
 	}
+	
+	private PControlPresenter presenter = null;
 
 	public PControlUI() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -32,36 +28,9 @@ public class PControlUI extends Composite implements HasText {
 	@UiField
 	Button button;
 
-	public PControlUI(String firstName) {
-		initWidget(uiBinder.createAndBindUi(this));
-		button.setText(firstName);
-		
-	}
-
 	@UiHandler("button")
-	void onClick(ClickEvent e) {
-		PubliCellUI publiCellUI = new PubliCellUI();
-		CellList<PubliGWT> cellList = new CellList<PubliGWT>(publiCellUI);
-		List<PubliGWT> lista = new ArrayList<PubliGWT>();
-		
-		PubliGWT p1 = new PubliGWT();
-		
-		p1.setUsuario("Alberto");
-		p1.setTitulo("TITULO 1");
-		p1.setTexto("Esta es la publicacion numero 1");
-		
-		PubliGWT p2 = new PubliGWT();
-		
-		p2.setUsuario("Alfonso Javier");
-		p2.setTitulo("TITULO 2");
-		p2.setTexto("Esta es la publicacion numero 2, iauygp aui apuihgpa aui gauerp ahit ");
-		
-		lista.add(p1);
-		lista.add(p2);
-		
-		cellList.setRowCount(lista.size(),true);
-		cellList.setRowData(lista);
-		RootLayoutPanel.get().add(cellList);
+	void onOpenCellListClick(ClickEvent e) {
+		this.presenter.OpenCellListClick();
 	}
 
 	public void setText(String text) {
@@ -70,6 +39,18 @@ public class PControlUI extends Composite implements HasText {
 
 	public String getText() {
 		return button.getText();
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean setPresenter(PControlPresenter presenter) {
+		this.presenter = presenter;
+		return false;
 	}
 
 }
