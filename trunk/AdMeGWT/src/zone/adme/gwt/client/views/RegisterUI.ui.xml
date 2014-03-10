@@ -13,6 +13,6 @@
 		<g:TextBox ui:field="nombre">Nombre</g:TextBox>
 		<g:TextBox ui:field="apellido1">Primer Apellido</g:TextBox>
 		<g:TextBox ui:field="apellido2">Segundo Apellido</g:TextBox>
-		<g:Button styleName="{style.important}" ui:field="register">RegistraMe!</g:Button>
+		<g:Button styleName="{style.important}" ui:field="registerButton">RegistraMe!</g:Button>
 	</g:HTMLPanel>
 </ui:UiBinder> 
