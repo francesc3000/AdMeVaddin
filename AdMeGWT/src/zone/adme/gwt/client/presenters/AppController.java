@@ -7,7 +7,7 @@ import zone.adme.gwt.client.views.SignUI;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
@@ -47,12 +47,12 @@ public class AppController implements Presenter {
 		return true;
 	}
 	
-	public boolean go(){
+	public boolean go(Panel panel){
 		SignUI signUI = new SignUI();
 		SignPresenter signPresenter = new SignPresenter(signUI,eventBus);
 		signPresenter.start();
 		main.getNorte().add(signUI);
-		RootLayoutPanel.get().add(main);
+		panel.add(main);
 		
 		return true;
 	}
