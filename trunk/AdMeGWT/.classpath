@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/AdMeCore.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-oauth2-0.2-alpha.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-plus-v1-0.3-alpha.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/eventbinder-1.0.2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
