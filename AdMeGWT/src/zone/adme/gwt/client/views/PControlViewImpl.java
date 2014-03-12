@@ -1,7 +1,5 @@
 package zone.adme.gwt.client.views;
 
-import zone.adme.gwt.client.presenters.PControlPresenter;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,17 +9,15 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PControlUI extends Composite implements PControlPresenter.Display {
+public class PControlViewImpl extends Composite implements PControlView {
 
-	private static PControlUIUiBinder uiBinder = GWT
-			.create(PControlUIUiBinder.class);
+	private static PControlUIUiBinder uiBinder = GWT.create(PControlUIUiBinder.class);
+	private Presenter presenter = null;
 
-	interface PControlUIUiBinder extends UiBinder<Widget, PControlUI> {
+	interface PControlUIUiBinder extends UiBinder<Widget, PControlViewImpl> {
 	}
-	
-	private PControlPresenter presenter = null;
 
-	public PControlUI() {
+	public PControlViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -48,9 +44,8 @@ public class PControlUI extends Composite implements PControlPresenter.Display {
 	}
 
 	@Override
-	public boolean setPresenter(PControlPresenter presenter) {
+	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
-		return false;
 	}
 
 }

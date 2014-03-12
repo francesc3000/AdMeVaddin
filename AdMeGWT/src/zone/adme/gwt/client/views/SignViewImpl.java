@@ -1,7 +1,6 @@
 package zone.adme.gwt.client.views;
 
 import zone.adme.gwt.shared.UsuarioGWT;
-import zone.adme.gwt.client.presenters.SignPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,15 +15,15 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SignUI extends Composite implements SignPresenter.Display {
+public class SignViewImpl extends Composite implements SignView {
 
 	private static SignUIUiBinder uiBinder = GWT.create(SignUIUiBinder.class);
-	private SignPresenter presenter = null;
+	private Presenter presenter = null;
 
-	interface SignUIUiBinder extends UiBinder<Widget, SignUI> {
+	interface SignUIUiBinder extends UiBinder<Widget, SignViewImpl> {
 	}
 	
-	public SignUI() {
+	public SignViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 		signInButton.setText("Iniciar Sesión");
 		google.setText("Google+");
@@ -75,9 +74,8 @@ public class SignUI extends Composite implements SignPresenter.Display {
 	}
 
 	@Override
-	public boolean setPresenter(SignPresenter presenter) {
+	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
-		return true;
 	}
 
 	@Override

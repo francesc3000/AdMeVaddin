@@ -1,6 +1,6 @@
 package zone.adme.gwt.client.views;
 
-import zone.adme.gwt.client.presenters.RegisterPresenter;
+import zone.adme.gwt.client.activities.RegisterPresenter;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
