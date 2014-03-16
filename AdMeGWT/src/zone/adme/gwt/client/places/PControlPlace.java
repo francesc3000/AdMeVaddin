@@ -5,16 +5,16 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class PControlPlace extends Place
 {
-	private String SignName;
+	private String pControlName;
 	
 	public PControlPlace(String token)
 	{
-		this.SignName = token;
+		this.pControlName = token;
 	}
 
-	public String getSignName()
+	public String getPControlName()
 	{
-		return SignName;
+		return pControlName;
 	}
 
 	public static class Tokenizer implements PlaceTokenizer<PControlPlace>
@@ -23,7 +23,7 @@ public class PControlPlace extends Place
 		@Override
 		public String getToken(PControlPlace place)
 		{
-			return place.getSignName();
+			return place.getPControlName();
 		}
 
 		@Override

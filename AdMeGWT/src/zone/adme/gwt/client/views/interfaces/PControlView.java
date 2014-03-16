@@ -1,4 +1,4 @@
-package zone.adme.gwt.client.views;
+package zone.adme.gwt.client.views.interfaces;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
@@ -8,8 +8,8 @@ public interface PControlView extends IsWidget{
 	
 	public interface Presenter
 	{
-		boolean start();
-		boolean stop();
+		void startHandler();
+		void stopHandler();
 		boolean OpenCellListClick();
 	}
 }

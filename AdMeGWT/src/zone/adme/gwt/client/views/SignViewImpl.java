@@ -1,5 +1,7 @@
 package zone.adme.gwt.client.views;
 
+import zone.adme.gwt.client.places.PControlPlace;
+import zone.adme.gwt.client.views.interfaces.SignView;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.core.client.GWT;
@@ -60,7 +62,7 @@ public class SignViewImpl extends Composite implements SignView {
 	
 	@UiHandler("pControlButton")
 	void onClickPControl(ClickEvent e) {
-		this.presenter.PControlClicked();
+		this.presenter.goTo(new PControlPlace("PControl"));
 	}
 	
 	public UsuarioGWT getUsuarioSession(){
@@ -69,8 +71,7 @@ public class SignViewImpl extends Composite implements SignView {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.setVisible(false);
 	}
 
 	@Override

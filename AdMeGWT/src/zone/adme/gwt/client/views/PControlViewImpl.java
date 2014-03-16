@@ -1,5 +1,7 @@
 package zone.adme.gwt.client.views;
 
+import zone.adme.gwt.client.views.interfaces.PControlView;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,14 +29,6 @@ public class PControlViewImpl extends Composite implements PControlView {
 	@UiHandler("button")
 	void onOpenCellListClick(ClickEvent e) {
 		this.presenter.OpenCellListClick();
-	}
-
-	public void setText(String text) {
-		button.setText(text);
-	}
-
-	public String getText() {
-		return button.getText();
 	}
 
 	@Override
