@@ -1,8 +1,10 @@
 package zone.adme.gwt.client.history;
 
 import zone.adme.gwt.client.ClientFactory;
+import zone.adme.gwt.client.activities.MainActivity;
 import zone.adme.gwt.client.activities.PControlActivity;
 import zone.adme.gwt.client.activities.SignActivity;
+import zone.adme.gwt.client.places.MainPlace;
 import zone.adme.gwt.client.places.PControlPlace;
 import zone.adme.gwt.client.places.SignPlace;
 
@@ -33,11 +35,20 @@ public class AppActivityMapper implements ActivityMapper {
 	@Override
 	public Activity getActivity(Place place) {
 		// This is begging for GIN
-		if (place instanceof SignPlace){
-			return new SignActivity((SignPlace) place, clientFactory);
+		if (place instanceof MainPlace){
+			MainActivity mainActivity = new MainActivity((MainPlace) place, clientFactory);
+			mainActivity.startHandler();
+			return mainActivity;
+		}
+	    else if (place instanceof SignPlace){
+			SignActivity signActivity = new SignActivity((SignPlace) place, clientFactory);
+			signActivity.startHandler();
+			return signActivity;
 		}
 		else if(place instanceof PControlPlace){
-			return new PControlActivity((PControlPlace) place, clientFactory);
+			PControlActivity pControlActivity =  new PControlActivity((PControlPlace) place, clientFactory);
+			pControlActivity.startHandler();
+			return pControlActivity;
 		}
 		return null;
 	}

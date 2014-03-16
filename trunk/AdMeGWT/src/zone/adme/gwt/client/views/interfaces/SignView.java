@@ -1,4 +1,4 @@
-package zone.adme.gwt.client.views;
+package zone.adme.gwt.client.views.interfaces;
 
 import zone.adme.gwt.shared.UsuarioGWT;
 
@@ -15,7 +15,7 @@ public interface SignView extends IsWidget{
 	{
 		void login(String usuario, String contrasena);
 		void googleIn();
-		void PControlClicked();
+		void pControlClicked();
 		UsuarioGWT getUsuarioSession();
 		void goTo(Place place);
 		void startHandler();

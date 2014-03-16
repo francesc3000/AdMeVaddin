@@ -1,9 +1,11 @@
 package zone.adme.gwt.client;
 
-import zone.adme.gwt.client.views.PControlView;
+import zone.adme.gwt.client.views.MainViewImpl;
 import zone.adme.gwt.client.views.PControlViewImpl;
-import zone.adme.gwt.client.views.SignView;
 import zone.adme.gwt.client.views.SignViewImpl;
+import zone.adme.gwt.client.views.interfaces.MainView;
+import zone.adme.gwt.client.views.interfaces.PControlView;
+import zone.adme.gwt.client.views.interfaces.SignView;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
@@ -15,6 +17,7 @@ public class ClientFactoryImpl implements ClientFactory
 	private static final PlaceController placeController = new PlaceController(eventBus);
 	private static final SignView signView = new SignViewImpl();
 	private static final PControlView pControlView = new PControlViewImpl();
+	private static final MainView mainView = new MainViewImpl();
 	
 	@Override
 	public EventBus getEventBus() {
@@ -35,6 +38,11 @@ public class ClientFactoryImpl implements ClientFactory
 	@Override
 	public PControlView getPControlView() {
 		return pControlView;
+	}
+
+	@Override
+	public MainView getMainView() {
+		return mainView;
 	}
 
 }

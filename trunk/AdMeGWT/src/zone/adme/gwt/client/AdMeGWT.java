@@ -2,7 +2,7 @@ package zone.adme.gwt.client;
 
 import zone.adme.gwt.client.history.AppActivityMapper;
 import zone.adme.gwt.client.history.AppPlaceHistoryMapper;
-import zone.adme.gwt.client.places.SignPlace;
+import zone.adme.gwt.client.places.MainPlace;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -11,6 +11,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.web.bindery.event.shared.EventBus;
@@ -20,7 +21,7 @@ import com.google.web.bindery.event.shared.EventBus;
 public class AdMeGWT implements EntryPoint {
   
   //Declaración de las clases globales
-	private Place defaultPlace = new SignPlace("Sign");
+	private Place defaultPlace = new MainPlace("Main");
 	private SimplePanel appWidget = new SimplePanel();
 
   @Override
@@ -41,7 +42,7 @@ public class AdMeGWT implements EntryPoint {
 	PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
 	historyHandler.register(placeController, eventBus, defaultPlace);
 
-	RootPanel.get().add(appWidget);
+	RootLayoutPanel.get().add(appWidget);
 	// Goes to place represented on URL or default place
 	historyHandler.handleCurrentHistory();
   }

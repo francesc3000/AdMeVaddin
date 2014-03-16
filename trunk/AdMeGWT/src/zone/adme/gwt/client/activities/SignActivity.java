@@ -8,7 +8,7 @@ import zone.adme.gwt.client.places.PControlPlace;
 import zone.adme.gwt.client.places.SignPlace;
 import zone.adme.gwt.client.services.UserService;
 import zone.adme.gwt.client.services.UserServiceAsync;
-import zone.adme.gwt.client.views.SignView;
+import zone.adme.gwt.client.views.interfaces.SignView;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.api.gwt.client.GoogleApiRequestTransport;
@@ -48,10 +48,17 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
 	private static final String API_KEY = "AIzaSyDXT4x-PbIHeqORMaJxWT2eZht7oySMZXw";
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
-	private final UserServiceAsync signService = GWT.create(UserService.class);	
+	private final UserServiceAsync signService = GWT.create(UserService.class);
+	
+	public SignActivity(ClientFactory clientFactory){
+		this.clientFactory = clientFactory;
+		this.clientFactory.getSignView().setPresenter(this);
+	}
 	
 	public SignActivity(SignPlace place, ClientFactory clientFactory){
 		this.clientFactory = clientFactory;
+		this.clientFactory.getSignView().setPresenter(this);
+		plus.initialize(this.clientFactory.getEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
 	}
 	
 	public void login(String usuario, String contrasena){
@@ -78,8 +85,8 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 				Window.alert(usuarioGWT.getMensaje());
 			}else{
 				this.clientFactory.getSignView().userRegistered("Hola " + usuarioGWT.getNombre());
-				//this.clientFactory.getEventBus().fireEvent(new UserRegisteredEvent(usuarioGWT));
-				this.clientFactory.getPlaceController().goTo(new PControlPlace(usuarioGWT.getNombre()));
+				this.clientFactory.getEventBus().fireEvent(new UserRegisteredEvent(usuarioGWT));
+				//this.clientFactory.getPlaceController().goTo(new PControlPlace(usuarioGWT.getNombre()));
 			}
 		}else{
 			this.clientFactory.getEventBus().fireEvent(new UserNotRegisteredEvent());
@@ -142,8 +149,8 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 		
 	}
 	
-	public void PControlClicked(){
-		this.clientFactory.getEventBus().fireEvent(new PControlClickedEvent(this.usuarioGWT));
+	public void pControlClicked(){
+		//this.clientFactory.getEventBus().fireEvent(new PControlClickedEvent(this.usuarioGWT));
 	}
 
 	@Override
@@ -151,7 +158,6 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 		SignView signView = this.clientFactory.getSignView();
 		signView.setPresenter(this);
 		containerWidget.setWidget(signView.asWidget());
-		plus.initialize(this.clientFactory.getEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
 	}
 	
 	@Override

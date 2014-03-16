@@ -3,8 +3,9 @@ package zone.adme.gwt.client.activities;
 import zone.adme.gwt.client.ClientFactory;
 import zone.adme.gwt.client.events.OpenCellListEvent;
 import zone.adme.gwt.client.events.PControlClickedEvent;
+import zone.adme.gwt.client.events.UserRegisteredEvent;
 import zone.adme.gwt.client.places.PControlPlace;
-import zone.adme.gwt.client.views.PControlView;
+import zone.adme.gwt.client.views.interfaces.PControlView;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
@@ -24,33 +25,36 @@ public class PControlActivity extends AbstractActivity implements PControlView.P
 	public PControlActivity(PControlPlace place, ClientFactory clientFactory){
 		this.clientFactory = clientFactory;
 	}
-
-	@Override
-	public boolean start() {
-		if(this.eventRegistration==null){
-			this.eventRegistration = eventBinder.bindEventHandlers(this, this.clientFactory.getEventBus());
-		}
-		return true;
-	}
-
-	@Override
-	public boolean stop() {
-		if(this.eventRegistration!=null){
-			eventRegistration.removeHandler();
-		}
-		return true;
-	}
 	
-	@EventHandler
-	void onShowPControl(PControlClickedEvent event){
-
-	}
-
 	public boolean OpenCellListClick() {
 		this.clientFactory.getEventBus().fireEvent(new OpenCellListEvent());
 		
 		return true;
+	}
+	
+	@EventHandler
+	void onUserRegistered(UserRegisteredEvent event){
+		this.clientFactory.getMainView().getNorte().clear();
+		//this.clientFactory.getMainView().getCentro().add(this.clientFactory.getPControlView());
+	}
+	
+	@EventHandler
+	void onShowPControl(PControlClickedEvent event){
 		
+	}
+
+	@Override
+	public void startHandler() {
+		if(this.eventRegistration==null){
+			this.eventRegistration = eventBinder.bindEventHandlers(this, this.clientFactory.getEventBus());
+		}
+	}
+
+	@Override
+	public void stopHandler() {
+		if(this.eventRegistration!=null){
+			eventRegistration.removeHandler();
+		}
 	}
 
 	@Override

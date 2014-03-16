@@ -5,16 +5,16 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class SignPlace extends Place
 {
-	private String SignName;
+	private String signName;
 	
 	public SignPlace(String token)
 	{
-		this.SignName = token;
+		this.signName = token;
 	}
 
 	public String getSignName()
 	{
-		return SignName;
+		return signName;
 	}
 
 	public static class Tokenizer implements PlaceTokenizer<SignPlace>
