@@ -1,9 +1,8 @@
 package zone.adme.gwt.client.places;
 
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class SignPlace extends Place
+public class SignPlace extends BasePlace
 {
 	private String signName;
 	
@@ -32,5 +31,10 @@ public class SignPlace extends Place
 			return new SignPlace(token);
 		}
 
+	}
+
+	@Override
+	public <IN, OUT> OUT accept(PlaceVisitor<IN, OUT> visitor, IN in) {
+		return visitor.visit(this, in);
 	}
 }

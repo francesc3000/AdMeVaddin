@@ -1,29 +1,35 @@
 package zone.adme.gwt.client.views;
 
-import zone.adme.gwt.client.activities.RegisterPresenter;
+import javax.inject.Inject;
+
+import zone.adme.gwt.client.activities.RegisterActivity;
+import zone.adme.gwt.client.views.interfaces.RegisterView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class RegisterUI extends Composite implements RegisterPresenter.Display {
+public class RegisterViewImpl extends Composite implements RegisterView {
 	
 	private static RegisterUiBinder uiBinder = GWT
 			.create(RegisterUiBinder.class);
 	
-	private RegisterPresenter presenter = null;
+	private RegisterActivity presenter = null;
 
-	interface RegisterUiBinder extends UiBinder<Widget, RegisterUI> {
+	@UiTemplate("RegisterView.ui.xml")
+	interface RegisterUiBinder extends UiBinder<Widget, RegisterViewImpl> {
 	}
 
-	public RegisterUI() {
+	@Inject
+	public RegisterViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
@@ -40,7 +46,7 @@ public class RegisterUI extends Composite implements RegisterPresenter.Display {
 	@UiField
 	Button registerButton;
 
-	public RegisterUI(String firstName) {
+	public RegisterViewImpl(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		registerButton.setText(firstName);
 	}
@@ -65,9 +71,8 @@ public class RegisterUI extends Composite implements RegisterPresenter.Display {
 	}
 
 	@Override
-	public boolean setPresenter(RegisterPresenter presenter) {
+	public void setPresenter(RegisterActivity presenter) {
 		this.presenter = presenter;
-		return true;
 	}
 
 }
