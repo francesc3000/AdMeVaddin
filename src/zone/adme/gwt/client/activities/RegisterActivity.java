@@ -1,43 +1,35 @@
 package zone.adme.gwt.client.activities;
 
+import javax.inject.Inject;
+
 import zone.adme.gwt.client.events.UserNotRegisteredEvent;
 import zone.adme.gwt.client.events.UserRegisteredEvent;
+import zone.adme.gwt.client.mapper.PlaceControllerHolder;
 import zone.adme.gwt.client.services.UserService;
 import zone.adme.gwt.client.services.UserServiceAsync;
+import zone.adme.gwt.client.views.interfaces.RegisterView;
 import zone.adme.gwt.shared.UsuarioGWT;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.EventBus;
+import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
-public class RegisterPresenter implements Presenter{
-	interface MyEventBinder extends EventBinder<RegisterPresenter> {}
+public class RegisterActivity extends BaseActivity<RegisterView> implements RegisterView.Presenter{
+	interface MyEventBinder extends EventBinder<RegisterActivity> {}
 	private static final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 	
 	private EventBus eventBus=null;
 	private HandlerRegistration eventRegistration = null;
 	
-	private Display view = null;
-	
 	private final UserServiceAsync signService = GWT.create(UserService.class);
 	
-	public interface Display{
-		public void clear();
-		public Widget asWidget();
-		public boolean setPresenter(RegisterPresenter presenter);
-	}
-	
-	public RegisterPresenter(Display view, EventBus eventBus){
-		this.eventBus = eventBus;
-		this.view = view;
-		
-		bind();
-	}
+	@Inject
+    PlaceControllerHolder placeControllerHolder;
 	
 	public boolean registrar(String correo, String contrasena, String nombre, String apellido1, String apellido2){
 		signService.register(correo, contrasena, nombre, apellido1, apellido2, new AsyncCallback<UsuarioGWT>() {
@@ -65,30 +57,36 @@ public class RegisterPresenter implements Presenter{
 	}
 
 	@Override
-	public boolean bind() {
-		this.view.setPresenter(this);
-		return true;
-	}
-
-	@Override
-	public boolean start() {
+	public void startHandler() {
 		if(this.eventRegistration==null){
 			this.eventRegistration = eventBinder.bindEventHandlers(this, this.eventBus);
 		}
-		return true;
 	}
 
 	@Override
-	public boolean stop() {
+	public void stopHandler() {
 		if(this.eventRegistration!=null){
 			eventRegistration.removeHandler();
 		}
-		return true;
 	}
 	
 	@EventHandler
 	void onShowRegisterForm(UserNotRegisteredEvent event){
 		//TODO
+	}
+
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStart(AcceptsOneWidget panel) {
+		panel.setWidget(getView());
+        getView().setPresenter(this);
+        this.startHandler();
+        this.eventBus = this.placeControllerHolder.getEventBus();
 	}
 	
 }

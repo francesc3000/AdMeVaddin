@@ -1,6 +1,7 @@
 package zone.adme.gwt.client.views;
 
-import zone.adme.gwt.client.places.PControlPlace;
+import javax.inject.Inject;
+
 import zone.adme.gwt.client.views.interfaces.SignView;
 import zone.adme.gwt.shared.UsuarioGWT;
 
@@ -9,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,9 +24,11 @@ public class SignViewImpl extends Composite implements SignView {
 	private static SignUIUiBinder uiBinder = GWT.create(SignUIUiBinder.class);
 	private Presenter presenter = null;
 
+	@UiTemplate("SignView.ui.xml")
 	interface SignUIUiBinder extends UiBinder<Widget, SignViewImpl> {
 	}
 	
+	@Inject
 	public SignViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 		signInButton.setText("Iniciar Sesión");
@@ -62,7 +66,7 @@ public class SignViewImpl extends Composite implements SignView {
 	
 	@UiHandler("pControlButton")
 	void onClickPControl(ClickEvent e) {
-		this.presenter.goTo(new PControlPlace("PControl"));
+		this.presenter.pControlClicked();
 	}
 	
 	public UsuarioGWT getUsuarioSession(){

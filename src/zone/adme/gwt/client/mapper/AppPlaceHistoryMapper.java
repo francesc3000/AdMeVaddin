@@ -1,8 +1,8 @@
-package zone.adme.gwt.client.history;
+package zone.adme.gwt.client.mapper;
 
 import zone.adme.gwt.client.places.MainPlace;
-import zone.adme.gwt.client.places.SignPlace;
 import zone.adme.gwt.client.places.PControlPlace;
+import zone.adme.gwt.client.places.SignPlace;
 
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.WithTokenizers;
@@ -15,7 +15,7 @@ import com.google.gwt.place.shared.WithTokenizers;
  */
 @WithTokenizers( { MainPlace.Tokenizer.class
 				   ,SignPlace.Tokenizer.class 
-				   /*,PControlPlace.Tokenizer.class*/
+				   ,PControlPlace.Tokenizer.class
 				 })
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

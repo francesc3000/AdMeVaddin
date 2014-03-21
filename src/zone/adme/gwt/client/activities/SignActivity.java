@@ -1,11 +1,12 @@
 package zone.adme.gwt.client.activities;
 
-import zone.adme.gwt.client.ClientFactory;
-import zone.adme.gwt.client.events.PControlClickedEvent;
+import javax.inject.Inject;
+
 import zone.adme.gwt.client.events.UserNotRegisteredEvent;
 import zone.adme.gwt.client.events.UserRegisteredEvent;
+import zone.adme.gwt.client.mapper.PlaceControllerHolder;
 import zone.adme.gwt.client.places.PControlPlace;
-import zone.adme.gwt.client.places.SignPlace;
+import zone.adme.gwt.client.places.RegisterPlace;
 import zone.adme.gwt.client.services.UserService;
 import zone.adme.gwt.client.services.UserServiceAsync;
 import zone.adme.gwt.client.views.interfaces.SignView;
@@ -19,10 +20,8 @@ import com.google.api.gwt.services.plus.shared.Plus.ActivitiesContext.ListReques
 import com.google.api.gwt.services.plus.shared.model.Activity;
 import com.google.api.gwt.services.plus.shared.model.ActivityFeed;
 import com.google.api.gwt.services.plus.shared.model.Person;
-import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,12 +33,15 @@ import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
-public class SignActivity extends AbstractActivity implements SignView.Presenter{
+public class SignActivity extends BaseActivity<SignView> implements SignView.Presenter{
 	interface MyEventBinder extends EventBinder<SignActivity> {}
 	private static final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 	
+	@Inject
+    PlaceControllerHolder placeControllerHolder;
+	
 	//Variables de evento
-	private ClientFactory clientFactory;
+	//private ClientFactory clientFactory;
 	private HandlerRegistration eventRegistration = null;
 	
 	//Variables de ejecución
@@ -50,18 +52,10 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
 	private final UserServiceAsync signService = GWT.create(UserService.class);
 	
-	public SignActivity(ClientFactory clientFactory){
-		this.clientFactory = clientFactory;
-		this.clientFactory.getSignView().setPresenter(this);
-	}
-	
-	public SignActivity(SignPlace place, ClientFactory clientFactory){
-		this.clientFactory = clientFactory;
-		this.clientFactory.getSignView().setPresenter(this);
-		plus.initialize(this.clientFactory.getEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
-	}
-	
 	public void login(String usuario, String contrasena){
+		
+		plus.initialize(this.placeControllerHolder.getEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
+		
 		signService.signIn(usuario, contrasena, new AsyncCallback<UsuarioGWT>() {
 
 			@Override
@@ -84,12 +78,12 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 			if(usuarioGWT.getMensaje()!=null){
 				Window.alert(usuarioGWT.getMensaje());
 			}else{
-				this.clientFactory.getSignView().userRegistered("Hola " + usuarioGWT.getNombre());
-				this.clientFactory.getEventBus().fireEvent(new UserRegisteredEvent(usuarioGWT));
-				//this.clientFactory.getPlaceController().goTo(new PControlPlace(usuarioGWT.getNombre()));
+				this.view.userRegistered("Hola " + usuarioGWT.getNombre());
+				this.placeControllerHolder.getEventBus().fireEvent(new UserRegisteredEvent(usuarioGWT));
 			}
 		}else{
-			this.clientFactory.getEventBus().fireEvent(new UserNotRegisteredEvent());
+			this.placeControllerHolder.getEventBus().fireEvent(new UserNotRegisteredEvent());
+			this.placeControllerHolder.getPlaceController().goTo(new RegisterPlace("Registro"));
 		}
 		
 		this.usuarioGWT = usuarioGWT;		
@@ -150,20 +144,18 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 	}
 	
 	public void pControlClicked(){
-		//this.clientFactory.getEventBus().fireEvent(new PControlClickedEvent(this.usuarioGWT));
+		this.placeControllerHolder.getPlaceController().goTo(new PControlPlace("PControl"));
 	}
-
-	@Override
-	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		SignView signView = this.clientFactory.getSignView();
-		signView.setPresenter(this);
-		containerWidget.setWidget(signView.asWidget());
-	}
+	
+	@EventHandler
+	 void onUserRegistered(UserRegisteredEvent event) {
+	    this.view.userRegistered(event.getUsuarioGWT().getNombre());
+	 }
 	
 	@Override
 	public void startHandler(){
 		if(this.eventRegistration==null){
-			this.eventRegistration = eventBinder.bindEventHandlers(this, this.clientFactory.getEventBus());
+			this.eventRegistration = eventBinder.bindEventHandlers(this, this.placeControllerHolder.getEventBus());
 		}
 	}
 
@@ -173,14 +165,21 @@ public class SignActivity extends AbstractActivity implements SignView.Presenter
 			eventRegistration.removeHandler();
 		}
 	}
-	
-	@EventHandler
-	 void onUserRegistered(UserRegisteredEvent event) {
-	    this.clientFactory.getSignView().userRegistered(event.getUsuarioGWT().getNombre());
-	 }
 
 	@Override
 	public void goTo(Place place) {
-		clientFactory.getPlaceController().goTo(place);
+		this.placeControllerHolder.getPlaceController().goTo(place);
+	}
+
+	@Override
+	public void onStop() {
+		this.stopHandler();
+	}
+
+	@Override
+	public void onStart(AcceptsOneWidget panel) {
+		panel.setWidget(getView());
+        getView().setPresenter(this);
+        this.startHandler();
 	}
 }

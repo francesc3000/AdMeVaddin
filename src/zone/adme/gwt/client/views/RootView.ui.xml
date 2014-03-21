@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:zone.adme.gwt.client.views.regions">
+	<ui:style src="region.css" />
+	<g:DockLayoutPanel unit='EM' ui:field="rootContainer">
+	    <g:north size='2'>
+	    	<m:RegionContainer ui:field="northRegionContainer" styleName="{style.northRegion}"></m:RegionContainer>
+	    </g:north>
+	    <g:south size='2'>
+	    	<m:RegionContainer ui:field="southRegionContainer" styleName="{style.southRegion}"></m:RegionContainer>
+	    </g:south>
+	    <g:west size='8'>
+	    	<m:RegionContainer ui:field="westRegionContainer" styleName="{style.westRegion}"></m:RegionContainer>
+	    </g:west>
+	    <g:east size='6'>
+	    	<m:RegionContainer ui:field="eastRegionContainer" styleName="{style.eastRegion}"></m:RegionContainer>
+	    </g:east>
+	    <g:center>
+	    	<m:RegionContainer ui:field="centerRegionContainer" styleName="{style.centerRegion}"></m:RegionContainer>
+	    </g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder> 
