@@ -4,6 +4,7 @@ import zone.adme.gwt.client.mapper.AppPlaceHistoryMapper;
 import zone.adme.gwt.client.mapper.CenterActivityMapper;
 import zone.adme.gwt.client.mapper.NorthActivityMapper;
 import zone.adme.gwt.client.mapper.PlaceControllerHolder;
+import zone.adme.gwt.client.mapper.SouthActivityMapper;
 import zone.adme.gwt.client.mapper.WestActivityMapper;
 import zone.adme.gwt.client.views.interfaces.RootView;
 
@@ -24,4 +25,6 @@ public interface MyGinjector extends Ginjector
     CenterActivityMapper getCenterActivityMapper();
 
     WestActivityMapper getWestActivityMapper();
+    
+    SouthActivityMapper getSouthActivityMapper();
 }

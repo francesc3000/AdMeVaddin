@@ -11,6 +11,8 @@
             <g:Label text="Publicaciones" />
             <g:HorizontalPanel verticalAlignment="top" ui:field="topHPanel">
 			 	<g:Button ui:field ="button">CellList</g:Button>
+			 	<g:Button ui:field="creaPubli">Crear Publicación</g:Button>
+			 	<g:Button ui:field="creaGrupo">Crear Grupo</g:Button>
             </g:HorizontalPanel>
             <g:HorizontalPanel verticalAlignment="bottom" ui:field="bottomHPanel">
 

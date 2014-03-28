@@ -24,6 +24,8 @@ public class ShowPubliUI extends Composite {
 
 	private static ShowPubliUiBinder uiBinder = GWT
 			.create(ShowPubliUiBinder.class);
+	
+	final PubliServiceAsync getPubliService = GWT.create(PubliService.class);
 
 	interface ShowPubliUiBinder extends UiBinder<Widget, ShowPubliUI> {
 	}
@@ -38,7 +40,6 @@ public class ShowPubliUI extends Composite {
 	FlowPanel norte;
 	@UiField
 	FlowPanel centro;
-
 
 	public FlowPanel getCentro() {
 		return centro;
@@ -63,7 +64,6 @@ public class ShowPubliUI extends Composite {
 		t.getRowFormatter().addStyleName(0, "watchListHeader");
 		RootPanel.get().add(t);
 		
-		final PubliServiceAsync getPubliService = GWT.create(PubliService.class);
 		getPubliService.getPubli(new AsyncCallback<List<PubliGWT>>() {
 
 
@@ -92,7 +92,6 @@ public class ShowPubliUI extends Composite {
 
 			}
 		});
-		
 	}
 
 

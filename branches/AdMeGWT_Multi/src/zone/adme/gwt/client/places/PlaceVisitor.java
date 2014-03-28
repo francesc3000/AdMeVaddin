@@ -10,4 +10,6 @@ public interface PlaceVisitor<IN, OUT>
     
     OUT visit(PControlPlace pControlPlace, IN in);
     
+    OUT visit(ShowPlace showPlace, IN in);
+    
 }

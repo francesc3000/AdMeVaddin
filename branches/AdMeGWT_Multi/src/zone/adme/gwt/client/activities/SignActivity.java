@@ -17,9 +17,9 @@ import com.google.api.gwt.client.OAuth2Login;
 import com.google.api.gwt.services.plus.shared.Plus;
 import com.google.api.gwt.services.plus.shared.Plus.PlusAuthScope;
 import com.google.api.gwt.services.plus.shared.Plus.ActivitiesContext.ListRequest.Collection;
-import com.google.api.gwt.services.plus.shared.model.Activity;
 import com.google.api.gwt.services.plus.shared.model.ActivityFeed;
 import com.google.api.gwt.services.plus.shared.model.Person;
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
@@ -33,7 +33,7 @@ import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 
-public class SignActivity extends BaseActivity<SignView> implements SignView.Presenter{
+public class SignActivity extends BaseActivity<SignView> implements Activity, SignView.Presenter{
 	interface MyEventBinder extends EventBinder<SignActivity> {}
 	private static final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 	
@@ -41,7 +41,6 @@ public class SignActivity extends BaseActivity<SignView> implements SignView.Pre
     PlaceControllerHolder placeControllerHolder;
 	
 	//Variables de evento
-	//private ClientFactory clientFactory;
 	private HandlerRegistration eventRegistration = null;
 	
 	//Variables de ejecución
@@ -50,13 +49,13 @@ public class SignActivity extends BaseActivity<SignView> implements SignView.Pre
 	private static final String CLIENT_ID = "480216243468-lk40r99ktga7djtdcukdbjf8tee2tq0f.apps.googleusercontent.com";
 	private static final String API_KEY = "AIzaSyDXT4x-PbIHeqORMaJxWT2eZht7oySMZXw";
 	private static final String APPLICATION_NAME = "AdMeGWT/1.0";
-	private final UserServiceAsync signService = GWT.create(UserService.class);
+	private final UserServiceAsync userService = GWT.create(UserService.class);
 	
 	public void login(String usuario, String contrasena){
 		
 		plus.initialize(this.placeControllerHolder.getEventBus(), new GoogleApiRequestTransport(APPLICATION_NAME, API_KEY));
 		
-		signService.signIn(usuario, contrasena, new AsyncCallback<UsuarioGWT>() {
+		userService.signIn(usuario, contrasena, new AsyncCallback<UsuarioGWT>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -82,6 +81,7 @@ public class SignActivity extends BaseActivity<SignView> implements SignView.Pre
 				this.placeControllerHolder.getEventBus().fireEvent(new UserRegisteredEvent(usuarioGWT));
 			}
 		}else{
+			this.view.disable();
 			this.placeControllerHolder.getEventBus().fireEvent(new UserNotRegisteredEvent());
 			this.placeControllerHolder.getPlaceController().goTo(new RegisterPlace("Registro"));
 		}
@@ -112,7 +112,7 @@ public class SignActivity extends BaseActivity<SignView> implements SignView.Pre
 	    if (feed.getItems() == null || feed.getItems().isEmpty()) {
 	    	println("You have no public activities");
 	        } else {
-	          for (Activity a : feed.getItems()) {
+	          for (com.google.api.gwt.services.plus.shared.model.Activity a : feed.getItems()) {
 	            println(a.getTitle());
 	          }
 	        }
