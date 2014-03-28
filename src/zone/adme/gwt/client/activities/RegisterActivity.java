@@ -6,33 +6,34 @@ import zone.adme.gwt.client.events.UserNotRegisteredEvent;
 import zone.adme.gwt.client.events.UserRegisteredEvent;
 import zone.adme.gwt.client.mapper.PlaceControllerHolder;
 import zone.adme.gwt.client.services.UserService;
-import zone.adme.gwt.client.services.UserServiceAsync;
 import zone.adme.gwt.client.views.interfaces.RegisterView;
 import zone.adme.gwt.shared.UsuarioGWT;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 
-public class RegisterActivity extends BaseActivity<RegisterView> implements RegisterView.Presenter{
+public class RegisterActivity extends BaseActivity<RegisterView> implements Activity, RegisterView.Presenter{
 	interface MyEventBinder extends EventBinder<RegisterActivity> {}
 	private static final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 	
 	private EventBus eventBus=null;
 	private HandlerRegistration eventRegistration = null;
 	
-	private final UserServiceAsync signService = GWT.create(UserService.class);
+	//private final UserServiceAsync signService = GWT.create(UserService.class);
 	
 	@Inject
     PlaceControllerHolder placeControllerHolder;
 	
+	@Inject
+	UserService signService;
+	
 	public boolean registrar(String correo, String contrasena, String nombre, String apellido1, String apellido2){
-		signService.register(correo, contrasena, nombre, apellido1, apellido2, new AsyncCallback<UsuarioGWT>() {
+		/*signService.register(correo, contrasena, nombre, apellido1, apellido2, new AsyncCallback<UsuarioGWT>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -46,7 +47,8 @@ public class RegisterActivity extends BaseActivity<RegisterView> implements Regi
 			}
 			
 			
-			});
+			});*/
+		this.setUsuarioGWT(this.signService.register(correo, contrasena, nombre, apellido1, apellido2));
 		
 		return true;
 	}
@@ -85,8 +87,8 @@ public class RegisterActivity extends BaseActivity<RegisterView> implements Regi
 	public void onStart(AcceptsOneWidget panel) {
 		panel.setWidget(getView());
         getView().setPresenter(this);
-        this.startHandler();
         this.eventBus = this.placeControllerHolder.getEventBus();
+        this.startHandler();
 	}
 	
 }

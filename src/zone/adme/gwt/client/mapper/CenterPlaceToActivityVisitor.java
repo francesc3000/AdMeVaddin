@@ -3,8 +3,11 @@ package zone.adme.gwt.client.mapper;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import zone.adme.gwt.client.activities.BuscaIniActivity;
+import zone.adme.gwt.client.activities.ShowActivity;
 import zone.adme.gwt.client.activities.PControlActivity;
 import zone.adme.gwt.client.activities.RegisterActivity;
+import zone.adme.gwt.client.places.ShowPlace;
 import zone.adme.gwt.client.places.InitPlace;
 import zone.adme.gwt.client.places.PControlPlace;
 import zone.adme.gwt.client.places.PlaceVisitor;
@@ -21,9 +24,15 @@ public class CenterPlaceToActivityVisitor implements PlaceVisitor<Void, Activity
     @Inject
     Provider<PControlActivity> pControlProvider;
     
+    @Inject
+    Provider<BuscaIniActivity> buscaProvider;
+    
+    @Inject
+    Provider<ShowActivity> showProvider;
+    
     @Override
 	public Activity visit(InitPlace initPlace, Void in) {
-		return null;
+		return buscaProvider.get();
 	}
 
 	@Override
@@ -39,5 +48,10 @@ public class CenterPlaceToActivityVisitor implements PlaceVisitor<Void, Activity
 	@Override
 	public Activity visit(RegisterPlace registerPlace, Void in) {
 		return registerProvider.get();
+	}
+
+	@Override
+	public Activity visit(ShowPlace buscaPlace, Void in) {
+		return showProvider.get();
 	}
 }

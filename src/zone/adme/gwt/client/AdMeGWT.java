@@ -37,12 +37,13 @@ public class AdMeGWT implements EntryPoint {
     ActivityManager centerActivityManager = new ActivityManager(injector.getCenterActivityMapper(), placeControllerHolder.getEventBus());
     centerActivityManager.setDisplay(rootPresenter.getView().getRegion(Region.Center));
 
-    // Do the same for center, south ...
+    ActivityManager southActivityManager = new ActivityManager(injector.getSouthActivityMapper(), placeControllerHolder.getEventBus());
+    southActivityManager.setDisplay(rootPresenter.getView().getRegion(Region.South));
 
 
     AppPlaceHistoryMapper historyMapper= injector.getAppPlaceHistoryMapper();
     PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
-    historyHandler.register(placeControllerHolder.getPlaceController(), placeControllerHolder.getEventBus(), new InitPlace("test"));
+    historyHandler.register(placeControllerHolder.getPlaceController(), placeControllerHolder.getEventBus(), new InitPlace("init"));
 
     RootLayoutPanel.get().add(rootPresenter.getView().asWidget());
 

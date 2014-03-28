@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface PubliServiceAsync {
 
-	void getPubli( AsyncCallback<List<PubliGWT>> callback);
+	void getPubli(AsyncCallback<List<PubliGWT>> callback);
 
 	void putPubli(PubliGWT publiGWT, AsyncCallback<List<MensajeGWT>> callback);
 

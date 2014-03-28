@@ -5,6 +5,7 @@ import zone.adme.gwt.shared.PubliGWT;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiRenderer;
 import com.google.gwt.uibinder.client.UiTemplate;
 
@@ -13,6 +14,10 @@ public class PubliCellViewImpl extends AbstractCell<PubliGWT> {
 	@UiTemplate("PubliCellView.ui.xml")
 	interface MyUiRenderer extends UiRenderer {
 		void render(SafeHtmlBuilder sb, PubliGWT publiGWT);
+	}
+	
+	public @UiConstructor PubliCellViewImpl(){
+		
 	}
 
 	private static MyUiRenderer renderer = GWT.create(MyUiRenderer.class);
