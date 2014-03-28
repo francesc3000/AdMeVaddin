@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>  
+   <ui:with field='publiGWT' />  
+   <div>  
+     Titulo :  
+     <span>  
+       <ui:text from='{publiGWT.getTitulo}' />  
+     </span>  
+     <p>  
+       Descripción :  
+       <span>  
+         <ui:text from='{publiGWT.getTexto}' />  
+       </span>  
+     </p>  
+   </div>  
+ </ui:UiBinder>  
