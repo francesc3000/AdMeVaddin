@@ -3,8 +3,8 @@ package zone.adme.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.core.modelo.Publi;
-import zone.adme.core.modelo.Usuario;
+import zone.adme.core.shared.modelo.Publi;
+import zone.adme.core.shared.modelo.Usuario;
 import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 

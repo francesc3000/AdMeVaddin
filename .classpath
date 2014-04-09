@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/javax.inject.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/AdMeCore.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0rc2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

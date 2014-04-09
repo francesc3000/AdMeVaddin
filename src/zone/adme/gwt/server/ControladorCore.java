@@ -3,12 +3,12 @@ package zone.adme.gwt.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import zone.adme.core.controlador.ControladorModelo;
-import zone.adme.core.modelo.Mensaje;
-import zone.adme.core.modelo.Metadato;
-import zone.adme.core.modelo.Publi;
-import zone.adme.core.modelo.Usuario;
-import zone.adme.core.modelo.lista.ListaMensaje;
+import zone.adme.core.server.controlador.ControladorModelo;
+import zone.adme.core.shared.modelo.Mensaje;
+import zone.adme.core.shared.modelo.Metadato;
+import zone.adme.core.shared.modelo.Publi;
+import zone.adme.core.shared.modelo.Usuario;
+import zone.adme.core.shared.modelo.lista.ListaMensaje;
 import zone.adme.gwt.shared.PubliGWT;
 import zone.adme.gwt.shared.UsuarioGWT;
 

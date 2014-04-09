@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import zone.adme.core.modelo.Mensaje;
+import zone.adme.core.shared.modelo.Mensaje;
 import zone.adme.gwt.client.mapper.PlaceControllerHolder;
 import zone.adme.gwt.client.services.PubliService;
 import zone.adme.gwt.client.services.PubliServiceAsync;

@@ -2,8 +2,10 @@ package zone.adme.gwt.server;
 
 import java.util.List;
 
-import zone.adme.core.modelo.Mensaje;
-import zone.adme.core.modelo.Metadato;
+import zone.adme.core.shared.constantes.Constante;
+import zone.adme.core.shared.modelo.Mensaje;
+import zone.adme.core.shared.modelo.Metadato;
+import zone.adme.core.shared.modelo.Metadato2;
 import zone.adme.gwt.client.services.PubliService;
 import zone.adme.gwt.shared.PubliGWT;
 
@@ -57,6 +59,12 @@ PubliService {
 	@Override
 	public List<Mensaje> putPubliGWT(PubliGWT publiGWT) throws IllegalArgumentException {
 		//return this.controladorCore.putPubli(publiGWT);
+		return null;
+	}
+
+	@Override
+	public List<PubliGWT> getPubliGWT2(List<Metadato2> listaMetadato) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
