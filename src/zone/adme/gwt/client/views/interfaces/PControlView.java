@@ -15,5 +15,6 @@ public interface PControlView extends IsWidget{
 		void startHandler();
 		void stopHandler();
 		boolean OpenCellListClick();
+		void onCreaPubliClick();
 	}
 }

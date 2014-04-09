@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface UserServiceAsync {
 
-	void getUsuarioSession(AsyncCallback<UsuarioGWT> callback);
+	void getUsuarioGWTSession(AsyncCallback<UsuarioGWT> callback);
 
 	void register(String correo, String contrasena, String nombre,
 			String apellido1, String apellido2,

@@ -30,10 +30,19 @@ public class PControlViewImpl extends Composite implements PControlView {
 
 	@UiField
 	Button button;
+	@UiField
+	Button creaPubli;
+	@UiField
+	Button creaGrupo;
 
 	@UiHandler("button")
 	void onOpenCellListClick(ClickEvent e) {
 		this.presenter.OpenCellListClick();
+	}
+	
+	@UiHandler("creaPubli")
+	void onCreaPubliClick(ClickEvent e){
+		this.presenter.onCreaPubliClick();
 	}
 
 	@Override

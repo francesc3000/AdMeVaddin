@@ -47,4 +47,10 @@
 		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>AdMeCore</name>
+			<value>file:/C:/Users/fmunozr/Dropbox/workspace/AdMeGWT/war/WEB-INF/lib</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -20,7 +20,7 @@ UserService{
 	/**
 	 * SECCIÓN PUBLICA
 	 */
-	public static final String SESSION_USUARIO = "SessionUsuario";
+	public static final String SESSION_USUARIOGWT = "SessionUsuarioGWT";
 	
 	@Override
 	public UsuarioGWT signIn(String correo, String contrasena) {
@@ -34,7 +34,7 @@ UserService{
 				HttpServletRequest request = this.getThreadLocalRequest();
 				//true will create a new session if it not yet exists
 				HttpSession session = request.getSession(true);
-				session.setAttribute("Usuario", usuarioGWT);
+				session.setAttribute(SESSION_USUARIOGWT, usuarioGWT);
 			}
 		}
 		return usuarioGWT;
@@ -47,11 +47,11 @@ UserService{
 	}
 
 	@Override
-	public UsuarioGWT getUsuarioSession() {
+	public UsuarioGWT getUsuarioGWTSession() {
 		// create session and store userid
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession(true);
-		return (UsuarioGWT) session.getAttribute(SESSION_USUARIO);
+		return (UsuarioGWT) session.getAttribute(SESSION_USUARIOGWT);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ UserService{
 		HttpServletRequest request = this.getThreadLocalRequest();
 		//true will create a new session if it not yet exists
 		HttpSession session = request.getSession(true);
-		session.setAttribute("Usuario", usuarioGWT);
+		session.setAttribute(SESSION_USUARIOGWT, usuarioGWT);
 		return usuarioGWT;
 	}
 }

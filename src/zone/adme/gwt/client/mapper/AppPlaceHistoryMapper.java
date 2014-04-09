@@ -1,5 +1,6 @@
 package zone.adme.gwt.client.mapper;
 
+import zone.adme.gwt.client.places.FormPubliPlace;
 import zone.adme.gwt.client.places.InitPlace;
 import zone.adme.gwt.client.places.PControlPlace;
 import zone.adme.gwt.client.places.RegisterPlace;
@@ -20,6 +21,7 @@ import com.google.gwt.place.shared.WithTokenizers;
 					,PControlPlace.Tokenizer.class
 					,RegisterPlace.Tokenizer.class
 					,ShowPlace.Tokenizer.class
+					,FormPubliPlace.Tokenizer.class
 				 })
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

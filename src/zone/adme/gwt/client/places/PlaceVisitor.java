@@ -12,4 +12,6 @@ public interface PlaceVisitor<IN, OUT>
     
     OUT visit(ShowPlace showPlace, IN in);
     
+    OUT visit(FormPubliPlace showPlace, IN in);
+    
 }

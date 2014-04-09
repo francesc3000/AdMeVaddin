@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("UserService")
 public interface UserService extends RemoteService {
 	UsuarioGWT signIn(String correo, String contrasena);
-	UsuarioGWT getUsuarioSession();
+	UsuarioGWT getUsuarioGWTSession();
 	boolean signOut(String correo);
 	UsuarioGWT register(String correo, String contrasena, String nombre,
 						String apellido1, String apellido2);

@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import zone.adme.gwt.client.events.UserRegisteredEvent;
 import zone.adme.gwt.client.mapper.PlaceControllerHolder;
+import zone.adme.gwt.client.places.FormPubliPlace;
 import zone.adme.gwt.client.views.PubliCellViewImpl;
 import zone.adme.gwt.client.views.interfaces.PControlView;
 import zone.adme.gwt.shared.PubliGWT;
@@ -16,7 +16,6 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.binder.EventBinder;
-import com.google.web.bindery.event.shared.binder.EventHandler;
 
 public class PControlActivity extends BaseActivity<PControlView> implements PControlView.Presenter{
 	interface MyEventBinder extends EventBinder<PControlActivity> {}
@@ -32,7 +31,6 @@ public class PControlActivity extends BaseActivity<PControlView> implements PCon
 		List<PubliGWT> list = new ArrayList<PubliGWT>();
 		
 		PubliGWT publiGWT = new PubliGWT();
-		publiGWT.setUsuario("Antonio Recio");
 		publiGWT.setTitulo("Mariscos Recio");
 		publiGWT.setTexto("Salami, Salami!");
 		
@@ -44,11 +42,6 @@ public class PControlActivity extends BaseActivity<PControlView> implements PCon
 	    this.view.setCellList(cellList);
 
 		return true;
-	}
-	
-	@EventHandler
-	void onUserRegistered(UserRegisteredEvent event){
-		
 	}
 
 	@Override
@@ -75,5 +68,10 @@ public class PControlActivity extends BaseActivity<PControlView> implements PCon
 		panel.setWidget(getView());
         getView().setPresenter(this);
         this.startHandler();
+	}
+
+	@Override
+	public void onCreaPubliClick() {
+		this.placeControllerHolder.getPlaceController().goTo(new FormPubliPlace("CrearPubli"));
 	}	
 }

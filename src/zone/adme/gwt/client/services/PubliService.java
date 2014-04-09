@@ -2,7 +2,8 @@ package zone.adme.gwt.client.services;
 
 import java.util.List;
 
-import zone.adme.gwt.shared.MensajeGWT;
+import zone.adme.core.modelo.Mensaje;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -13,7 +14,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("PubliService")
 public interface PubliService extends RemoteService {
-	List<PubliGWT> getPubli() throws IllegalArgumentException;
+	List<PubliGWT> getPubliGWT(List<Metadato> listaMetadato) throws IllegalArgumentException;
 	
-	List<MensajeGWT> putPubli(PubliGWT publiGWT) throws IllegalArgumentException;
+	List<Mensaje> putPubliGWT(PubliGWT publiGWT) throws IllegalArgumentException;
+	
 }

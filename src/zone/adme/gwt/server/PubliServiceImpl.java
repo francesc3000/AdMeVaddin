@@ -1,10 +1,10 @@
 package zone.adme.gwt.server;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import zone.adme.core.modelo.Mensaje;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.gwt.client.services.PubliService;
-import zone.adme.gwt.shared.MensajeGWT;
 import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -18,25 +18,25 @@ PubliService {
 	private ControladorCore controladorCore = new ControladorCore();
 
 	@Override
-	public List<PubliGWT> getPubli() throws IllegalArgumentException {
-
+	public List<PubliGWT> getPubliGWT(List<Metadato> listaMetadato) throws IllegalArgumentException {
+		/*
 		List<PubliGWT> lista = new ArrayList<PubliGWT>();
 		
 		PubliGWT p1 = new PubliGWT();
 		
-		p1.setUsuario("Alberto");
+		//p1.setUsuarioGWT(new UsuarioGWT("Alberto@com.com"));
 		p1.setTitulo("TITULO 1");
 		p1.setTexto("Esta es la publicacion numero 1");
 		
 		PubliGWT p2 = new PubliGWT();
 		
-		p2.setUsuario("Alfonso Javier");
+		//p2.setUsuarioGWT(new UsuarioGWT("Alfonso.Javier@com.com"));
 		p2.setTitulo("TITULO 2");
 		p2.setTexto("Esta es la publicacion numero 2, iauygp aui apuihgpa aui gauerp ahit ");
 		
 		PubliGWT p3 = new PubliGWT();
 		
-		p2.setUsuario("Luis Euduardo");
+		//p2.setUsuarioGWT(new UsuarioGWT("Luis.Euduardo@com.com"));
 		p2.setTitulo("TITULO 322322");
 		p2.setTexto("Eijhgzfuizs zuihaiu hapuhaiph pahipuah aouh uiahg apuhgap gapwuh pag au, iauygp aui apuihgpa aui gauerp ahit as oifasug auia"
 				+ ""
@@ -47,13 +47,17 @@ PubliService {
 		lista.add(p1);
 		lista.add(p2);
 		lista.add(p3);
+*/
+		//return this.controladorCore.getListaPubliGWT(listaMetadato);
 		
-		return lista;
+		
+		return null;
 	}
 
 	@Override
-	public List<MensajeGWT> putPubli(PubliGWT publiGWT) throws IllegalArgumentException {
-		return this.controladorCore.putPubli(publiGWT);
+	public List<Mensaje> putPubliGWT(PubliGWT publiGWT) throws IllegalArgumentException {
+		//return this.controladorCore.putPubli(publiGWT);
+		return null;
 	}
 }
 

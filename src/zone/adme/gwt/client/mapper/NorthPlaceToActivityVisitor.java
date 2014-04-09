@@ -5,6 +5,7 @@ import javax.inject.Provider;
 
 import zone.adme.gwt.client.activities.NorthSingletonActivity;
 import zone.adme.gwt.client.activities.SignActivity;
+import zone.adme.gwt.client.places.FormPubliPlace;
 import zone.adme.gwt.client.places.ShowPlace;
 import zone.adme.gwt.client.places.InitPlace;
 import zone.adme.gwt.client.places.PControlPlace;
@@ -43,6 +44,11 @@ public class NorthPlaceToActivityVisitor implements PlaceVisitor<Void, Activity>
 
 	@Override
 	public Activity visit(ShowPlace showPlace, Void in) {
+		return signProvider.get();
+	}
+
+	@Override
+	public Activity visit(FormPubliPlace showPlace, Void in) {
 		return signProvider.get();
 	}
 }

@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import zone.adme.core.constantes.Constante.ConstanteOperador;
+import zone.adme.core.constantes.Constante.ConstantePubli;
+import zone.adme.core.constantes.Constante.Tabla;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.gwt.client.events.BuscarEvent;
 import zone.adme.gwt.client.events.UserRegisteredEvent;
 import zone.adme.gwt.client.mapper.PlaceControllerHolder;
@@ -18,6 +22,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -43,15 +48,18 @@ public class ShowActivity extends BaseActivity<ShowView> implements Activity, Sh
 	@EventHandler
 	void onBusqueda(BuscarEvent event){
 		this.conceptoBusqueda = event.getBusqueda();
-		getPubliService.getPubli(new AsyncCallback<List<PubliGWT>>() {
+		
+		List<Metadato> listaMetadato = new ArrayList<Metadato>();
+		listaMetadato.add(new Metadato(Tabla.PUBLICACION,ConstantePubli.TITULO,ConstanteOperador.EQUAL,this.conceptoBusqueda));
+		
+		getPubliService.getPubliGWT(listaMetadato, new AsyncCallback<List<PubliGWT>>() {
 			public void onSuccess(List<PubliGWT> result) {
 				setTableData(result);
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
+				Window.alert(caught.getMessage());
 			}
 		});
 	}
