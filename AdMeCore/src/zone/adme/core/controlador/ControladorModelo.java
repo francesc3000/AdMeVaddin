@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import zone.adme.core.constantes.Constante.ConstanteSession;
-
 import zone.adme.core.modelo.Grupo;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.core.modelo.Propietario;
 import zone.adme.core.modelo.PuestoControl;
 import zone.adme.core.modelo.Publi;
@@ -18,7 +18,6 @@ import zone.adme.core.modelo.gestor.GestorPropietario;
 import zone.adme.core.modelo.gestor.GestorPubli;
 import zone.adme.core.modelo.gestor.GestorUsuario;
 import zone.adme.core.modelo.lista.ListaMensaje;
-import zone.adme.core.modelo.lista.ListaMetadato;
 import zone.adme.core.vista.UtilidadesVista;
 
 public class ControladorModelo{
@@ -85,7 +84,7 @@ public class ControladorModelo{
 	 * @param listaMetadato 
 	 * @return Se retorna un listado de Publicaciones
 	 */
-	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
+	public List<Publi> getListaPubli(List<Metadato> listaMetadato){
 		return gestorPubli.getListaPubli(listaMetadato);
 	}
 	

@@ -3,10 +3,9 @@ package zone.adme.core.modelo.gestor;
 import java.util.List;
 
 import zone.adme.core.bbdd.PubliBbdd;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.core.modelo.Publi;
-
 import zone.adme.core.modelo.lista.ListaMensaje;
-import zone.adme.core.modelo.lista.ListaMetadato;
 
 public class GestorPubli {
 	
@@ -21,7 +20,7 @@ public class GestorPubli {
 	 * @param listaMetadato Filtros que se quiere buscar publicaciones
 	 * @return Listado de Publicaciones
 	 */	
-	public List<Publi> getListaPubli(ListaMetadato listaMetadato){
+	public List<Publi> getListaPubli(List<Metadato> listaMetadato){
 		return this.publiBbdd.getListaPubli(listaMetadato);
 	}
 
