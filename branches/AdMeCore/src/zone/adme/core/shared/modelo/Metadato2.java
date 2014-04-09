@@ -2,31 +2,27 @@ package zone.adme.core.shared.modelo;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-import zone.adme.core.shared.constantes.Constante;
 import zone.adme.core.shared.constantes.Constante.ConstanteOperador;
-import zone.adme.core.shared.constantes.Constante.Tabla;
 
-public class Metadato implements IsSerializable{
-
-	private Tabla tabla;
-	private Constante nombreMetadato;
-    private ConstanteOperador operador;
+public class Metadato2 implements IsSerializable{
+	
+	private String tabla;
+	private String nombreMetadato;
+    private String operador;
     private Object valor;
-        
-    public Metadato(){}
     
-	public Metadato(Tabla tabla, Constante nombreMetadato, ConstanteOperador operador, Object valor ) {
+    public Metadato2(String tabla, String nombreMetadato, String operador, Object valor ) {
 		this.tabla = tabla;
 		this.nombreMetadato = nombreMetadato;
 	    this.operador = operador;
 	    this.valor = valor;
 	}
 
-	public Tabla getNombreTabla(){
+	public String getNombreTabla(){
 		return this.tabla;
 	}
 	
-	public Constante getNombreMetadato(){
+	public String getNombreMetadato(){
 		return this.nombreMetadato;
 	}
 	
@@ -41,12 +37,12 @@ public class Metadato implements IsSerializable{
 		return retorno;
 	}
 	
-	public ConstanteOperador getOperador(){
+	public String getOperador(){
 		return this.operador;
 	}
 	
 	public Object getValor(){
 		return this.valor;
 	}
-	
+
 }
