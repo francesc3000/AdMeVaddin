@@ -1,2 +1,0 @@
-serviceClass: zone.adme.gwt.client.GreetingService
-path: E2ACF68FD2170D91827A297931148FD6.gwt.rpc

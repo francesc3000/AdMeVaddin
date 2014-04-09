@@ -1,2 +1,0 @@
-serviceClass: zone.adme.gwt.client.sign.SignService
-path: 494B880EE15BBC257158EE2DCA8B8B1A.gwt.rpc

@@ -1,2 +1,0 @@
-serviceClass: zone.adme.gwt.client.sign.UsuarioService
-path: 1E9596EAC8F97F70416B875CAEEBF00F.gwt.rpc

@@ -1,2 +1,0 @@
-serviceClass: zone.adme.gwt.client.UsuarioService
-path: C3DA563FBAFAF43BE6D6E52CAC812B75.gwt.rpc
