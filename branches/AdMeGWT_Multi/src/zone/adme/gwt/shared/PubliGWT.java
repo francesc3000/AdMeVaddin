@@ -1,13 +1,8 @@
 package zone.adme.gwt.shared;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PubliGWT implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class PubliGWT implements IsSerializable {
 	
 	private UsuarioGWT usuarioGWT=null;
 	private String titulo;

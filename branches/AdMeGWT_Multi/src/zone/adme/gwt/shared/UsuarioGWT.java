@@ -1,6 +1,6 @@
 package zone.adme.gwt.shared;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
 /**
@@ -9,12 +9,8 @@ import java.io.Serializable;
  * @author francesc3000@gmail.com
  *
 */
-public class UsuarioGWT implements Serializable{
+public class UsuarioGWT implements IsSerializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6786037227487428148L;
 	private String correo;
 	private String contrasena;
 	private String nombre;
