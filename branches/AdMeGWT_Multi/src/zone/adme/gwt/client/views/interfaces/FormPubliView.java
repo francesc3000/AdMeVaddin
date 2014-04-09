@@ -8,7 +8,7 @@ public interface FormPubliView extends IsWidget{
 	
 	public interface Presenter
 	{
-		void crearPubli();
+		void crearPubli(String titulo, String descripcion);
 		void startHandler();
 		void stopHandler();		
 	}

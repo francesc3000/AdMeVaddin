@@ -24,6 +24,8 @@
   <inherits name="com.google.gwt.activity.Activity"/>
   <inherits name="com.google.gwt.place.Place"/>
   
+  <inherits name='zone.adme.core.AdMeCore'/>
+  
   <!-- Specify the app entry point class.                         -->
   <entry-point class='zone.adme.gwt.client.AdMeGWT'/>
   

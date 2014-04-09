@@ -3,6 +3,7 @@ package zone.adme.gwt.client.infrastructure.injection;
 import javax.inject.Singleton;
 
 import zone.adme.gwt.client.activities.BuscaIniActivity;
+import zone.adme.gwt.client.activities.FormPubliActivity;
 import zone.adme.gwt.client.activities.ShowActivity;
 import zone.adme.gwt.client.activities.NorthSingletonActivity;
 import zone.adme.gwt.client.activities.RegisterActivity;
@@ -17,6 +18,7 @@ import zone.adme.gwt.client.mapper.SouthPlaceToActivityVisitor;
 import zone.adme.gwt.client.mapper.WestPlaceToActivityVisitor;
 import zone.adme.gwt.client.presenters.RootPresenter;
 import zone.adme.gwt.client.views.BuscaViewImpl;
+import zone.adme.gwt.client.views.FormPubliViewImpl;
 import zone.adme.gwt.client.views.PubliCellViewImpl;
 import zone.adme.gwt.client.views.ShowViewImpl;
 import zone.adme.gwt.client.views.PControlViewImpl;
@@ -24,6 +26,7 @@ import zone.adme.gwt.client.views.RegisterViewImpl;
 import zone.adme.gwt.client.views.RootViewImpl;
 import zone.adme.gwt.client.views.SignViewImpl;
 import zone.adme.gwt.client.views.interfaces.BuscaView;
+import zone.adme.gwt.client.views.interfaces.FormPubliView;
 import zone.adme.gwt.client.views.interfaces.ShowView;
 import zone.adme.gwt.client.views.interfaces.PControlView;
 import zone.adme.gwt.client.views.interfaces.RegisterView;
@@ -60,6 +63,7 @@ public class MyModule extends AbstractGinModule
         bind(ShowView.class).to(ShowViewImpl.class);
         bind(PubliCellViewImpl.class);
         bind(SouthView.class).to(SouthViewImpl.class);
+        bind(FormPubliView.class).to(FormPubliViewImpl.class);
 
         // Presenters
         bind(RootView.Presenter.class).to(RootPresenter.class).in(Singleton.class);
@@ -76,6 +80,7 @@ public class MyModule extends AbstractGinModule
         bind(RegisterActivity.class);
         bind(BuscaIniActivity.class);
         bind(ShowActivity.class);
+        bind(FormPubliActivity.class);
 
         bind(WestPlaceToActivityVisitor.class);
         // Make this activity a singleton to always use the same activity in west region

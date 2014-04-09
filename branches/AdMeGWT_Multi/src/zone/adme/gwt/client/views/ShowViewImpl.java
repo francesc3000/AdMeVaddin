@@ -10,11 +10,9 @@ import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,7 +63,7 @@ public class ShowViewImpl extends Composite implements ShowView { //ProvidesResi
 		while (iter.hasNext()){
 
 			PubliGWT publi = (PubliGWT) iter.next();
-			flexTable.setText(i, 0,publi.getUsuario() );
+			//flexTable.setText(i, 0,publi.getUsuarioGWT().getNombre() );
 			flexTable.setText(i, 1,publi.getTitulo() );
 			flexTable.setText(i, 2,publi.getTexto());
 			i++;

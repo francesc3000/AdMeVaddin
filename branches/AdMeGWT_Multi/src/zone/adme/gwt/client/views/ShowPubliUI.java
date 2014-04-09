@@ -1,5 +1,6 @@
 package zone.adme.gwt.client.views;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,8 +64,8 @@ public class ShowPubliUI extends Composite {
 		t.setText(0, 2, "Publicacion");
 		t.getRowFormatter().addStyleName(0, "watchListHeader");
 		RootPanel.get().add(t);
-		
-		getPubliService.getPubli(new AsyncCallback<List<PubliGWT>>() {
+		/*
+		getPubliService.getPubliGWT(new ArrayList<MetadatoGWT>(), new AsyncCallback<List<PubliGWT>>() {
 
 
 			public void onSuccess(List<PubliGWT> result) {
@@ -78,7 +79,7 @@ public class ShowPubliUI extends Composite {
 
 					PubliGWT publi = (PubliGWT) iter.next();
 
-					t.setText(i, 0,publi.getUsuario() );
+					//t.setText(i, 0,publi.getUsuarioGWT().getNombre() );
 					t.setText(i, 1,publi.getTitulo() );
 					t.setText(i, 2,publi.getTexto());	
 					i++;
@@ -91,7 +92,7 @@ public class ShowPubliUI extends Composite {
 				// TODO Auto-generated method stub
 
 			}
-		});
+		});*/
 	}
 
 

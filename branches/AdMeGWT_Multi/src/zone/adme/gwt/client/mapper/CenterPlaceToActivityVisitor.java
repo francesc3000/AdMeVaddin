@@ -4,9 +4,11 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import zone.adme.gwt.client.activities.BuscaIniActivity;
+import zone.adme.gwt.client.activities.FormPubliActivity;
 import zone.adme.gwt.client.activities.ShowActivity;
 import zone.adme.gwt.client.activities.PControlActivity;
 import zone.adme.gwt.client.activities.RegisterActivity;
+import zone.adme.gwt.client.places.FormPubliPlace;
 import zone.adme.gwt.client.places.ShowPlace;
 import zone.adme.gwt.client.places.InitPlace;
 import zone.adme.gwt.client.places.PControlPlace;
@@ -29,6 +31,9 @@ public class CenterPlaceToActivityVisitor implements PlaceVisitor<Void, Activity
     
     @Inject
     Provider<ShowActivity> showProvider;
+    
+    @Inject
+    Provider<FormPubliActivity> formPubliProvider;
     
     @Override
 	public Activity visit(InitPlace initPlace, Void in) {
@@ -53,5 +58,10 @@ public class CenterPlaceToActivityVisitor implements PlaceVisitor<Void, Activity
 	@Override
 	public Activity visit(ShowPlace buscaPlace, Void in) {
 		return showProvider.get();
+	}
+
+	@Override
+	public Activity visit(FormPubliPlace showPlace, Void in) {
+		return formPubliProvider.get();
 	}
 }

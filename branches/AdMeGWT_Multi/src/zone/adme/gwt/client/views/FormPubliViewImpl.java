@@ -1,8 +1,6 @@
 package zone.adme.gwt.client.views;
 
 import zone.adme.gwt.client.views.interfaces.FormPubliView;
-import zone.adme.gwt.client.views.interfaces.ShowView.Presenter;
-import zone.adme.gwt.shared.PubliGWT;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,15 +36,10 @@ public class FormPubliViewImpl extends Composite implements FormPubliView {
 	TextBox textoPubli;
 	
 	@UiHandler("crearPubli")
-	void OnClick1(ClickEvent e){
-	
-	
-		PubliGWT publi = new PubliGWT();
+	void OncrearPubliClick(ClickEvent e){
 		
-		publi.setUsuario("Jose Andres");
-		publi.setTexto((textoPubli.getText()));
-		publi.setTitulo(tituloPubli.getText());
-	
+		this.presenter.crearPubli(tituloPubli.getText(), textoPubli.getText());
+
 	}
 
 	@Override

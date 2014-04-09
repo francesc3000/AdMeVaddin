@@ -8,16 +8,17 @@ public class PubliGWT implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String usuario;
+	
+	private UsuarioGWT usuarioGWT=null;
 	private String titulo;
 	private String texto;
 	
 	
-	public String getUsuario() {
-		return usuario;
+	public UsuarioGWT getUsuarioGWT() {
+		return usuarioGWT;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsuarioGWT(UsuarioGWT usuarioGWT) {
+		this.usuarioGWT = usuarioGWT;
 	}
 	public String getTitulo() {
 		return titulo;
@@ -30,8 +31,6 @@ public class PubliGWT implements Serializable {
 	}
 	public void setTexto(String texto) {
 		this.texto = texto;
-	}
-	
-	
+	}	
 
 }

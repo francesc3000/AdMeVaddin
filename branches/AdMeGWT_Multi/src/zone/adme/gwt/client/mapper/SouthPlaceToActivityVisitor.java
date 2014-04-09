@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import zone.adme.gwt.client.activities.SouthActivity;
+import zone.adme.gwt.client.places.FormPubliPlace;
 import zone.adme.gwt.client.places.ShowPlace;
 import zone.adme.gwt.client.places.InitPlace;
 import zone.adme.gwt.client.places.PControlPlace;
@@ -40,6 +41,11 @@ public class SouthPlaceToActivityVisitor implements PlaceVisitor<Void, Activity>
 
 	@Override
 	public Activity visit(ShowPlace showPlace, Void in) {
+		return null;
+	}
+
+	@Override
+	public Activity visit(FormPubliPlace showPlace, Void in) {
 		return null;
 	}
 }
