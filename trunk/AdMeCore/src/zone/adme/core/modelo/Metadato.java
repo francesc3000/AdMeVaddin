@@ -1,18 +1,27 @@
 package zone.adme.core.modelo;
 
+import java.io.Serializable;
+
 import zone.adme.core.constantes.Constante;
+import zone.adme.core.constantes.Constante.ConstanteOperador;
 import zone.adme.core.constantes.Constante.Tabla;
 
-import com.google.appengine.api.datastore.Query.FilterOperator;
+public class Metadato implements Serializable{
 
-public class Metadato {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4051355469215817506L;
 
+	
 	private Tabla tabla;
 	private Constante nombreMetadato;
-    private FilterOperator operador;
+    private ConstanteOperador operador;
     private Object valor;
-	
-	public Metadato(Tabla tabla, Constante nombreMetadato, FilterOperator operador, Object valor ) {
+    
+    public Metadato(){}
+    
+	public Metadato(Tabla tabla, Constante nombreMetadato, ConstanteOperador operador, Object valor ) {
 		this.tabla = tabla;
 		this.nombreMetadato = nombreMetadato;
 	    this.operador = operador;
@@ -29,7 +38,7 @@ public class Metadato {
 	
 	public String getOperatorFilter(){
 		String retorno = null;
-		if(this.operador.equals(FilterOperator.EQUAL)){
+		if(this.operador.equals(ConstanteOperador.EQUAL)){
 			retorno = this.operador.toString() + this.operador.toString();
 		}else{
 			retorno = this.operador.toString();
@@ -38,12 +47,11 @@ public class Metadato {
 		return retorno;
 	}
 	
-	public FilterOperator getOperador(){
+	public ConstanteOperador getOperador(){
 		return this.operador;
 	}
 	
 	public Object getValor(){
 		return this.valor;
 	}
-
 }

@@ -4,12 +4,13 @@ import java.util.List;
 
 import zone.adme.core.bbdd.UsuarioBbdd;
 import zone.adme.core.modelo.Mensaje;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.core.modelo.Usuario;
 import zone.adme.core.modelo.Mensaje.TipoError;
 
 import com.googlecode.objectify.Key;
+
 import zone.adme.core.modelo.lista.ListaMensaje;
-import zone.adme.core.modelo.lista.ListaMetadato;
 
 public class GestorUsuario {
 	private UsuarioBbdd usuarioBbdd = null;
@@ -51,7 +52,7 @@ public class GestorUsuario {
 		return this.usuarioBbdd.getListaUsuarioByKey(listaKey);
 	}
 	
-	public List<Usuario> getListaUsuario(ListaMetadato listaMetadato){
+	public List<Usuario> getListaUsuario(List<Metadato> listaMetadato){
 		
 		return this.usuarioBbdd.getListaUsuario(listaMetadato);
 	}

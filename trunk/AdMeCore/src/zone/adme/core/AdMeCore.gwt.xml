@@ -1,0 +1,10 @@
+
+<module>
+    <inherits name='com.google.gwt.user.User'/>
+    <!--
+    <inherits name="com.googlecode.objectify.Objectify" />
+    -->
+  <!-- Specify the paths for translatable code                    -->
+  <source path='constantes'/>
+  <source path='modelo'/>
+</module>

@@ -6,16 +6,15 @@ import java.util.List;
 import com.googlecode.objectify.Key;
 
 import static zone.adme.core.bbdd.OfyService.ofy;
-
 import zone.adme.core.modelo.Grupo;
+import zone.adme.core.modelo.Metadato;
 import zone.adme.core.modelo.lista.ListaMensaje;
-import zone.adme.core.modelo.lista.ListaMetadato;
 
 public class GrupoBbdd{
 	
 	public GrupoBbdd(){}
 	
-	public List<Grupo> getListaGrupo(ListaMetadato listaMetadato){
+	public List<Grupo> getListaGrupo(List<Metadato> listaMetadato){
 		return null;
 	}
 	
