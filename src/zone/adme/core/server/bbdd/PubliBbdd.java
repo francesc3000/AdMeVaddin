@@ -24,7 +24,7 @@ public class PubliBbdd{
 			if(metadato.getNombreTabla().compareTo(Tabla.PUBLICACION)==0){
 				String nombreMetadato = metadato.getNombreMetadato().toString();
 				String operador = metadato.getOperador().toString();
-				String valor = metadato.getValor().toString();
+				String valor = metadato.getValor();
 				queryPubli.filter(nombreMetadato + " " + operador, valor);
 			}
 		}

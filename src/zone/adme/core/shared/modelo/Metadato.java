@@ -11,11 +11,11 @@ public class Metadato implements IsSerializable{
 	private Tabla tabla;
 	private Constante nombreMetadato;
     private ConstanteOperador operador;
-    private Object valor;
+    private String valor;
         
     public Metadato(){}
     
-	public Metadato(Tabla tabla, Constante nombreMetadato, ConstanteOperador operador, Object valor ) {
+	public Metadato(Tabla tabla, Constante nombreMetadato, ConstanteOperador operador, String valor ) {
 		this.tabla = tabla;
 		this.nombreMetadato = nombreMetadato;
 	    this.operador = operador;
@@ -45,7 +45,7 @@ public class Metadato implements IsSerializable{
 		return this.operador;
 	}
 	
-	public Object getValor(){
+	public String getValor(){
 		return this.valor;
 	}
 	

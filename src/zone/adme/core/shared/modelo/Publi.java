@@ -24,8 +24,8 @@ public class Publi implements Serializable, IsSerializable{
 	private Long id;
 	@Load private Ref<Propietario> propietario; //Puede ser un usuario o un grupo
 	private String titulo;	 		//Titulo de la publicacion
-	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
 	private String descripcion; 	//Descripción de la publicación
+	private String ciudad; 			//Ciudad donde se va mostrar el logotipo
 	
 	@SuppressWarnings("unused")
 	private Publi(){}
