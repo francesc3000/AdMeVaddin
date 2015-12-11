@@ -2,15 +2,20 @@ package co.adme.vaadin.modelo;
 
 import org.springframework.data.annotation.Id;
 
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.UIScope;
+
+@SpringComponent
+@UIScope
 public class MongoDBModelo {
 	//Separator
 	public final static String separator = "|";
 	
 	@Id
-	private String id;
+	protected String id;
 	
 	//Search assistant
-	private String lookup;
+	protected String lookup;
 	
 	public String getId(){
 		return this.id;
@@ -18,7 +23,7 @@ public class MongoDBModelo {
 	
 	protected void setLookup(String[] args ){
 		for(String arg:args){
-			this.lookup = arg.toUpperCase() + MongoDBModelo.separator;
+			this.lookup = this.lookup + arg.toUpperCase() + MongoDBModelo.separator;
 		}
 	}
 	

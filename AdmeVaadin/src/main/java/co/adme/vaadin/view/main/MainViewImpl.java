@@ -55,7 +55,7 @@ public class MainViewImpl extends VerticalLayout implements View, MainView,
         setSizeUndefined();
         
         HorizontalLayout top = new HorizontalLayout();
-    	Button userButton = new Button("Usuario");
+    	Button userButton = new Button("Registrarse");
     	userButton.addClickListener(this);
     	//userButton.setData(UserViewImpl.VIEWNAME);
     	top.addComponent(userButton);

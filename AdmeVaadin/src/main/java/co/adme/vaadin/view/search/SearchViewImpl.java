@@ -19,6 +19,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
@@ -29,6 +30,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import co.adme.vaadin.db.PubliDBContainer;
+import co.adme.vaadin.modelo.FilterOption;
 import co.adme.vaadin.modelo.Publi;
 import co.adme.vaadin.view.DefaultViewManager;
 
@@ -49,12 +51,14 @@ public class SearchViewImpl extends VerticalLayout
 	private PubliDBContainer publiDBContainer;
 	
 	private HorizontalLayout horizontal;
+	private HorizontalLayout resultZone;
+	private VerticalLayout filterZone;
+	
 	private TextField searchTerm;
 	private TextField searchCity;
 	private Button searchButton;
-	private Panel viewContainer;
-	 
-	private Table table = null;
+	
+	private Table table;	
 	/* Only the presenter registers one listener... */
 	private List<SearchViewListener> listeners =
 	        	new ArrayList<SearchViewListener>();
@@ -88,26 +92,31 @@ public class SearchViewImpl extends VerticalLayout
 		navigationBar.addComponent(searchButton);
 		
 		//horizontal.setComponentAlignment(navigationBar, Alignment.MIDDLE_RIGHT);
-		horizontal.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+		//horizontal.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 		
-		viewContainer = new Panel();
+		resultZone = new HorizontalLayout();
+		resultZone.setVisible(false);
+		addComponent(resultZone);
+		
+		filterZone = new VerticalLayout();
+		resultZone.addComponent(filterZone);
+		
+		Panel viewContainer = new Panel();
 		viewContainer.setSizeFull();
-        viewContainer.setVisible(false);
-		addComponent(viewContainer);
-		setExpandRatio(viewContainer, 1.0f);
+        viewContainer.setSizeUndefined();
+        resultZone.addComponent(viewContainer);
+        resultZone.setExpandRatio(viewContainer, 1.0f);
 	    
 	    table = new Table("Publicaciones");
 	    table.setColumnExpandRatio(viewContainer,  1.0f);
-	    table.setSizeFull();
 	    table.setContainerDataSource(publiDBContainer);  
 	    table.setVisibleColumns(PubliDBContainer.PROPERTIES);  
 	    table.setColumnHeaders(PubliDBContainer.HEADERS);  
 	    table.setSelectable(true);  
 	    table.addItemClickListener(this);
-	    table.setVisible(false);
 	    table.setVisibleColumns(PubliDBContainer.VISIBLE);
 	    
-	    addComponent( table );
+	    viewContainer.setContent(table);
 	     
 	    //Se configuran las views con sus presenters
 	    viewManager.configure(this);
@@ -120,10 +129,16 @@ public class SearchViewImpl extends VerticalLayout
 	
 	@Override
 	public void setSearchResult(List<Publi> publiList) {
-		if(!viewContainer.isVisible()){viewContainer.setVisible(true);}
-		if(!table.isVisible()){table.setVisible(true);}
+		if(!resultZone.isVisible()){resultZone.setVisible(true);}
 		publiDBContainer.removeAllItems();
 		publiDBContainer.addAll(publiList);
+		buildFilterZone(this.publiDBContainer, this.filterZone);
+	}
+	
+	private void buildFilterZone(PubliDBContainer publiDBContainer, VerticalLayout filterZone){
+		FilterOptionView filterOptionView = new FilterOptionView(publiDBContainer);
+		
+		filterZone.addComponent(filterOptionView);
 	}
 	
 	@Override

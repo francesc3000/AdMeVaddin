@@ -14,12 +14,25 @@ public class Publi extends MongoDBModelo{
 	private String description; 	//Descripción de la publicación
 	private String city; 			//Ciudad donde se va mostrar el logotipo
 	private Float price;
-	private Group owner;
+	//private Group owner;
 	
-	private List<Group> sponsorList = new ArrayList<Group>();
+	//private List<Group> sponsorList = new ArrayList<Group>();
+	
+	@SuppressWarnings("unused")
+	private Publi(){}
+	
+	@Deprecated
+	public Publi(String title, String description, String city, Float price){
+		this.title = title;
+		this.description = description;
+		this.city = city;
+		this.price = price;
+		this.setLookup(new String[]{getTitle(),getDescription()});
+		
+	}
 	
 	public Publi(Group owner, String title, String description, String city, Float price){
-		this.owner = owner;
+		//this.owner = owner;
 		this.title = title;
 		this.description = description;
 		this.city = city;
@@ -43,7 +56,7 @@ public class Publi extends MongoDBModelo{
 	public Float getPrice(){
 		return this.price;
 	}
-	
+	/*
 	public Group getOwner(){
 		return this.owner;
 	}
@@ -64,4 +77,5 @@ public class Publi extends MongoDBModelo{
 		}
 		return null;
 	}
+	*/
 }
