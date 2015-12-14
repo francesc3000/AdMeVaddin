@@ -8,6 +8,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 
 import co.adme.vaadin.view.main.MainViewImpl;
@@ -21,17 +22,27 @@ public class AdMeVaadinUI extends UI {
 	@Autowired
 	SpringViewProvider viewProvider;
 	
-	@Autowired
-	MainViewImpl mainView;
+	//@Autowired
+	//MainViewImpl mainView;
 	 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-    	
+    	/*
     	setContent(mainView);
 		
 		Navigator navigator = new Navigator(this, mainView);
         navigator.addProvider(viewProvider);        
-        navigator.addViewChangeListener(mainView);   
-
+        navigator.addViewChangeListener(mainView);  
+        */
+    	
+    	final Panel mainContainer = new Panel();
+    	mainContainer.setSizeFull();
+        setContent(mainContainer);
+        
+        Navigator navigator = new Navigator(this, mainContainer);
+        navigator.addProvider(viewProvider);
+        //navigator.addViewChangeListener(mainView);
+        
+        UI.getCurrent().getNavigator().navigateTo(MainViewImpl.VIEW_NAME);
     }    
 }
