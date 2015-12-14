@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -21,6 +22,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 
+import co.adme.vaadin.user.register.UserRegisterViewImpl;
 import co.adme.vaadin.view.DefaultViewManager;
 import co.adme.vaadin.view.podium.AdPodiumImpl;
 import co.adme.vaadin.view.search.SearchViewImpl;
@@ -57,7 +59,7 @@ public class MainViewImpl extends VerticalLayout implements View, MainView,
         HorizontalLayout top = new HorizontalLayout();
     	Button userButton = new Button("Registrarse");
     	userButton.addClickListener(this);
-    	//userButton.setData(UserViewImpl.VIEWNAME);
+    	userButton.setData(UserRegisterViewImpl.VIEW_NAME);
     	top.addComponent(userButton);
     	top.setComponentAlignment(userButton, Alignment.MIDDLE_RIGHT);
     	
@@ -94,7 +96,7 @@ public class MainViewImpl extends VerticalLayout implements View, MainView,
 	}
 
 	@Override
-	public void buttonClick(ClickEvent event) {
+	public void buttonClick(ClickEvent event) {		
 		UI.getCurrent().getNavigator().navigateTo((String)event.getButton().getData());
 	}
 

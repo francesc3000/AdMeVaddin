@@ -91,7 +91,7 @@ public class SearchViewImpl extends VerticalLayout
 		searchButton.setClickShortcut(KeyCode.ENTER);
 		navigationBar.addComponent(searchButton);
 		
-		//horizontal.setComponentAlignment(navigationBar, Alignment.MIDDLE_RIGHT);
+		horizontal.setComponentAlignment(navigationBar, Alignment.MIDDLE_RIGHT);
 		//horizontal.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 		
 		resultZone = new HorizontalLayout();
