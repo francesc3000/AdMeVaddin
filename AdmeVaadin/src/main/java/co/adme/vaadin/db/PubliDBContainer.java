@@ -24,5 +24,21 @@ public class PubliDBContainer extends BeanContainer<String, Publi> {
         super(Publi.class);  
         setBeanIdProperty(BEAN_ID);  
     } 
+    
+    public String getTitleHeader(){
+    	return PubliDBContainer.HEADERS[1];
+    }
+    
+    public String getDescriptioneHeader(){
+    	return PubliDBContainer.HEADERS[2];
+    }
+    
+    public String getCityHeader(){
+    	return PubliDBContainer.HEADERS[3];
+    }
+    
+    public String getPriceHeader(){
+    	return PubliDBContainer.HEADERS[4];
+    }
 
 }
