@@ -2,30 +2,27 @@ package co.adme.vaadin.presenter;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vaadin.navigator.View;
 
 import co.adme.vaadin.user.register.UserRegisterView;
+import co.adme.vaadin.view.publi.PubliView;
 
 
-public class RegisterPresenter  implements UserRegisterView.UserRegisterListener,
-Presenter{
+public class RegisterPresenter extends Presenter implements UserRegisterView.UserRegisterListener {
 	
-	
-    private UserRegisterView view;
+	private List<UserRegisterView> viewList = new ArrayList<UserRegisterView>();
 	
 	private RegisterPresenter(){}
-	
 
 	@Override
-	public void setView(View view) {
-		this.view  = (UserRegisterView) view;
-		
-	}
-
-	@Override
-	public void bind() {
-		view.addUserRegisterListener(this);
-		
+	public void setViewAndBind(View view) {
+		super.setViewAndBind(view);
+		UserRegisterView userRegisterView = (UserRegisterView) view;
+		this.viewList.add(userRegisterView);
+		userRegisterView.addUserRegisterListener(this);
 	}
 
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import co.adme.vaadin.modelo.Publi;
 
 public interface SearchView {
-	public void setSearchResult(List<Publi> publiList);
-	
 	interface SearchViewListener {
-		void searchPubliList(String searchTerm);
+		List<String> getAvailableCities();
+		void searchPubliList(String searchTerm, String searchCity);
+		List<Publi> searchPubliListPage(String searchTerm, String searchCity, Boolean newSearch);
     }
+
     public void addSearchListener(SearchViewListener listener);
+    public void setSearchResult(List<Publi> publiList);
 }

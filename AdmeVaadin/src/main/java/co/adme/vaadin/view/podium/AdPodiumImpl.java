@@ -5,11 +5,13 @@ import java.io.File;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.virkki.carousel.HorizontalCarousel;
+import org.vaadin.virkki.carousel.client.widget.gwt.ArrowKeysMode;
+import org.vaadin.virkki.carousel.client.widget.gwt.CarouselLoadMode;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ClassResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringView;
@@ -18,14 +20,11 @@ import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import co.adme.vaadin.view.DefaultViewManager;
-
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
+
+import co.adme.vaadin.view.DefaultViewManager;
+import co.adme.vaadin.view.podium.AdPodiumView;
 
 @SuppressWarnings("serial")
 @UIScope
@@ -44,7 +43,15 @@ public class AdPodiumImpl extends VerticalLayout implements View, AdPodiumView, 
         setMargin(true);
         setSpacing(true);
         
-        HorizontalLayout podium = new HorizontalLayout();
+        viewManager.configure(this);
+        
+	    HorizontalCarousel podium = new HorizontalCarousel();
+	    // Only react to arrow keys when focused
+	    podium.setArrowKeysMode(ArrowKeysMode.FOCUS);
+	    // Fetch children lazily
+	    podium.setLoadMode(CarouselLoadMode.EAGER);
+	    // Transition animations between the children run 500 milliseconds
+	    podium.setTransitionDuration(500);
         // Find the application directory
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 
@@ -77,9 +84,8 @@ public class AdPodiumImpl extends VerticalLayout implements View, AdPodiumView, 
         image.setHeight(5, Unit.CM);
         podium.addComponent(image);
         
-        //addComponent(podium);
+        addComponent(podium);
         
-        viewManager.configure(this);
 	}
 
 	@Override

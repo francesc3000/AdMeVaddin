@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.vaadin.data.Container.Filter;
-import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -81,11 +77,13 @@ public class FilterOptionView extends VerticalLayout
 		accordion.setSizeFull();
 		panel.setContent(accordion);
 		
-		for(OptionGroup optionGroup:this.optionGroupList){
-			accordion.addTab(optionGroup,optionGroup.getCaption());
+		if(optionGroupList!=null && !optionGroupList.isEmpty()){
+			for(OptionGroup optionGroup:this.optionGroupList){
+				accordion.addTab(optionGroup,optionGroup.getCaption());
+			}
+			
+			addComponent(panel);
 		}
-		
-		addComponent(panel);
 	}
 	
 	public void rebuild(){
